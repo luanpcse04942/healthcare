@@ -1,0 +1,132 @@
+body {
+    background: #f2f3f5;
+}
+
+.container-comic {
+	background-color: #fff;
+	margin: 30px 100px;
+	border-radius: 10px;
+	box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+	padding-bottom: 100px;
+}
+
+.top-title-comic {
+	margin-top: 10px;
+	padding: 20px;
+}
+.heading-comic {
+    border-left: 8px solid #56ccf2;
+}
+.title-comic {
+	font-size: 1em;
+	font-family: inherit;
+	font-style: inherit;
+    font-weight: inherit;
+    margin-left: 10px;
+    font-weight: 600;
+}
+
+.container-comic-layout {
+	display: flex;
+	padding: 20px;
+}
+.comic-layout-img {
+	margin-right: 35px;
+}
+
+.comic-layout-img > a > img {
+	border-radius: 10px;
+	box-shadow: 0 .2rem 1.5rem rgba(0,0,0,.15);
+}
+
+.comic-layout-content .name-comic {
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+.comic-layout-content .chapter-comic, .category-comic {
+	display: inline-block;
+    border: 1px solid #f18121;
+    color: #f18121;
+    border-radius: 0.25rem;
+    padding: 0.375rem 0.75rem;
+    cursor: pointer;
+    text-align: center;
+}
+
+.comic-layout-content .chapter-comic:hover, .category-comic:hover {
+	color: #fff;
+	background-color: #f18121;
+	transition: color .15s ease-in-out,
+	background-color .15s ease-in-out,
+	border-color .15s ease-in-out,
+	box-shadow .15s ease-in-out;
+}
+
+.comic-layout-content .layout {
+	margin: 15px 0;
+}
+
+.comic-layout-content .layout .btn-follow {
+	background-color: #ffc038;
+	color: #fff;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 25px;
+	cursor: pointer;
+	font-size: inherit;
+	margin-right: 20px;
+}
+
+.comic-layout-content .layout .btn-follow .fa-flag:before {
+    margin-right: 8px;
+}
+
+.comic-layout-content .layout .first {
+	background-color: #8bc34a!important;
+}
+
+.comic-layout-content .layout .new {
+	background-color: #209cee!important;
+}
+
+.comic-layout-content .description {
+	line-height: 1.6;
+	height: 53px;
+	overflow: hidden;
+	border-bottom: 1px solid #dee2e6;
+}
+.comic-layout-content .view-more {
+	text-align: center;
+}
+.list-chapter {
+	color: #f18121;
+	margin-left: 20px;
+	margin-bottom: 30px;
+	font-size: 1.5rem;
+	font-weight: 600;
+}
+.list-chapter .fa-bars:before {
+    content: "\f03a";
+}
+.chapters-content {
+	border: 1px solid #dee2e6;
+	max-height: 400px;
+	overflow-y: auto;
+	box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+	border-radius: 10px;
+	padding-bottom: 30px;
+	margin: 0 20px;
+}
+
+.chapters-content .list a{
+	display: flex;
+	justify-content: space-between;
+	margin: 15px 20px;
+	border-bottom: 1px solid #dee2e6;
+	align-items: center;
+	cursor: pointer;
+	outline: none;
+    text-decoration: none;
+    color: inherit;
+}
