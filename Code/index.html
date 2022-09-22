@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./asset/css/base.css">
+    <link rel="stylesheet" href="./asset/css/main.css">
+    <link rel="stylesheet" href="asset/fonts/fontawesome-free-6.2.0-web/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <div class="grid">
+                <nav class="header__navbar">
+                    <ul class="header__navbar-list">
+                       <li class="header__navbar-item header__navbar-item--has-qr header__navbar-item-split">
+                        Sử dụng dịch vụ trên ứng dụng BookingCare
+                        <div class="header__qr">
+                            <img src="./asset/image/code.png" alt="qr code" class="header__qr-img">
+                            <div class="header__qr-apps">
+                                <a href="" class="header__qr-link">
+                                    <img src="./asset/image/google.png" alt="google store" class="header__qr-download-img">
+                                </a>
+                                <a href="" class="header__qr-link">
+                                    <img src="./asset/image/apple.png" alt="app store" class="header__qr-download-img">
+                                </a>
+                            </div>
+                        </div>
+                    </li> 
+                       <li class="header__navbar-item">
+                        <span class="header__navbar-title--no-pointer"> Kết Nối</span>
+                       
+                        <a href="" class="header__navbar-icon-link">
+                            <i class="header_navbar-icon fa-brands fa-facebook"></i></a>
+                        <a href="" class="header__navbar-icon-link">
+                            <i class="header_navbar-icon fa-brands fa-instagram"></i></a>
+                       </li>
+                    </ul>
+                    <ul class="header__navbar-list">
+                       <li class="header__navbar-item header__navbar-item--gotNotify">
+                         <a href="" class="header__navbar-item-link">
+                            <i class="header_navbar-icon fas fa-bell"></i>
+                            Thông Báo
+                        </a>
+                        <div class="header__notify">
+                            <header class="header__notify-header ">
+                                <h3>Thông Báo Mới Nhận</h3>
+                            </header>
+                            <ul class="header__notify-list">
+                                <li class="header__notify-item  ">
+                                    <a href="" class="header__notify-link ">
+                                        <img src="https://cf.shopee.vn/file/vn-11134103-22060-wlkdfkwdv1dve7" alt="" class="header__notify-img">
+                                        <div class="header__notify-info">
+                                            <span class="header__notify-name">xin chào tên tôi là phạm xuân trung năm nay tôi 21 tuổi và đang học kĩ thuật phần mềm</span>
+                                            <span class="header__notify-description">tôi đến từ hải phòng địa chỉ là 110 trần văn lan cát bi hải an hải phòng</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="header__notify-item header__notify-item-noreaded ">
+                                    <a href="" class="header__notify-link">
+                                        <img src="https://cf.shopee.vn/file/vn-11134103-22060-wlkdfkwdv1dve7" alt="" class="header__notify-img">
+                                        <div class="header__notify-info">
+                                            <span class="header__notify-name">xin chào tên tôi là phạm xuân trung năm nay tôi 21 tuổi và đang học kĩ thuật phần mềm</span>
+                                            <span class="header__notify-description">tôi đến từ hải phòng địa chỉ là 110 trần văn lan cát bi hải an hải phòng</span>
+                                        </div>
+                                    </a>
+                                </li>
+                               
+                                
+                            </ul>
+                            <footer class="header__notify-footer">
+                                <a href="" class="header__notify-footer-btn">Xem Tất Cả</a>
+                            </footer>
+                        </div>
+                       </li>
+                       <li class="header__navbar-item">
+                         <a href="" class="header__navbar-item-link">
+                            <i class="header_navbar-icon far fa-question-circle"></i>
+                            Trợ Giúp
+                        </a>
+                       </li>
+                       <!-- chưa đăng kí đăng nhập -->
+                       <!-- <li class="header__navbar-item header__navbar-item--strong header__navbar-item-split">Đăng Kí</li>
+                       <li class="header__navbar-item header__navbar-item--strong">Đăng Nhập</li> -->
+                        <!-- có đăng kí đăng nhập -->
+                        <li class="header__navbar-item header__navbar-user">
+                            <img src="./asset/image/anyaaa.webp" alt="" class="header__navbar-user-img">
+                            <span class="header__navbar-user-name">Xuân Trung</span>
+
+                            <ul class="header__navbar-user-menu">
+                                <li class="header__navbar-user-item">
+                                    <a href="">Tài Khoản của tôi</a>   
+                                </li>
+                                <li class="header__navbar-user-item">
+                                    <a href="">Địa chỉ của tôi</a>   
+                                </li>
+                                <li class="header__navbar-user-item">
+                                    <a href="">Đơn mua</a>   
+                                </li>
+                                <li class="header__navbar-user-item header__navbar-user-item-split">
+                                    <a href="">Đăng xuát</a>   
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                 </nav>
+                 <!-- header with search -->
+                 <div class="header_with-search">
+
+                    <!-- logo page -->
+                    <div class="header__logo">
+                       <a href="" class="header__logo-link">
+                        <img class="header__logo-img" src="https://bookingcare.vn/assets/icon/bookingcare-2020.svg" alt="BookingCare/">
+                       </a>
+                    </div>   
+
+                 <!-- thanh tìm kiếm -->
+                 <div class="header__search">
+                     <div class="header__search-input-wrap">
+                         <input type="text" class="header__search-input" placeholder="Nhập để tìm kiếm sản phẩm">
+                         
+                         <!-- lịch sử tìm kiếm -->
+                         <div class="header__search-history">
+                           <h3 class="header__search-history-heading">
+                            Lịch sử tìm kiếm
+                           </h3>
+                           <ul class="header__search-history-heading-list">
+                            <li class="header__search-history-heading-item">
+                                <a href="">lololo</a>
+                            </li>
+                            <li class="header__search-history-heading-item">
+                                <a href="">lalala</a>
+                            </li>
+                           </ul>
+                         </div>
+                     </div>
+
+                            <!-- option -->
+                    <div class="header__search-select">
+                        <span class="header__search-select-label">Trong Shop</span>
+                        <i class="header__search-select-icon fas fa-angle-down"></i>
+                            <!-- thanh option -->
+                        <ul class="header__search-option">
+                            <li class="header__search-option-item">
+                                <span>Trong Shop</span>
+                                <i class="fas fa-check"></i>
+                            </li>
+                            <li class="header__search-option-item">
+                                <span>Ngoài Shop</span>
+                                <i class="fas fa-check"></i>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- nút search thanh tìm kiếm-->
+                    <button class="header__search-btn">
+                        <i class="header__search-btn-icon fas fa-search"></i>
+                    </button>
+                 </div> 
+                  <!-- giỏ hàng -->
+                 <div class="header__cart">
+                    <div class="header__cart-wrap">
+                        <i class="header__cart-icon fa-solid fa-stethoscope"></i>
+                        <span class="header__cart-notice">
+                            3
+                        </span>
+
+                        <!-- Has nocart add :header__cart-list--nocart -->
+                    <div class="header__cart-list ">
+                        <img src="./asset/image/EmptyCart2.png" alt="" class="header__cart-nocart-img">
+                    <!-- có sản phẩm -->
+                    <h4 class="header__cart-heading">
+                        Sản phẩm đã thêm
+                    </h4>
+                    <ul class="header__cart-list-item">
+                        <!-- Cart item -->
+                        <li class="header__cart-item">
+                            <img src="./asset/image/anyaaa.webp" alt="" class="header__cart-img">
+                            <div class="header__cart-item-info">
+                                <div class="header__cart-item-heading">
+                                    <h5 class="header__cart-item-name">ảnh của anya nhé</h5>
+                                    <div class="header__cart-price-wrap">
+                                        <span class="header__cart-item-price">2.000.000đ</span>
+                                        <span class="header__cart-item-multiply">x</span>
+                                        <span class="header__cart-item-quantity">2</span>
+                                    </div>
+                                </div>
+                                <div class="header__cart-item-body">
+                                    <span class="header__cart-item-descrition">Phân loại :Xinh</span>
+                                    <span class="header__cart-item-remove">Xóa</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="header__cart-item">
+                            <img src="./asset/image/anyaaa.webp" alt="" class="header__cart-img">
+                            <div class="header__cart-item-info">
+                                <div class="header__cart-item-heading">
+                                    <h5 class="header__cart-item-name">ảnh của anya nhé</h5>
+                                    <div class="header__cart-price-wrap">
+                                        <span class="header__cart-item-price">2.000.000đ</span>
+                                        <span class="header__cart-item-multiply">x</span>
+                                        <span class="header__cart-item-quantity">2</span>
+                                    </div>
+                                </div>
+                                <div class="header__cart-item-body">
+                                    <span class="header__cart-item-descrition">Phân loại :Xinh</span>
+                                    <span class="header__cart-item-remove">Xóa</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="header__cart-item">
+                            <img src="./asset/image/anyaaa.webp" alt="" class="header__cart-img">
+                            <div class="header__cart-item-info">
+                                <div class="header__cart-item-heading">
+                                    <h5 class="header__cart-item-name">ảnh của anya nhé</h5>
+                                    <div class="header__cart-price-wrap">
+                                        <span class="header__cart-item-price">2.000.000đ</span>
+                                        <span class="header__cart-item-multiply">x</span>
+                                        <span class="header__cart-item-quantity">2</span>
+                                    </div>
+                                </div>
+                                <div class="header__cart-item-body">
+                                    <span class="header__cart-item-descrition">Phân loại :Xinh</span>
+                                    <span class="header__cart-item-remove">Xóa</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <a href ="#" class="header__cart-view-cart btn btn--primary">Xem giỏ hàng</a>
+                        
+                    </div>
+                    </div>
+                </div> 
+            </div>
+            </div>
+        </header>
+        <div class="container">
+             <nav class="category">
+                <h3 class="category__heading">
+                    <i class="fas fa-list"></i>   
+                    Danh mục
+                </h3>
+
+                <ul class="category-list">
+                    <li class="category-item category-item--active">
+                        <a href="" class="category-item__link">Trang điểm mặt</a>
+                    </li>
+                    <li class="category-item">
+                        <a href="" class="category-item__link">Trang điểm môi</a>
+                    </li>
+                    <li class="category-item">
+                        <a href="" class="category-item__link">Trang điểm mắt</a>
+                    </li>
+                </ul>
+             </nav>
+        </div>
+        <footer class="footer">
+
+        </footer>
+    </div>
+    <!-- modal layout -->
+    <div class="modal">
+        <div class="modal__overlay">
+
+        </div>
+        <div class="modal__body">
+            
+                <!-- Register form -->
+                <div class="auth-form"> 
+                    <div class="auth-form__container">
+                        <div class="auth-form__header">
+                            <span class="auth-form__heading">Đăng Kí</span>
+                            <span class="auth-form__switch-btn">Đăng Nhập</span> 
+                        </div>
+                    <div class="auth-form__form">
+                        <div class="auth-form__group">
+                            <input type="text" class="auth-form__input" placeholder="Nhập Email của bạn">
+                        </div>
+                        <div class="auth-form__group">
+                            <input type="text" class="auth-form__input" placeholder="Nhập mật khẩu của bạn">
+                        </div>
+                        <div class="auth-form__group">
+                            <input type="text" class="auth-form__input" placeholder="Nhập lại mật khẩu của bạn">
+                        </div>
+                    </div>
+    
+                    <div class="auth-form__aside">
+                        <p class="auth-form__policy-text">
+                             Bằng việc đăng kí bạn đã đồng ý với Booking care về
+                             <a href="" class="auth-form__policy-link">Điều khoản dịch vụ </a>&
+                             <a href="" class="auth-form__policy-link">Chính sách bảo mật</a>
+                        </p>
+                    </div>
+                    <div class="auth-form__controls">
+                        <button class="btn auth-form__controls-back">TRỞ LẠI</button>
+                        <button class="btn btn--primary">ĐĂNG KÍ</button>
+                    </div>
+                    </div>
+                <div class="auth-form__socials">
+                    <a href="" class="auth-form__socials--facebook btn btn--with-icon">
+                        <i class="auth-form__socials-icon fab fa-facebook-square"></i>
+                        <span class="auth-form__socials-label">Kết nối với Facebook</span>    
+                        
+                    </a>
+                    <a href="" class="auth-form__socials--google btn btn--with-icon">
+                        <i class="auth-form__socials-icon fab fa-google"></i>
+                        <span class="auth-form__socials-label">Kết nối với Google</span>    
+                    </a>
+                </div>
+                </div> 
+            
+                <!-- Login form -->
+                  <div class="auth-form"> 
+                    <div class="auth-form__container">
+                        <div class="auth-form__header">
+                            <span class="auth-form__heading">Đăng Nhập</span>
+                            <span class="auth-form__switch-btn">Đăng Kí</span> 
+                        </div>
+                    <div class="auth-form__form">
+                        <div class="auth-form__group">
+                            <input type="text" class="auth-form__input" placeholder="Nhập Email của bạn">
+                        </div>
+                        <div class="auth-form__group">
+                            <input type="text" class="auth-form__input" placeholder="Nhập mật khẩu của bạn">
+                        </div>
+                    </div>
+    
+                    <div class="auth-form__aside">
+                        <div class="auth-form__help">
+                            <a href="" class="auth-form__link auth-form__link-forgot">Quên Mật Khẩu</a>
+                            <span class="auth-form__help-split"></span>
+                            <a href="" class="auth-form__link">Cần Trợ Giúp</a>
+                        </div>
+                    </div>
+                    <div class="auth-form__controls">
+                        <button class="btn auth-form__controls-back">TRỞ LẠI</button>
+                        <button class="btn btn--primary">ĐĂNG NHẬP</button>
+                    </div>
+                    </div>
+                <div class="auth-form__socials">
+                    <a href="" class="auth-form__socials--facebook btn btn--with-icon">
+                        <i class="auth-form__socials-icon fab fa-facebook-square"></i>
+                        <span class="auth-form__socials-label">Kết nối với Facebook</span>    
+                        
+                    </a>
+                    <a href="" class="auth-form__socials--google btn btn--with-icon">
+                        <i class="auth-form__socials-icon fab fa-google"></i>
+                        <span class="auth-form__socials-label">Kết nối với Google</span>    
+                    </a>
+                </div>
+                </div>
+        </div> 
+    </div> 
+</body>
+</html>
