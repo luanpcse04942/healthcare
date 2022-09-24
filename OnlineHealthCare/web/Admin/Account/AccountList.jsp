@@ -37,14 +37,15 @@
             <!-- header -->
 
             <div class="main-content">
-                <form action="<c:url value='/admin-new'/>" id="formSubmit" method="get">
+                <form action="<c:url value='/admin-account'/>" id="formSubmit" method="get">
                     <div class="main-content-inner">
                         <div class="breadcrumbs ace-save-state" id="breadcrumbs">
                             <ul class="breadcrumb">
                                 <li>
                                     <i class="ace-icon fa fa-home home-icon"></i>
-                                    <a href="#">Trang chủ</a>
+                                    <a href="<c:url value='/admin-home'/>">Trang chủ</a>
                                 </li>
+                                <li class="active">Danh sách tài khoản</li>
                             </ul>
                             <!-- /.breadcrumb -->
                         </div>
@@ -67,12 +68,6 @@
                                                             <i class="fa fa-plus-circle bigger-110 purple"></i>
                                                         </span>
                                                     </a>
-                                                    <button id="btnDelete" type="button"
-                                                            class="dt-button buttons-html5 btn btn-white btn-primary btn-bold" data-toggle="tooltip" title='Xóa bài viết'>
-                                                        <span>
-                                                            <i class="fa fa-trash-o bigger-110 pink"></i>
-                                                        </span>
-                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -83,27 +78,39 @@
                                                 <table class="table table-bordered">
                                                     <thead>
                                                         <tr>
-                                                            <th><input type="checkbox" id="checkAll"></th>
                                                             <th>No.</th>
-                                                            <th>Họ tên</th>
+                                                            <th>Họ và tên</th>
+                                                            <th>Email</th>
+                                                            <th>Giới tính</th>
                                                             <th>Số điện thoại</th>
-                                                            <th>Địa chỉ</th>
+                                                            <th>Vai trò</th>
+                                                            <th>Thao tác</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                        <c:set var="count" value="0" scope="page" />
                                                         <c:forEach var="item" items="${model.listResult}">
+                                                            <c:set var="count" value="${count + 1}" scope="page"/>
                                                             <tr>
-                                                                <td><input type="checkbox" id="checkbox_${item.id}" value="${item.id}"></td>
-                                                                <td>${item.id}</td>
+                                                                <td><c:out value = "${count}"/></td>
                                                                 <td>${item.firstName} ${item.lastName}</td>
+                                                                <td>${item.email}</td>
+                                                                <td>${item.gender}</td>
                                                                 <td>${item.phoneNumber}</td>
-                                                                <td>${item.address}</td>
+                                                                <td>${item.roleName}</td>
+                                                                <td>
+                                                                    <c:url var="viewDetail" value="/admin-account-detail">
+                                                                        <c:param name="userId" value="${item.id}"/>
+                                                                    </c:url>
+                                                                    <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
+                                                                       title="Xem chi tiết" href="${viewDetail}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                                    </a>
+                                                                </td>
                                                             </tr>
                                                         </c:forEach>
                                                     </tbody>
                                                 </table>
                                                 <ul class="pagination" id="pagination"></ul>
-                                                <ul class="pagination" id="pagination"><li class="page-item first disabled"><a href="#" class="page-link">First</a></li><li class="page-item prev disabled"><a href="#" class="page-link">Previous</a></li><li class="page-item active"><a href="#" class="page-link">1</a></li><li class="page-item"><a href="#" class="page-link">2</a></li><li class="page-item next"><a href="#" class="page-link">Next</a></li><li class="page-item last"><a href="#" class="page-link">Last</a></li></ul>
                                                 <input type="hidden" value="" id="page" name="page"/>
                                                 <input type="hidden" value="" id="maxPageItem" name="maxPageItem"/>
                                                 <input type="hidden" value="" id="sortName" name="sortName"/>
