@@ -16,7 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 public class AccountDAO extends DBContext {
 
     public ArrayList<Account> findAll(Pageble pageble) {
-        StringBuilder sql = new StringBuilder("SELECT * FROM [User]");
+        StringBuilder sql = new StringBuilder("SELECT * FROM [User] where roleId not like 4");
         if (pageble.getSorter() != null && StringUtils.isNotBlank(pageble.getSorter().getSortName()) && StringUtils.isNotBlank(pageble.getSorter().getSortBy())) {
             sql.append(" ORDER BY " + pageble.getSorter().getSortName() + " " + pageble.getSorter().getSortBy() + "");
         }
@@ -32,11 +32,24 @@ public class AccountDAO extends DBContext {
             while (rs.next()) {
                 Account acc = new Account();
                 acc.setId(rs.getInt("userId"));
+                int roleId = rs.getInt("roleId");
                 acc.setRoleId(rs.getInt("roleId"));
+                switch (roleId) {
+                    case 1:
+                        acc.setRoleName("Admin");
+                        break;
+                    case 2:
+                        acc.setRoleName("Bác sĩ");
+                        break;
+                    case 3:
+                        acc.setRoleName("Bệnh nhân");
+                        break;
+                    default:
+                        break;
+                }
                 acc.setFirstName(rs.getString("firstName"));
                 acc.setLastName(rs.getString("lastName"));
                 acc.setEmail(rs.getString("email"));
-                acc.setPassword(rs.getString("password"));
                 acc.setGender(rs.getString("gender"));
                 acc.setPhoneNumber(rs.getString("phoneNumber"));
                 acc.setAddress(rs.getString("address"));
@@ -90,5 +103,56 @@ public class AccountDAO extends DBContext {
                 return 0;
             }
         }
+    }
+    
+    public Account getAccountDetail(int userId) {
+        String sql = "SELECT * FROM [User] where userId = ?";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Account acc = new Account();
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                acc.setId(rs.getInt("userId"));
+                int roleId = rs.getInt("roleId");
+                acc.setRoleId(rs.getInt("roleId"));
+                switch (roleId) {
+                    case 1:
+                        acc.setRoleName("Admin");
+                        break;
+                    case 2:
+                        acc.setRoleName("Bác sĩ");
+                        break;
+                    case 3:
+                        acc.setRoleName("Bệnh nhân");
+                        break;
+                    default:
+                        break;
+                }
+                acc.setFirstName(rs.getString("firstName"));
+                acc.setLastName(rs.getString("lastName"));
+                acc.setEmail(rs.getString("email"));
+                acc.setGender(rs.getString("gender"));
+                acc.setPhoneNumber(rs.getString("phoneNumber"));
+                acc.setAddress(rs.getString("address"));
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return acc;
     }
 }

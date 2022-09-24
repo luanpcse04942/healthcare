@@ -5,8 +5,8 @@ package com.laptrinhweb.healthcare.model;
  * @author LuanPC
  */
 public class Account extends AbstractModel<Account>{
-    Integer id;
     Integer roleId;
+    String roleName;
     String firstName;
     String lastName;
     String email;
@@ -15,16 +15,20 @@ public class Account extends AbstractModel<Account>{
     String phoneNumber;
     String address;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public Integer getRoleId() {
         return roleId;
     }
 
     public void setRoleId(Integer roleId) {
         this.roleId = roleId;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     public String getFirstName() {

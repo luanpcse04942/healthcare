@@ -32,7 +32,7 @@ public class LoginController extends HttpServlet {
 
         UserDAO userDao = new UserDAO();
         Account acc = userDao.checkUserExist(username, password);
-        if (acc.getRoleId() == null) {
+        if (acc == null) {
             doGet(request, response);
         }
         
