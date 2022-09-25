@@ -53,7 +53,7 @@
                             <div class="nav-search" id="nav-search">
                                 <form class="form-search">
                                     <span class="input-icon">
-                                        <input name="search" value="${nameSearch}" type="text" placeholder="Tìm tên, email ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                                        <input name="search" value="${nameSearch}" type="text" placeholder="Tìm tên, email ..." class="nav-search-input" style="width:300px !important" id="nav-search-input" autocomplete="off" />
                                         <button type="submit" class="ace-icon fa fa-search nav-search-icon"></button>
                                     </span>
                                 </form>
@@ -73,7 +73,7 @@
                                                 <div class="dt-buttons btn-overlap btn-group">
                                                     <a flag="info"
                                                        class="dt-button buttons-colvis btn btn-white btn-primary btn-bold" data-toggle="tooltip"
-                                                       title='Thêm bài viết' href='<c:url value="/admin-account?type=edit"/>'>
+                                                       title='Thêm tài khoản' href='<c:url value="/admin-add-account"/>'>
                                                         <span>
                                                             <i class="fa fa-plus-circle bigger-110 purple"></i>
                                                         </span>
@@ -98,16 +98,16 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                        
                                                         <c:choose>
                                                             <c:when test="${empty accounts}">
                                                             <p>Không có thông tin!</p>
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <c:set var="count" value="0" scope="page" />
-                                                            <c:forEach var="item" items="${accounts}">
-                                                                <c:set var="count" value="${count + 1}" scope="page"/>
+                                                            <c:forEach var="item" items="${accounts}" varStatus="loop">
+                                                                <c:set var="count" value="${(currentPage - 1) * 4}"/>
                                                                 <tr>
-                                                                    <td><c:out value = "${count}"/></td>
+                                                                    <td>${loop.index + count + 1}</td>
                                                                     <td>${item.firstName} ${item.lastName}</td>
                                                                     <td>${item.email}</td>
                                                                     <td>${item.gender}</td>

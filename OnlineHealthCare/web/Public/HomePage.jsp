@@ -38,12 +38,6 @@
                             <span>Chọn bác sĩ giỏi</span>
                         </a>
                     </li>
-                    <li class="nav-link">
-                        <a href="/#khamtongquat" class="mo-cuaso" dl-cuaso="khamtongquat"> Gói khám
-                            <span>Khám sức khỏe tổng quát</span>
-                        </a>
-                    </li>
-
                 </ul>
 
             </div>
