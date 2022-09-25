@@ -4,6 +4,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="<c:url value='/template/admin/assets/css/bootstrap.min.css' />" />
+        <link rel="stylesheet" href="<c:url value='/css/admin/accountList.css' />" />
         <link rel="stylesheet" href="<c:url value='/template/admin/font-awesome/4.5.0/css/font-awesome.min.css' />" />
         <link rel="stylesheet" href="<c:url value='/template/admin/assets/css/ace.min.css' />" class="ace-main-stylesheet" id="main-ace-style" />
         <script src="<c:url value='/template/admin/assets/js/ace-extra.min.js' />"></script>
@@ -38,7 +39,7 @@
             <!-- header -->
 
             <div class="main-content">
-                <form action="<c:url value='/admin-account?type=list&page=1&maxPageItem=4&sortName=lastName&sortBy=asc'/>" method="post">
+                <form action="<c:url value='/account-search'/>" method="get">
                     <div class="main-content-inner">
                         <div class="breadcrumbs ace-save-state" id="breadcrumbs">
                             <ul class="breadcrumb">
@@ -52,7 +53,7 @@
                             <div class="nav-search" id="nav-search">
                                 <form class="form-search">
                                     <span class="input-icon">
-                                        <input name="search" type="text" placeholder="Tìm tên, email ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                                        <input name="search" value="${nameSearch}" type="text" placeholder="Tìm tên, email ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
                                         <button type="submit" class="ace-icon fa fa-search nav-search-icon"></button>
                                     </span>
                                 </form>
@@ -98,12 +99,12 @@
                                                     </thead>
                                                     <tbody>
                                                         <c:choose>
-                                                            <c:when test="${empty model.listResult}">
+                                                            <c:when test="${empty accounts}">
                                                             <p>Không có thông tin!</p>
                                                         </c:when>
                                                         <c:otherwise>
                                                             <c:set var="count" value="0" scope="page" />
-                                                            <c:forEach var="item" items="${model.listResult}">
+                                                            <c:forEach var="item" items="${accounts}">
                                                                 <c:set var="count" value="${count + 1}" scope="page"/>
                                                                 <tr>
                                                                     <td><c:out value = "${count}"/></td>
@@ -126,11 +127,43 @@
                                                     </c:choose>
                                                     </tbody>
                                                 </table>
-                                                <ul id="pagination"></ul>
-                                                <input type="hidden" value="" id="page" name="page"/>
-                                                <input type="hidden" value="" id="maxPageItem" name="maxPageItem"/>
-                                                <input type="hidden" value="" id="sortName" name="sortName"/>
-                                                <input type="hidden" value="" id="sortBy" name="sortBy"/>
+                                                <c:if test="${noOfPages > 1}">
+                                                    <div class="pagination">
+                                                        <c:if test="${currentPage != 1}">
+                                                            <c:choose>
+                                                                <c:when test="${isSearching}">
+                                                                    <a href="account-search?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <a href="admin-account?page=${currentPage-1}">Trang trước</a>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </c:if>
+                                                        <c:forEach begin="1" end="${noOfPages}" var="i">
+                                                            <c:choose>
+                                                                <c:when test="${currentPage eq i}">
+                                                                    <a href="" class="active">${i}</a>
+                                                                </c:when>
+                                                                <c:when test="${isSearching}">
+                                                                    <a href="account-search?search=${nameSearch}&page=${i}">${i}</a>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <a href="admin-account?page=${i}">${i}</a>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </c:forEach>
+                                                        <c:if test="${currentPage lt noOfPages}">
+                                                            <c:choose>
+                                                                <c:when test="${isSearching}">
+                                                                    <a href="account-search?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <a href="admin-account?page=${currentPage+1}">Trang sau</a>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </c:if>
+                                                    </div>
+                                                </c:if>
                                             </div>
                                         </div>
                                     </div>
@@ -151,27 +184,6 @@
         </div>
 
         <script>
-            var totalPages = ${model.totalPage};
-            var currentPage = ${model.page};
-            var limit = 4;
-            $(function () {
-                window.pagObj = $('#pagination').twbsPagination({
-                    totalPages: totalPages,
-                    visiblePages: 10,
-                    startPage: currentPage,
-                    onPageClick: function (event, page) {
-                        if (currentPage !== page) {
-                            $('#maxPageItem').val(limit);
-                            $('#page').val(page);
-                            $('#sortName').val('lastName');
-                            $('#sortBy').val('desc');
-                            $('#type').val('list');
-                            $('#formSubmit').submit();
-                        }
-                    }
-                });
-            });
-
             $("#btnDelete").click(function () {
                 var data = {};
                 var ids = $('tbody input[type=checkbox]:checked').map(function () {

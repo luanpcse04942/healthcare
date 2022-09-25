@@ -1,11 +1,7 @@
-package com.laptrinhweb.healthcare.controller.adminFeature;
+package com.laptrinhweb.healthcare.controller.adminFeature.account;
 
 import com.laptrinhweb.healthcare.dao.adminFeature.AccountDAO;
 import com.laptrinhweb.healthcare.model.Account;
-import com.laptrinhweb.healthcare.paging.PageRequest;
-import com.laptrinhweb.healthcare.paging.Pageble;
-import com.laptrinhweb.healthcare.sort.Sorter;
-import com.laptrinhweb.healthcare.utils.FormUtil;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -13,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /**
  *
@@ -24,13 +21,28 @@ public class AccountController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         AccountDAO accDAO = new AccountDAO();
-        Account model = FormUtil.toModel(Account.class, request);
-        Pageble pageble = new PageRequest(model.getPage(), model.getMaxPageItem(),
-                new Sorter(model.getSortName(), model.getSortBy()));
-        model.setListResult(accDAO.findAll(pageble));
-        model.setTotalItem(accDAO.getTotalItem());
-        model.setTotalPage((int) Math.ceil((double) model.getTotalItem() / model.getMaxPageItem()));
-        request.setAttribute("model", model);
+        ArrayList<Account> accounts = new ArrayList<>();
+        
+        int page = 1;
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+        
+        int recordsPerPage = 4;
+        accounts = accDAO.findAll((page - 1) * recordsPerPage, recordsPerPage);
+        
+        int noOfRecords = 0;
+        noOfRecords = accDAO.getNoOfRecordAccounts();
+        
+        //calculate number of page
+        int noOfPages = noOfRecords / recordsPerPage;
+        if (noOfRecords % recordsPerPage > 0) {
+            noOfPages++;
+        }
+        
+        request.setAttribute("accounts", accounts);
+        request.setAttribute("noOfPages", noOfPages);
+        request.setAttribute("currentPage", page);
         RequestDispatcher rd = request.getRequestDispatcher("Admin/Account/AccountList.jsp");
         rd.forward(request, response);
     }
@@ -44,12 +56,6 @@ public class AccountController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String search = request.getParameter("search");
-        AccountDAO accDAO = new AccountDAO();
-        Account model = FormUtil.toModel(Account.class, request);
-        model.setListResult(accDAO.searchByNameOrEmail(search));
-        request.setAttribute("model", model);
-        RequestDispatcher rd = request.getRequestDispatcher("Admin/Account/AccountList.jsp");
-        rd.forward(request, response);
+        
     }
 }

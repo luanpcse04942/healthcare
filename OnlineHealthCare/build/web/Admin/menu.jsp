@@ -52,7 +52,7 @@
                 </li>
                 
                 <li>
-                    <a href='<c:url value="/admin-account?type=list&page=1&maxPageItem=4&sortName=lastName&sortBy=asc"/>'>
+                    <a href='<c:url value="/admin-account"/>'>
                         <i class="menu-icon fa fa-caret-right"></i>
                         Danh sách tài khoản
                     </a>

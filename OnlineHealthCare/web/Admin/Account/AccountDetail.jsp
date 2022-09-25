@@ -46,7 +46,7 @@
                                     <a href="<c:url value='/admin-home'/>">Trang chủ</a>
                                 </li>
                                 <li>
-                                    <a href="<c:url value='/admin-account?type=list&page=1&maxPageItem=4&sortName=lastName&sortBy=desc'/>">Danh sách tài khoản</a>
+                                    <a href="<c:url value='/admin-account'/>">Danh sách tài khoản</a>
                                 </li>
                                 <li class="active">Thông tin chi tiết</li>
                             </ul>

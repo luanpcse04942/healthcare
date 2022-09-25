@@ -2,12 +2,12 @@ package com.laptrinhweb.healthcare.dao.adminFeature;
 
 import com.laptrinhweb.healthcare.context.DBContext;
 import com.laptrinhweb.healthcare.model.Account;
-import com.laptrinhweb.healthcare.paging.Pageble;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import org.apache.commons.lang3.StringUtils;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -15,19 +15,17 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class AccountDAO extends DBContext {
 
-    public ArrayList<Account> findAll(Pageble pageble) {
-        StringBuilder sql = new StringBuilder("SELECT * FROM [User] where roleId not like 4");
-        if (pageble.getSorter() != null && StringUtils.isNotBlank(pageble.getSorter().getSortName()) && StringUtils.isNotBlank(pageble.getSorter().getSortBy())) {
-            sql.append(" ORDER BY " + pageble.getSorter().getSortName() + " " + pageble.getSorter().getSortBy() + "");
-        }
-        if (pageble.getOffset() != null && pageble.getLimit() != null) {
-            sql.append(" OFFSET " + pageble.getOffset() + " ROWS FETCH NEXT " + pageble.getLimit() + " ROWS ONLY");
-        }
+    public ArrayList<Account> findAll(int start, int total) {
+        String sql = "SELECT * FROM [User] where roleId not like 4 ORDER BY userId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         PreparedStatement ps = null;
         ResultSet rs = null;
+        DBContext db = new DBContext();
         ArrayList<Account> listAccount = new ArrayList<>();
         try {
-            ps = conn.prepareStatement(sql.toString());
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, start);
+            ps.setInt(2, total);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Account acc = new Account();
@@ -58,38 +56,6 @@ public class AccountDAO extends DBContext {
         } catch (SQLException e) {
         } finally {
             try {
-                rs.close();
-            } catch (SQLException e) {
-                /* Ignored */ }
-            try {
-                ps.close();
-            } catch (SQLException e) {
-                /* Ignored */ }
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                /* Ignored */ }
-        }
-        return listAccount;
-    }
-
-    public int getTotalItem() {
-        String sql = "SELECT count(*) FROM [User]";
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        try {
-            int count = 0;
-            ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                count = rs.getInt(1);
-            }
-            return count;
-        } catch (SQLException e) {
-            return 0;
-        } finally {
-            try {
                 if (conn != null) {
                     conn.close();
                 }
@@ -100,17 +66,59 @@ public class AccountDAO extends DBContext {
                     rs.close();
                 }
             } catch (SQLException e) {
-                return 0;
             }
         }
+        return listAccount;
     }
-    
+
+    public int getNoOfRecordAccounts() {
+        String query = "SELECT count(*) FROM [User] where roleId not like 4";
+        DBContext db = new DBContext();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int count = 0;
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return count;
+    }
+
     public Account getAccountDetail(int userId) {
         String sql = "SELECT * FROM [User] where userId = ?";
+        DBContext db = new DBContext();
         PreparedStatement ps = null;
         ResultSet rs = null;
         Account acc = new Account();
         try {
+            conn = db.getConn();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, userId);
             rs = ps.executeQuery();
@@ -140,24 +148,33 @@ public class AccountDAO extends DBContext {
             }
         } catch (SQLException e) {
         } finally {
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-                if (rs != null) {
+            if (rs != null) {
+                try {
                     rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (SQLException e) {
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
         return acc;
     }
-    
-    public ArrayList<Account> searchByNameOrEmail(String search) {
-        String sql = "SELECT * FROM [User] where (email like ? or lastName like ?) and roleId not like 4";
+
+    public ArrayList<Account> searchByNameOrEmail(String search, int start, int total) {
+        String sql = "SELECT * FROM [User] where (email like ? or lastName like ?) and roleId not like 4 ORDER BY userId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         PreparedStatement ps = null;
         ResultSet rs = null;
         ArrayList<Account> listAccount = new ArrayList<>();
@@ -165,6 +182,8 @@ public class AccountDAO extends DBContext {
             ps = conn.prepareStatement(sql);
             ps.setString(1, '%' + search.trim() + '%');
             ps.setString(2, '%' + search.trim() + '%');
+            ps.setInt(3, start);
+            ps.setInt(4, total);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Account acc = new Account();
@@ -194,19 +213,70 @@ public class AccountDAO extends DBContext {
             }
         } catch (SQLException e) {
         } finally {
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-                if (rs != null) {
+            if (rs != null) {
+                try {
                     rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (SQLException e) {
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
         return listAccount;
+    }
+
+    public int getNoOfRecordSearchAccounts(String search) {
+        String query = "SELECT COUNT(*) FROM [User] WHERE 1 = 1 and (email like ? or lastName like ?) and roleId not like 4";
+        DBContext db = new DBContext();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int count = 0;
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, '%' + search.trim() + '%');
+            ps.setString(2, '%' + search.trim() + '%');
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return count;
     }
 }
