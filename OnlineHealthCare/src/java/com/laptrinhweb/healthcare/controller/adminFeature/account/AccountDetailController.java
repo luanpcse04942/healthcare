@@ -1,4 +1,4 @@
-package com.laptrinhweb.healthcare.controller.adminFeature;
+package com.laptrinhweb.healthcare.controller.adminFeature.account;
 
 import com.laptrinhweb.healthcare.dao.adminFeature.AccountDAO;
 import com.laptrinhweb.healthcare.model.Account;
