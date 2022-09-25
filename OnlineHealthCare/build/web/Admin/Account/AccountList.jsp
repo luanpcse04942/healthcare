@@ -16,6 +16,7 @@
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="<c:url value='/template/paging/jquery.twbsPagination.js' />"></script>
         <script type='text/javascript' src='<c:url value="/template/paging/jquery.twbsPagination.min" />'></script>
+        <script type='text/javascript' src='<c:url value="/template/paging/jquery.twbsPagination.min.js" />'></script>
         <script src="<c:url value='/ckeditor/ckeditor.js' />"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Quản lý  tài khoản</title>
@@ -37,7 +38,7 @@
             <!-- header -->
 
             <div class="main-content">
-                <form action="<c:url value='/admin-account'/>" id="formSubmit" method="get">
+                <form action="<c:url value='/admin-account?type=list&page=1&maxPageItem=4&sortName=lastName&sortBy=asc'/>" method="post">
                     <div class="main-content-inner">
                         <div class="breadcrumbs ace-save-state" id="breadcrumbs">
                             <ul class="breadcrumb">
@@ -48,6 +49,14 @@
                                 <li class="active">Danh sách tài khoản</li>
                             </ul>
                             <!-- /.breadcrumb -->
+                            <div class="nav-search" id="nav-search">
+                                <form class="form-search">
+                                    <span class="input-icon">
+                                        <input name="search" type="text" placeholder="Tìm tên, email ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                                        <button type="submit" class="ace-icon fa fa-search nav-search-icon"></button>
+                                    </span>
+                                </form>
+                            </div>
                         </div>
                         <div class="page-content">
                             <div class="row">
@@ -88,29 +97,36 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <c:set var="count" value="0" scope="page" />
-                                                        <c:forEach var="item" items="${model.listResult}">
-                                                            <c:set var="count" value="${count + 1}" scope="page"/>
-                                                            <tr>
-                                                                <td><c:out value = "${count}"/></td>
-                                                                <td>${item.firstName} ${item.lastName}</td>
-                                                                <td>${item.email}</td>
-                                                                <td>${item.gender}</td>
-                                                                <td>${item.phoneNumber}</td>
-                                                                <td>${item.roleName}</td>
-                                                                <td>
-                                                                    <c:url var="viewDetail" value="/admin-account-detail">
-                                                                        <c:param name="userId" value="${item.id}"/>
-                                                                    </c:url>
-                                                                    <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
-                                                                       title="Xem chi tiết" href="${viewDetail}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                                                    </a>
-                                                                </td>
-                                                            </tr>
-                                                        </c:forEach>
+                                                        <c:choose>
+                                                            <c:when test="${empty model.listResult}">
+                                                            <p>Không có thông tin!</p>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <c:set var="count" value="0" scope="page" />
+                                                            <c:forEach var="item" items="${model.listResult}">
+                                                                <c:set var="count" value="${count + 1}" scope="page"/>
+                                                                <tr>
+                                                                    <td><c:out value = "${count}"/></td>
+                                                                    <td>${item.firstName} ${item.lastName}</td>
+                                                                    <td>${item.email}</td>
+                                                                    <td>${item.gender}</td>
+                                                                    <td>${item.phoneNumber}</td>
+                                                                    <td>${item.roleName}</td>
+                                                                    <td>
+                                                                        <c:url var="viewDetail" value="/admin-account-detail">
+                                                                            <c:param name="userId" value="${item.id}"/>
+                                                                        </c:url>
+                                                                        <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
+                                                                           title="Xem chi tiết" href="${viewDetail}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                     </tbody>
                                                 </table>
-                                                <ul class="pagination" id="pagination"></ul>
+                                                <ul id="pagination"></ul>
                                                 <input type="hidden" value="" id="page" name="page"/>
                                                 <input type="hidden" value="" id="maxPageItem" name="maxPageItem"/>
                                                 <input type="hidden" value="" id="sortName" name="sortName"/>
@@ -141,7 +157,7 @@
             $(function () {
                 window.pagObj = $('#pagination').twbsPagination({
                     totalPages: totalPages,
-                    visiblePages: 5,
+                    visiblePages: 10,
                     startPage: currentPage,
                     onPageClick: function (event, page) {
                         if (currentPage !== page) {
@@ -149,6 +165,7 @@
                             $('#page').val(page);
                             $('#sortName').val('lastName');
                             $('#sortBy').val('desc');
+                            $('#type').val('list');
                             $('#formSubmit').submit();
                         }
                     }

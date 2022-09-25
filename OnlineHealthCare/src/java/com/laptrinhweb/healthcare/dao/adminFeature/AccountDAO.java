@@ -155,4 +155,58 @@ public class AccountDAO extends DBContext {
         }
         return acc;
     }
+    
+    public ArrayList<Account> searchByNameOrEmail(String search) {
+        String sql = "SELECT * FROM [User] where (email like ? or lastName like ?) and roleId not like 4";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<Account> listAccount = new ArrayList<>();
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, '%' + search.trim() + '%');
+            ps.setString(2, '%' + search.trim() + '%');
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Account acc = new Account();
+                acc.setId(rs.getInt("userId"));
+                int roleId = rs.getInt("roleId");
+                acc.setRoleId(rs.getInt("roleId"));
+                switch (roleId) {
+                    case 1:
+                        acc.setRoleName("Admin");
+                        break;
+                    case 2:
+                        acc.setRoleName("Bác sĩ");
+                        break;
+                    case 3:
+                        acc.setRoleName("Bệnh nhân");
+                        break;
+                    default:
+                        break;
+                }
+                acc.setFirstName(rs.getString("firstName"));
+                acc.setLastName(rs.getString("lastName"));
+                acc.setEmail(rs.getString("email"));
+                acc.setGender(rs.getString("gender"));
+                acc.setPhoneNumber(rs.getString("phoneNumber"));
+                acc.setAddress(rs.getString("address"));
+                listAccount.add(acc);
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return listAccount;
+    }
 }
