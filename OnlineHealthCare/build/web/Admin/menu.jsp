@@ -35,7 +35,7 @@
     </div>
     <ul class="nav nav-list">
         <li >
-            <a href="#" class="dropdown-toggle">
+            <a href="<c:url value="/admin-home"/>" class="dropdown-toggle">
                 <i class="menu-icon fa fa-list"></i>
                 <span class="menu-text"></span>
                 Trang quản lý
@@ -52,7 +52,7 @@
                 </li>
                 
                 <li>
-                    <a href='<c:url value="/admin-account?type=list&page=1&maxPageItem=4&sortName=lastName&sortBy=desc"/>'>
+                    <a href='<c:url value="/admin-account?type=list&page=1&maxPageItem=4&sortName=lastName&sortBy=asc"/>'>
                         <i class="menu-icon fa fa-caret-right"></i>
                         Danh sách tài khoản
                     </a>

@@ -1,4 +1,5 @@
 package com.laptrinhweb.healthcare.controller.adminFeature;
+
 import com.laptrinhweb.healthcare.dao.adminFeature.AccountDAO;
 import com.laptrinhweb.healthcare.model.Account;
 import com.laptrinhweb.healthcare.paging.PageRequest;
@@ -43,6 +44,12 @@ public class AccountController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String search = request.getParameter("search");
+        AccountDAO accDAO = new AccountDAO();
+        Account model = FormUtil.toModel(Account.class, request);
+        model.setListResult(accDAO.searchByNameOrEmail(search));
+        request.setAttribute("model", model);
+        RequestDispatcher rd = request.getRequestDispatcher("Admin/Account/AccountList.jsp");
+        rd.forward(request, response);
     }
 }
