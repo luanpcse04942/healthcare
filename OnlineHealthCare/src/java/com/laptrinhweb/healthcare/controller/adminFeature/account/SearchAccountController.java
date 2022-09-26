@@ -28,7 +28,7 @@ public class SearchAccountController extends HttpServlet {
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
-        int recordsPerPage = 2;
+        int recordsPerPage = 4;
         accounts = accDAO.searchByNameOrEmail(search, (page - 1) * recordsPerPage, recordsPerPage);
         int noOfRecords = 0;
         noOfRecords = accDAO.getNoOfRecordSearchAccounts(search);

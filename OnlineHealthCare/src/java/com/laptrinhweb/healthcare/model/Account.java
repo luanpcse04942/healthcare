@@ -14,6 +14,33 @@ public class Account extends AbstractModel<Account>{
     String gender;
     String phoneNumber;
     String address;
+    String images;
+
+    public Account() {
+    }
+
+    public Account(Integer roleId, String roleName, String firstName, String lastName, String email, String password, String gender, String phoneNumber, String address, String images) {
+        this.roleId = roleId;
+        this.roleName = roleName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.gender = gender;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.images = images;
+    }
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
+    }
+    
+    
 
     public Integer getRoleId() {
         return roleId;
