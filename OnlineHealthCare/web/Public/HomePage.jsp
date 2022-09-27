@@ -24,7 +24,7 @@
             <div class="navbar-pc">
                 <ul class="nav-list">
                     <li class="nav-link">
-                        <a href="#" class="mo-cuaso" dl-cuaso="chuyenkhoa"> Chuyên khoa
+                        <a href="specialty-list" class="mo-cuaso" dl-cuaso="chuyenkhoa"> Chuyên khoa
                             <span>Tìm bác sĩ theo chuyên khoa</span>
                         </a>
                     </li>
@@ -34,7 +34,7 @@
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="/#bacsi" class="mo-cuaso" dl-cuaso="bacsi"> Bác sĩ
+                        <a href="doctor-list-public" class="mo-cuaso" dl-cuaso="bacsi"> Bác sĩ
                             <span>Chọn bác sĩ giỏi</span>
                         </a>
                     </li>
