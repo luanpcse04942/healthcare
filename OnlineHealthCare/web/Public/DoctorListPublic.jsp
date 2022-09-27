@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Trang chủ chuyên khoa </title>
+        <title>Trang chủ Bác sĩ </title>
         <link rel="stylesheet" href="<c:url value='/template/admin/assets/css/bootstrap.min.css' />" />
         <link rel="stylesheet" href="<c:url value='/css/admin/accountList.css' />" />
         <link rel="stylesheet" href="<c:url value='/template/admin/font-awesome/4.5.0/css/font-awesome.min.css' />" />
@@ -147,9 +147,24 @@
         </div>
 
         <div class="container d-flex justify-content-center mt-50 mb-50">
-            <h1>Chuyên khoa phổ biến</h1>
+            <div class="search-container">
+                <form id="form-search" action="search" method="POST">
+                    <div class="input-group">
+                        <c:if test="${codeSearch != null}">
+                            <input type="text" class="form-control" name="codeSearch" value="${codeSearch}" placeholder="Tìm kiếm bác sĩ" required maxlength="50" aria-describedby="basic-addon2"/>
+                        </c:if>
+                        <c:if test="${codeSearch == null || codeSearch == ''}">
+                            <input type="text" class="form-control" name="codeSearch" placeholder="Tìm kiếm bác sĩ" required/>
+                        </c:if>
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true">
+                                </span> Search!</button>
+                        </span>
+                    </div>
+                </form>
+            </div>
             <div class="row">
-                <c:forEach var="item" items="${specialtys}">
+                <c:forEach var="item" items="${accounts}">
                     <div class="col-md-4 mt-2">
 
 
@@ -157,14 +172,14 @@
 
                             <div class="card-body">
                                 <div class="card-img-actions">
-                                    <img src="https://cdn.medicalfuturist.com/wp-content/uploads/2020/03/top-medical-specialties-small.jpg" class="card-img img-fluid" width="96" height="350" alt="">
+                                    <img src="https://www.fvhospital.com/wp-content/uploads/2018/03/dr-vo-trieu-dat-2020.jpg" class="card-img img-fluid" width="96" height="350" alt="">
                                 </div>
                             </div>
 
                             <div class="card-body bg-light text-center">
                                 <div class="mb-2">
                                     <h6 class="font-weight-semibold mb-2">
-                                        <a href="#" class="text-default mb-2" data-abc="true">${item.name}</a>
+                                        <a href="#" class="text-default mb-2" data-abc="true">${item.firstName} ${item.lastName}</a>
                                     </h6>
                                 </div>
                             </div> 
@@ -178,10 +193,10 @@
                     <c:if test="${currentPage != 1}">
                         <c:choose>
                             <c:when test="${isSearching}">
-                                <a href="specialty-list?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
+                                <a href="doctor-list-public?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="specialty-list?page=${currentPage-1}">Trang trước</a>
+                                <a href="doctor-list-public?page=${currentPage-1}">Trang trước</a>
                             </c:otherwise>
                         </c:choose>
                     </c:if>
@@ -191,29 +206,24 @@
                                 <a href="" class="active">${i}</a>
                             </c:when>
                             <c:when test="${isSearching}">
-                                <a href="specialty-list?search=${nameSearch}&page=${i}">${i}</a>
+                                <a href="doctor-list-public?search=${nameSearch}&page=${i}">${i}</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="specialty-list?page=${i}">${i}</a>
+                                <a href="doctor-list-public?page=${i}">${i}</a>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
                     <c:if test="${currentPage lt noOfPages}">
                         <c:choose>
                             <c:when test="${isSearching}">
-                                <a href="specialty-list?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
+                                <a href="doctor-list-public?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="specialty-list?page=${currentPage+1}">Trang sau</a>
+                                <a href="doctor-list-public?page=${currentPage+1}">Trang sau</a>
                             </c:otherwise>
                         </c:choose>
                     </c:if>
                 </div>
             </c:if>
-
-
-
-
-
     </body>
 </html>
