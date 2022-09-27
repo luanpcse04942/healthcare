@@ -29,7 +29,7 @@
             <!-- header -->
 
             <div class="main-content">
-                <form action="<c:url value='/admin-account'/>" id="formSubmit" method="get">
+                <form action="<c:url value='/admin-add-account'/>" id="formSubmit" method="post">
                     <div class="main-content-inner">
                         <div class="breadcrumbs ace-save-state" id="breadcrumbs">
                             <ul class="breadcrumb">
@@ -46,27 +46,36 @@
                         </div>
                         <div class="container">
                             <h2>Thêm mới tài khoản</h2>
-                            <form>
-                                <div class="form-group col-sm-9">
-                                    <label for="exampleInputEmail1">Email</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập vào email">
+                            <div class="form-group col-sm-9">
+                                <label>Email</label>
+                                <input name="email" type="email" class="form-control"  aria-describedby="emailHelp" placeholder="Nhập vào email">
+                            </div>
+                            <div class="form-group col-sm-9">
+                                <label>Mật khẩu</label>
+                                <input name="password" type="password" class="form-control" placeholder="Nhập vào mật khẩu">
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Họ</label>
+                                    <input name="firstName" type="text" class="form-control">
                                 </div>
-                                <div class="form-group col-sm-9">
-                                    <label for="exampleInputPassword1">Mật khẩu</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Nhập vào mật khẩu">
+                                <div class="form-group col-md-6">
+                                    <label>Tên</label>
+                                    <input name="lastName" type="text" class="form-control">
                                 </div>
-                                <div class="form-group col-sm-9">
-                                    <select class="form-control" id="form-field-select-1">
-                                        <option value="">--Chọn vai trò--</option>
-                                        <option value="1">Quản trị viên</option>
-                                        <option value="2">Bác sĩ</option>
-                                        <option value="4">Cơ sở y tế</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-sm-9">
-                                    <button type="submit" class="btn btn-primary">Thêm</button>
-                                </div>
-                            </form>
+                            </div>
+                            <div class="form-group col-sm-9">
+                                <select class="form-control" id="form-field-select-1">
+                                    <option value="">--Chọn vai trò--</option>
+                                    <option value="1">Quản trị viên</option>
+                                    <option value="2">Bác sĩ</option>
+                                    <option value="4">Cơ sở y tế</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-9">
+                                <button type="submit" class="btn btn-primary">Thêm</button>
+                            </div>
                         </div>
                 </form>
             </div>
