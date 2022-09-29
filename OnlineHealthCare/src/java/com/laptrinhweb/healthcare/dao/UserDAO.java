@@ -1,7 +1,7 @@
-package com.laptrinhweb.healthcare.dao.adminFeature;
+package com.laptrinhweb.healthcare.dao;
 
 import com.laptrinhweb.healthcare.context.DBContext;
-import com.laptrinhweb.healthcare.model.Account;
+import com.laptrinhweb.healthcare.model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,14 +13,54 @@ import java.util.logging.Logger;
  *
  * @author LuanPC
  */
-public class AccountDAO extends DBContext {
-
-    public ArrayList<Account> findAll(int start, int total) {
+public class UserDAO extends DBContext {
+    
+     public User checkUserExist(String username, String password) {
+        String sql = "select * from [User] where email = ? and password = ?";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        User acc = new User();
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                acc.setId(rs.getInt("userId"));
+                acc.setRoleId(rs.getInt("roleId"));
+                acc.setFirstName(rs.getString("firstName"));
+                acc.setLastName(rs.getString("lastName"));
+                acc.setEmail(rs.getString("email"));
+                acc.setPassword(rs.getString("password"));
+                acc.setGender(rs.getString("gender"));
+                acc.setPhoneNumber(rs.getString("phoneNumber"));
+                acc.setAddress(rs.getString("address"));
+            }
+        } 
+        catch (SQLException e) {
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                /* Ignored */ }
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                /* Ignored */ }
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                /* Ignored */ }
+        }
+        return acc;
+    }
+     
+    public ArrayList<User> findAll(int start, int total) {
         String sql = "SELECT * FROM [User] where roleId not like 4 ORDER BY userId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         PreparedStatement ps = null;
         ResultSet rs = null;
         DBContext db = new DBContext();
-        ArrayList<Account> listAccount = new ArrayList<>();
+        ArrayList<User> listAccount = new ArrayList<>();
         try {
             conn = db.getConn();
             ps = conn.prepareStatement(sql);
@@ -28,7 +68,7 @@ public class AccountDAO extends DBContext {
             ps.setInt(2, total);
             rs = ps.executeQuery();
             while (rs.next()) {
-                Account acc = new Account();
+                User acc = new User();
                 acc.setId(rs.getInt("userId"));
                 int roleId = rs.getInt("roleId");
                 acc.setRoleId(rs.getInt("roleId"));
@@ -90,33 +130,33 @@ public class AccountDAO extends DBContext {
                 try {
                     rs.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
         return count;
     }
 
-    public Account getAccountDetail(int userId) {
+    public User getAccountDetail(int userId) {
         String sql = "SELECT * FROM [User] where userId = ?";
         DBContext db = new DBContext();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Account acc = new Account();
+        User acc = new User();
         try {
             conn = db.getConn();
             ps = conn.prepareStatement(sql);
@@ -152,32 +192,32 @@ public class AccountDAO extends DBContext {
                 try {
                     rs.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
         return acc;
     }
 
-    public ArrayList<Account> searchByNameOrEmail(String search, int start, int total) {
+    public ArrayList<User> searchByNameOrEmail(String search, int start, int total) {
         String sql = "SELECT * FROM [User] where (email like ? or lastName like ?) and roleId not like 4 ORDER BY userId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ArrayList<Account> listAccount = new ArrayList<>();
+        ArrayList<User> listAccount = new ArrayList<>();
         try {
             ps = conn.prepareStatement(sql);
             ps.setString(1, '%' + search.trim() + '%');
@@ -186,7 +226,7 @@ public class AccountDAO extends DBContext {
             ps.setInt(4, total);
             rs = ps.executeQuery();
             while (rs.next()) {
-                Account acc = new Account();
+                User acc = new User();
                 acc.setId(rs.getInt("userId"));
                 int roleId = rs.getInt("roleId");
                 acc.setRoleId(rs.getInt("roleId"));
@@ -217,21 +257,21 @@ public class AccountDAO extends DBContext {
                 try {
                     rs.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -259,21 +299,21 @@ public class AccountDAO extends DBContext {
                 try {
                     rs.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }

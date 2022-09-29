@@ -1,7 +1,7 @@
-package com.laptrinhweb.healthcare.dao.publicFeature;
+package com.laptrinhweb.healthcare.dao;
 
 import com.laptrinhweb.healthcare.context.DBContext;
-import com.laptrinhweb.healthcare.model.Account;
+import com.laptrinhweb.healthcare.model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,56 +13,14 @@ import java.util.logging.Logger;
  *
  * @author LuanPC
  */
-public class UserDAO extends DBContext {
-
+public class DoctorDAO extends DBContext {
     
-    
-    public Account checkUserExist(String username, String password) {
-        String sql = "select * from [User] where email = ? and password = ?";
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        Account acc = new Account();
-        try {
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, username);
-            ps.setString(2, password);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                acc.setId(rs.getInt("userId"));
-                acc.setRoleId(rs.getInt("roleId"));
-                acc.setFirstName(rs.getString("firstName"));
-                acc.setLastName(rs.getString("lastName"));
-                acc.setEmail(rs.getString("email"));
-                acc.setPassword(rs.getString("password"));
-                acc.setGender(rs.getString("gender"));
-                acc.setPhoneNumber(rs.getString("phoneNumber"));
-                acc.setAddress(rs.getString("address"));
-            }
-        } 
-        catch (SQLException e) {
-        } finally {
-            try {
-                rs.close();
-            } catch (SQLException e) {
-                /* Ignored */ }
-            try {
-                ps.close();
-            } catch (SQLException e) {
-                /* Ignored */ }
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                /* Ignored */ }
-        }
-        return acc;
-    }
-    
-    public ArrayList<Account> findAllDoctor(int start, int total) {
+    public ArrayList<User> findAllDoctor(int start, int total) {
         String sql = "SELECT * FROM [User] where roleId like 2 ORDER BY userId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         PreparedStatement ps = null;
         ResultSet rs = null;
         DBContext db = new DBContext();
-        ArrayList<Account> listAccount = new ArrayList<>();
+        ArrayList<User> listAccount = new ArrayList<>();
         try {
             conn = db.getConn();
             ps = conn.prepareStatement(sql);
@@ -70,7 +28,7 @@ public class UserDAO extends DBContext {
             ps.setInt(2, total);
             rs = ps.executeQuery();
             while (rs.next()) {
-                Account acc = new Account();
+                User acc = new User();
                 acc.setId(rs.getInt("userId"));
                 acc.setRoleId(rs.getInt("roleId"));
                 acc.setFirstName(rs.getString("firstName"));
@@ -100,18 +58,18 @@ public class UserDAO extends DBContext {
         return listAccount;
     }
     
-    public ArrayList<Account> searchDoctor(String codeSearch,int start, int total) {
+    public ArrayList<User> searchDoctor(String codeSearch,int start, int total) {
         String sql = "select * from [User] where (convert(VARCHAR(255), firstName)+' '+convert(VARCHAR(255), lastName)) like '%" + codeSearch + "%' and roleId like 2 ORDER BY userId OFFSET " + start + " ROWS FETCH NEXT " + total + " ROWS ONLY";
         PreparedStatement ps = null;
         ResultSet rs = null;
         DBContext db = new DBContext();
-        ArrayList<Account> listAccount = new ArrayList<>();
+        ArrayList<User> listAccount = new ArrayList<>();
         try {
             conn = db.getConn();
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                Account acc = new Account();
+                User acc = new User();
                 acc.setId(rs.getInt("userId"));
                 acc.setRoleId(rs.getInt("roleId"));
                 acc.setFirstName(rs.getString("firstName"));
@@ -161,21 +119,21 @@ public class UserDAO extends DBContext {
                 try {
                     rs.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(DoctorDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(DoctorDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(DoctorDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -202,21 +160,21 @@ public class UserDAO extends DBContext {
                 try {
                     rs.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(DoctorDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(DoctorDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(DoctorDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }

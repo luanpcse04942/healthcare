@@ -60,7 +60,7 @@
                 <ul class="nav ace-nav">
                     <li class="light-blue">
                         <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                            <img class="nav-user-photo" src="<c:url value='/template/admin/assets/avatars/user.jpg' />" alt="" />
+                            <img class="nav-user-photo" src="<c:url value='/template/admin/assets/avatars/avatar5.png' />" alt="" />
                             <span class="user-info">
                                 <small>Xin chào,</small>
                                 Luân

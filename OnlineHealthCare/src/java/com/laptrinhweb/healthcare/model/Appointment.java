@@ -1,6 +1,6 @@
 package com.laptrinhweb.healthcare.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *
@@ -9,21 +9,24 @@ import java.util.Date;
 public class Appointment {
     private int appointmentId;
     private int userId;
-    private int doctorWorkingInfoId;
+    private int doctorId;
+    private String doctorName;
     private int timeId;
+    private String timeName;
     private int statusId;
+    private String statusValue;
     private String reasonExamination; 
     private Date bookingDate;
 
-    public Appointment() {
-    }
-
-    public Appointment(int appointmentId, int userId, int doctorWorkingInfoId, int timeId, int statusId, String reasonExamination, Date bookingDate) {
+    public Appointment(int appointmentId, int userId, int doctorId, String doctorName, int timeId, String timeName, int statusId, String statusValue, String reasonExamination, Date bookingDate) {
         this.appointmentId = appointmentId;
         this.userId = userId;
-        this.doctorWorkingInfoId = doctorWorkingInfoId;
+        this.doctorId = doctorId;
+        this.doctorName = doctorName;
         this.timeId = timeId;
+        this.timeName = timeName;
         this.statusId = statusId;
+        this.statusValue = statusValue;
         this.reasonExamination = reasonExamination;
         this.bookingDate = bookingDate;
     }
@@ -44,12 +47,20 @@ public class Appointment {
         this.userId = userId;
     }
 
-    public int getDoctorWorkingInfoId() {
-        return doctorWorkingInfoId;
+    public int getDoctorId() {
+        return doctorId;
     }
 
-    public void setDoctorWorkingInfoId(int doctorWorkingInfoId) {
-        this.doctorWorkingInfoId = doctorWorkingInfoId;
+    public void setDoctorId(int doctorId) {
+        this.doctorId = doctorId;
+    }
+
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
     }
 
     public int getTimeId() {
@@ -60,12 +71,28 @@ public class Appointment {
         this.timeId = timeId;
     }
 
+    public String getTimeName() {
+        return timeName;
+    }
+
+    public void setTimeName(String timeName) {
+        this.timeName = timeName;
+    }
+
     public int getStatusId() {
         return statusId;
     }
 
     public void setStatusId(int statusId) {
         this.statusId = statusId;
+    }
+
+    public String getStatusValue() {
+        return statusValue;
+    }
+
+    public void setStatusValue(String statusValue) {
+        this.statusValue = statusValue;
     }
 
     public String getReasonExamination() {
@@ -83,5 +110,5 @@ public class Appointment {
     public void setBookingDate(Date bookingDate) {
         this.bookingDate = bookingDate;
     }
-
+    
 }

@@ -1,4 +1,4 @@
-package com.laptrinhweb.healthcare.dao.publicFeature;
+package com.laptrinhweb.healthcare.dao;
 
 import com.laptrinhweb.healthcare.context.DBContext;
 import com.laptrinhweb.healthcare.model.Specialty;
@@ -49,7 +49,7 @@ public class SpecialtyDAO extends DBContext {
         return listSpecialty;
     }
     
-    public ArrayList<Specialty> getAllSpecialtyPublic(int start, int total) throws SQLException {
+    public ArrayList<Specialty> getAllSpecialtyPublic(int start, int total) {
         String sql = "select * from Specialty ORDER BY specialtyId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         PreparedStatement ps = null;
         ResultSet rs = null;

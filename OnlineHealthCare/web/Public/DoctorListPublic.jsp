@@ -148,7 +148,7 @@
 
         <div class="container d-flex justify-content-center mt-50 mb-50">
             <div class="search-container">
-                <form id="form-search" action="search" method="POST">
+                <form id="form-search" action="<c:url value='/public-doctor-search'/>" method="POST">
                     <div class="input-group">
                         <c:if test="${codeSearch != null}">
                             <input type="text" class="form-control" name="codeSearch" value="${codeSearch}" placeholder="Tìm kiếm bác sĩ" required maxlength="50" aria-describedby="basic-addon2"/>

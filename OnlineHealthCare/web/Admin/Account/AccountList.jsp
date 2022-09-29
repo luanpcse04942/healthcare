@@ -15,9 +15,6 @@
         <script src="<c:url value='/template/admin/assets/js/jquery.2.1.1.min.js' />"></script>
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script src="<c:url value='/template/paging/jquery.twbsPagination.js' />"></script>
-        <script type='text/javascript' src='<c:url value="/template/paging/jquery.twbsPagination.min" />'></script>
-        <script type='text/javascript' src='<c:url value="/template/paging/jquery.twbsPagination.min.js" />'></script>
         <script src="<c:url value='/ckeditor/ckeditor.js' />"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Quản lý  tài khoản</title>
@@ -39,7 +36,7 @@
             <!-- header -->
 
             <div class="main-content">
-                <form action="<c:url value='/account-search'/>" method="get">
+                <form action="<c:url value='/admin-account-search'/>" method="get">
                     <div class="main-content-inner">
                         <div class="breadcrumbs ace-save-state" id="breadcrumbs">
                             <ul class="breadcrumb">
@@ -183,31 +180,6 @@
             </a>
         </div>
 
-        <script>
-            $("#btnDelete").click(function () {
-                var data = {};
-                var ids = $('tbody input[type=checkbox]:checked').map(function () {
-                    return $(this).val();
-                }).get();
-                data['ids'] = ids;
-                deleteNew(data);
-            });
-
-            function deleteNew(data) {
-                $.ajax({
-                    url: '${APIurl}',
-                    type: 'DELETE',
-                    contentType: 'application/json',
-                    data: JSON.stringify(data),
-                    success: function (result) {
-                        window.location.href = "${NewURL}?type=list&maxPageItem=2&page=1&message=delete_success";
-                    },
-                    error: function (error) {
-                        window.location.href = "${NewURL}?type=list&maxPageItem=2&page=1&message=error_system";
-                    }
-                });
-            }
-        </script>
         <script src="<c:url value='/template/admin/assets/js/bootstrap.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/jquery-ui.custom.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/jquery.ui.touch-punch.min.js' />"></script>
