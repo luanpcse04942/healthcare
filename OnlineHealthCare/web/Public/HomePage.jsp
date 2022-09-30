@@ -24,17 +24,17 @@
             <div class="navbar-pc">
                 <ul class="nav-list">
                     <li class="nav-link">
-                        <a href="#" class="mo-cuaso" dl-cuaso="chuyenkhoa"> Chuyên khoa
+                        <a href="<c:url value='/public-specialty-list'/>" class="mo-cuaso" dl-cuaso="chuyenkhoa"> Chuyên khoa
                             <span>Tìm bác sĩ theo chuyên khoa</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="/#cosoyte" class="mo-cuaso" dl-cuaso="cosoyte"> Cơ sở y tế
+                        <a href="#" class="mo-cuaso" dl-cuaso="cosoyte"> Cơ sở y tế
                             <span>Chọn bệnh viện phòng khám</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="/#bacsi" class="mo-cuaso" dl-cuaso="bacsi"> Bác sĩ
+                        <a href="<c:url value='/doctor-list-public'/>" class="mo-cuaso" dl-cuaso="bacsi"> Bác sĩ
                             <span>Chọn bác sĩ giỏi</span>
                         </a>
                     </li>
