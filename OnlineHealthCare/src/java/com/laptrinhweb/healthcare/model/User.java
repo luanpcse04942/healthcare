@@ -20,13 +20,14 @@ public class User {
     private String images;
     private Date createdAt;
     private Date updatedAt;
-    private int statusId;
-    private String statusName;
-    
-    public User() {
-    }
+    private boolean onlineStatus;
+    private boolean activedStatus;
 
-    public User(Integer id, Integer roleId, String roleName, String firstName, String lastName, String email, String password, String gender, String phoneNumber, String address, String images, Date createdAt, Date updatedAt, int statusId, String statusName) {
+    public User() {
+        
+    }
+    
+    public User(Integer id, Integer roleId, String roleName, String firstName, String lastName, String email, String password, String gender, String phoneNumber, String address, String images, Date createdAt, Date updatedAt, boolean onlineStatus, boolean activedStatus) {
         this.id = id;
         this.roleId = roleId;
         this.roleName = roleName;
@@ -40,8 +41,8 @@ public class User {
         this.images = images;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.statusId = statusId;
-        this.statusName = statusName;
+        this.onlineStatus = onlineStatus;
+        this.activedStatus = activedStatus;
     }
 
     public Integer getId() {
@@ -50,14 +51,6 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getImages() {
-        return images;
-    }
-
-    public void setImages(String images) {
-        this.images = images;
     }
 
     public Integer getRoleId() {
@@ -132,6 +125,14 @@ public class User {
         this.address = address;
     }
 
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -148,21 +149,20 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
-    public int getStatusId() {
-        return statusId;
+    public boolean isOnlineStatus() {
+        return onlineStatus;
     }
 
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
+    public void setOnlineStatus(boolean onlineStatus) {
+        this.onlineStatus = onlineStatus;
     }
 
-    public String getStatusName() {
-        return statusName;
+    public boolean isActivedStatus() {
+        return activedStatus;
     }
 
-    public void setStatusName(String statusName) {
-        this.statusName = statusName;
+    public void setActivedStatus(boolean activedStatus) {
+        this.activedStatus = activedStatus;
     }
-    
-    
+   
 }

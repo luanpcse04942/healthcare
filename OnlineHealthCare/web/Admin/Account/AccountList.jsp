@@ -4,7 +4,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="<c:url value='/template/admin/assets/css/bootstrap.min.css' />" />
-        <link rel="stylesheet" href="<c:url value='/css/admin/accountList.css' />" />
+        <link rel="stylesheet" href="<c:url value='/static/css/accountList.css' />" />
         <link rel="stylesheet" href="<c:url value='/template/admin/font-awesome/4.5.0/css/font-awesome.min.css' />" />
         <link rel="stylesheet" href="<c:url value='/template/admin/assets/css/ace.min.css' />" class="ace-main-stylesheet" id="main-ace-style" />
         <script src="<c:url value='/template/admin/assets/js/ace-extra.min.js' />"></script>
@@ -129,7 +129,7 @@
                                                         <c:if test="${currentPage != 1}">
                                                             <c:choose>
                                                                 <c:when test="${isSearching}">
-                                                                    <a href="account-search?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
+                                                                    <a href="admin-account-search?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
                                                                 </c:when>
                                                                 <c:otherwise>
                                                                     <a href="admin-account?page=${currentPage-1}">Trang trước</a>
@@ -142,7 +142,7 @@
                                                                     <a href="" class="active">${i}</a>
                                                                 </c:when>
                                                                 <c:when test="${isSearching}">
-                                                                    <a href="account-search?search=${nameSearch}&page=${i}">${i}</a>
+                                                                    <a href="admin-account-search?search=${nameSearch}&page=${i}">${i}</a>
                                                                 </c:when>
                                                                 <c:otherwise>
                                                                     <a href="admin-account?page=${i}">${i}</a>
@@ -152,7 +152,7 @@
                                                         <c:if test="${currentPage lt noOfPages}">
                                                             <c:choose>
                                                                 <c:when test="${isSearching}">
-                                                                    <a href="account-search?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
+                                                                    <a href="admin-account-search?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
                                                                 </c:when>
                                                                 <c:otherwise>
                                                                     <a href="admin-account?page=${currentPage+1}">Trang sau</a>
