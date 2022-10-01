@@ -29,71 +29,90 @@
             <!-- header -->
 
             <div class="main-content">
-                <form action="<c:url value='/admin-account'/>" id="formSubmit" method="get">
-                    <div class="main-content-inner">
-                        <div class="breadcrumbs ace-save-state" id="breadcrumbs">
-                            <ul class="breadcrumb">
-                                <li>
-                                    <i class="ace-icon fa fa-home home-icon"></i>
-                                    <a href="<c:url value='/admin-home'/>">Trang chủ</a>
-                                </li>
-                                <li>
-                                    <a href="<c:url value='/admin-account'/>">Danh sách tài khoản</a>
-                                </li>
-                                <li class="active">Thêm tài khoản</li>
-                            </ul>
-                            <!-- /.breadcrumb -->
-                        </div>
-                        <div class="container">
-                            <h2>Thêm mới tài khoản</h2>
-                            <form>
-                                <div class="form-group col-sm-9">
-                                    <label for="exampleInputEmail1">Email</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập vào email">
+
+                <div class="main-content-inner">
+                    <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a href="<c:url value='/admin-home'/>">Trang chủ</a>
+                            </li>
+                            <li>
+                                <a href="<c:url value='/admin-account'/>">Danh sách tài khoản</a>
+                            </li>
+                            <li class="active">Thêm tài khoản</li>
+                        </ul>
+                        <!-- /.breadcrumb -->
+                    </div>
+                    <div class="container">
+                        <h2>Thêm mới tài khoản</h2>
+                        <form action="<c:url value='/add-account'/>" id="formSubmit" method="post" enctype="multipart/form-data">
+                            <div class="form-group col-sm-12">
+                                <label>Email</label>
+                                <input name="email" type="email" class="form-control"  aria-describedby="emailHelp" placeholder="Nhập vào email">
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label>Mật khẩu</label>
+                                <input name="password" type="password" class="form-control" placeholder="Nhập vào mật khẩu">
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Họ</label>
+                                    <input name="firstName" type="text" class="form-control">
                                 </div>
-                                <div class="form-group col-sm-9">
-                                    <label for="exampleInputPassword1">Mật khẩu</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Nhập vào mật khẩu">
+                                <div class="form-group col-md-6">
+                                    <label>Tên</label>
+                                    <input name="lastName" type="text" class="form-control">
                                 </div>
-                                <div class="form-group col-sm-9">
-                                    <select class="form-control" id="form-field-select-1">
-                                        <option value="">--Chọn vai trò--</option>
-                                        <option value="1">Quản trị viên</option>
-                                        <option value="2">Bác sĩ</option>
-                                        <option value="4">Cơ sở y tế</option>
-                                    </select>
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <select class="form-control" id="form-field-select-1" name="role">
+                                    <option >--Chọn vai trò--</option>
+                                    <option value="1">Quản trị viên</option>
+                                    <option value="2">Bác sĩ</option>
+                                    <option value="4">Cơ sở y tế</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <label class="custom-file-label" >Chọn ảnh</label>
+                                        <input type="file" name="file" class="custom-file-input">
+                                    </div>
                                 </div>
-                                <div class="form-group col-sm-9">
-                                    <button type="submit" class="btn btn-primary">Thêm</button>
-                                </div>
-                            </form>
-                        </div>
-                </form>
+                            </div>
+                            <div class="form-group col-sm-9">
+                                <button type="submit" class="btn btn-primary">Thêm</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
             </div>
+            <!-- footer -->
+            <%@ include file="/common/footer.jsp" %>
+            <!-- footer -->
+
+            <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse display">
+                <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+            </a>
         </div>
-        <!-- footer -->
-        <%@ include file="/common/footer.jsp" %>
-        <!-- footer -->
-
-        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse display">
-            <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-        </a>
-    </div>
 
 
-    <script src="<c:url value='/template/admin/assets/js/bootstrap.min.js' />"></script>
-    <script src="<c:url value='/template/admin/assets/js/jquery-ui.custom.min.js' />"></script>
-    <script src="<c:url value='/template/admin/assets/js/jquery.ui.touch-punch.min.js' />"></script>
-    <script src="<c:url value='/template/admin/assets/js/jquery.easypiechart.min.js' />"></script>
-    <script src="<c:url value='/template/admin/assets/js/jquery.sparkline.min.js' />"></script>
-    <script src="<c:url value='/template/admin/assets/js/jquery.flot.min.js' />"></script>
-    <script src="<c:url value='/template/admin/assets/js/jquery.flot.pie.min.js' />"></script>
-    <script src="<c:url value='/template/admin/assets/js/jquery.flot.resize.min.js' />"></script>
-    <script src="<c:url value='/template/admin/assets/js/ace-elements.min.js' />"></script>
-    <script src="<c:url value='/template/admin/assets/js/ace.min.js' />"></script>
-    <script src="<c:url value='/template/admin/assets/js/bootstrap.min.js'/>"></script>
+        <script src="<c:url value='/template/admin/assets/js/bootstrap.min.js' />"></script>
+        <script src="<c:url value='/template/admin/assets/js/jquery-ui.custom.min.js' />"></script>
+        <script src="<c:url value='/template/admin/assets/js/jquery.ui.touch-punch.min.js' />"></script>
+        <script src="<c:url value='/template/admin/assets/js/jquery.easypiechart.min.js' />"></script>
+        <script src="<c:url value='/template/admin/assets/js/jquery.sparkline.min.js' />"></script>
+        <script src="<c:url value='/template/admin/assets/js/jquery.flot.min.js' />"></script>
+        <script src="<c:url value='/template/admin/assets/js/jquery.flot.pie.min.js' />"></script>
+        <script src="<c:url value='/template/admin/assets/js/jquery.flot.resize.min.js' />"></script>
+        <script src="<c:url value='/template/admin/assets/js/ace-elements.min.js' />"></script>
+        <script src="<c:url value='/template/admin/assets/js/ace.min.js' />"></script>
+        <script src="<c:url value='/template/admin/assets/js/bootstrap.min.js'/>"></script>
 
-    <!-- page specific plugin scripts -->
-    <script src="<c:url value='/template/admin/assets/js/jquery-ui.min.js'/>"></script>
-</body>
+        <!-- page specific plugin scripts -->
+        <script src="<c:url value='/template/admin/assets/js/jquery-ui.min.js'/>"></script>
+    </body>
 </html>
