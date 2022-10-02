@@ -74,7 +74,7 @@
                     <b class="arrow"></b>
                 </li>
                 <li>
-                    <a href='#'>
+                    <a href='<c:url value="/admin-specialty"/>'>
                         <i class="menu-icon fa fa-caret-right"></i>
                         Quản lý chuyên khoa
                     </a>
