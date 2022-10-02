@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author LuanPC
  */
-public class AdminService {
+public class UserService {
 
     public ArrayList<User> getListAccounts(int page) {
         UserDAO userDAO = new UserDAO();
