@@ -106,7 +106,6 @@
                             </tr>
                         </thead>
 
-                        </thead>
                         <tbody class="align-middle">
                             <tr>
                                 <th scope="row">1</th>
@@ -115,9 +114,79 @@
                                 <td>20/09/2022</td>
                                 <td>Đã khám xong</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary">
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailPatient">
                                         Xem chi tiết
                                     </button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="detailPatient" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" 
+                                         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="staticBackdropLabel">Thông tin bệnh nhân</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h2>Thông tin bệnh nhân</h2>
+
+                                                    <!-- Personal Information -->
+                                                    <h6 class="text-start text-decoration-underline mb-3">
+                                                        Thông tin cá nhân
+                                                    </h6>
+                                                    <div class="container w-100 text-start">
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <p>Họ và tên: Nguyễn Văn A</p>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <p>Giới tính: Nam</p>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <p>Email: nguyenvana@gmail.com</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <p>Ngày sinh: 02/12/1978</p>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <p>Số điện thoại: 0963562002</p>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <p>Địa chỉ: Hà Nội</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Appointment schedule -->
+                                                    <h6 class="text-start text-decoration-underline mb-3">
+                                                        Danh sách lịch hẹn
+                                                    </h6>
+                                                    <table class="table table-striped text-center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">ID</th>
+                                                                <th scope="col">Ngày</th>
+                                                                <th scope="col">Thời gian chi tiết</th>
+                                                            </tr>
+                                                        </thead> 
+                                                        <tbody>
+                                                            <tr>
+                                                                <th scope="row">1</th>
+                                                                <td>22/09/2022</td>
+                                                                <td>8:00 - 9:00</td>  
+                                                            </tr> 
+                                                        </tbody>
+
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </td>
                             </tr>
                         </tbody>
