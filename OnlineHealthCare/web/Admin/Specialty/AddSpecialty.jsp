@@ -38,42 +38,29 @@
                                 <a href="<c:url value='/admin-home'/>">Trang chủ</a>
                             </li>
                             <li>
-                                <a href="<c:url value='/admin-account'/>">Danh sách tài khoản</a>
+                                <a href="<c:url value='/admin-specialty'/>">Danh sách chuyên khoa</a>
                             </li>
-                            <li class="active">Thêm tài khoản</li>
+                            <li class="active">Thêm chuyên khoa</li>
                         </ul>
                         <!-- /.breadcrumb -->
                     </div>
                     <div class="container">
-                        <h2>Thêm mới tài khoản</h2>
-                        <form action="<c:url value='/add-account'/>" id="formSubmit" method="post" enctype="multipart/form-data">
+                        <h2>Thêm mới chuyên khoa</h2>
+                        <c:if test="${not empty messageResponse}">
+                            <div class="alert alert-${alert}">
+                                ${messageResponse}
+                            </div>
+                        </c:if>
+                        <form action="<c:url value='/add-specialty'/>" id="formSubmit" method="post" enctype="multipart/form-data">
                             <div class="form-group col-sm-12">
-                                <label>Email</label>
-                                <input name="email" type="email" class="form-control"  aria-describedby="emailHelp" placeholder="Nhập vào email">
+                                <label>Tên chuyên khoa</label>
+                                <input name="name" type="text" class="form-control"  aria-describedby="emailHelp" placeholder="Nhập vào tên chuyên khoa">
                             </div>
                             <div class="form-group col-sm-12">
-                                <label>Mật khẩu</label>
-                                <input name="password" type="password" class="form-control" placeholder="Nhập vào mật khẩu">
+                                <label>Mô tả </label>
+                                <textarea name="description" type="text" class="form-control" placeholder="Nhập vào mô tả "></textarea>
                             </div>
 
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label>Họ</label>
-                                    <input name="firstName" type="text" class="form-control">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label>Tên</label>
-                                    <input name="lastName" type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-12">
-                                <select class="form-control" id="form-field-select-1" name="role">
-                                    <option >--Chọn vai trò--</option>
-                                    <option value="1">Quản trị viên</option>
-                                    <option value="2">Bác sĩ</option>
-                                    <option value="4">Cơ sở y tế</option>
-                                </select>
-                            </div>
                             <div class="form-group col-sm-12">
                                 <div class="input-group">
                                     <div class="custom-file">

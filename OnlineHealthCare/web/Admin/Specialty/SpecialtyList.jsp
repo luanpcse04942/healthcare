@@ -27,7 +27,7 @@
         <div class="main-container" id="main-container">
             <script type="text/javascript">
                 try {
-                    ace.settings.check('main-container', 'fixed');
+                    ace.settings.check('main-container', 'fixed')
                 } catch (e) {
                 }
             </script>
@@ -36,7 +36,7 @@
             <!-- header -->
 
             <div class="main-content">
-                <form action="<c:url value='/admin-account-search'/>" method="get">
+                <form action="<c:url value='/admin-specialty-search'/>" method="get">
                     <div class="main-content-inner">
                         <div class="breadcrumbs ace-save-state" id="breadcrumbs">
                             <ul class="breadcrumb">
@@ -44,13 +44,13 @@
                                     <i class="ace-icon fa fa-home home-icon"></i>
                                     <a href="<c:url value='/admin-home'/>">Trang chủ</a>
                                 </li>
-                                <li class="active">Danh sách tài khoản</li>
+                                <li class="active">Danh sách chuyên khoa</li>
                             </ul>
                             <!-- /.breadcrumb -->
                             <div class="nav-search" id="nav-search">
                                 <form class="form-search">
                                     <span class="input-icon">
-                                        <input name="search" value="${nameSearch}" type="text" placeholder="Tìm tên, email ..." class="nav-search-input" style="width:300px !important" id="nav-search-input" autocomplete="off" />
+                                        <input name="search" value="${nameSearch}" type="text" placeholder="Tìm tên chuyên khoa..." class="nav-search-input" style="width:300px !important" id="nav-search-input" autocomplete="off" />
                                         <button type="submit" class="ace-icon fa fa-search nav-search-icon"></button>
                                     </span>
                                 </form>
@@ -70,7 +70,7 @@
                                                 <div class="dt-buttons btn-overlap btn-group">
                                                     <a flag="info"
                                                        class="dt-button buttons-colvis btn btn-white btn-primary btn-bold" data-toggle="tooltip"
-                                                       title='Thêm tài khoản' href='<c:url value="/admin-add-account"/>'>
+                                                       title='Thêm chuyên khoa' href='<c:url value="/admin-add-specialty"/>'>
                                                         <span>
                                                             <i class="fa fa-plus-circle bigger-110 purple"></i>
                                                         </span>
@@ -85,37 +85,29 @@
                                                 <table class="table table-bordered">
                                                     <thead>
                                                         <tr>
-                                                            <th>No.</th>
-                                                            <th>Họ và tên</th>
-                                                            <th>Email</th>
-                                                            <th>Giới tính</th>
-                                                            <th>Số điện thoại</th>
-                                                            <th>Vai trò</th>
-                                                            <th>Thao tác</th>
+                                                            <th class="col-xs-1 center">No.</th>
+                                                            <th class="col-xs-2 center">Tên chuyên khoa</th>
+                                                            <th class="col-xs-8 center">Mô tả </th>
+                                                            <th class="col-xs-1 center">Thao tác</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        
+
                                                         <c:choose>
-                                                            <c:when test="${empty accounts}">
+                                                            <c:when test="${empty specialties}">
                                                             <p>Không có thông tin!</p>
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <c:forEach var="item" items="${accounts}" varStatus="loop">
-                                                                <c:set var="count" value="${(currentPage - 1) * 4}"/>
+                                                            <c:forEach var="item" items="${specialties}" varStatus="loop">
+                                                                <c:set var="count" value="${(currentPage - 1) * 6}"/>
                                                                 <tr>
-                                                                    <td>${loop.index + count + 1}</td>
-                                                                    <td>${item.firstName} ${item.lastName}</td>
-                                                                    <td>${item.email}</td>
-                                                                    <td>${item.gender}</td>
-                                                                    <td>${item.phoneNumber}</td>
-                                                                    <td>${item.roleName}</td>
-                                                                    <td>
-                                                                        <c:url var="viewDetail" value="/admin-account-detail">
-                                                                            <c:param name="userId" value="${item.id}"/>
-                                                                        </c:url>
+                                                                    <td class="center">${loop.index + count + 1}</td>
+                                                                    <td class="center">${item.name}</td>
+                                                                    <td>${item.description}</td>
+                                                                    <td class="center">
                                                                         <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
-                                                                           title="Xem chi tiết" href="${viewDetail}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                                           title="Xem chi tiết" href="<c:url value='/admin-specialty-detail?specialtyId=${item.id}'/>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                                            Sửa
                                                                         </a>
                                                                     </td>
                                                                 </tr>
@@ -129,10 +121,10 @@
                                                         <c:if test="${currentPage != 1}">
                                                             <c:choose>
                                                                 <c:when test="${isSearching}">
-                                                                    <a href="admin-account-search?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
+                                                                    <a href="admin-specialty-search?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <a href="admin-account?page=${currentPage-1}">Trang trước</a>
+                                                                    <a href="admin-specialty?page=${currentPage-1}">Trang trước</a>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </c:if>
@@ -142,20 +134,20 @@
                                                                     <a href="" class="active">${i}</a>
                                                                 </c:when>
                                                                 <c:when test="${isSearching}">
-                                                                    <a href="admin-account-search?search=${nameSearch}&page=${i}">${i}</a>
+                                                                    <a href="admin-specialty-search?search=${nameSearch}&page=${i}">${i}</a>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <a href="admin-account?page=${i}">${i}</a>
+                                                                    <a href="admin-specialty?page=${i}">${i}</a>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </c:forEach>
                                                         <c:if test="${currentPage lt noOfPages}">
                                                             <c:choose>
                                                                 <c:when test="${isSearching}">
-                                                                    <a href="admin-account-search?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
+                                                                    <a href="admin-specialty-search?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <a href="admin-account?page=${currentPage+1}">Trang sau</a>
+                                                                    <a href="admin-specialty?page=${currentPage+1}">Trang sau</a>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </c:if>
