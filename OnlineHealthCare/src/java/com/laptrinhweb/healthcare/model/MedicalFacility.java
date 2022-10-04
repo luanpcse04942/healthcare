@@ -11,12 +11,12 @@ public class MedicalFacility {
     private int provinceId;
     private String provinceName;
     private String address;
-    private byte[] description;
+    private String description;
     private Date establishedAt;
     private Date createdAt;
     private Date updatedAt;
 
-    public MedicalFacility(int id, int provinceId, String provinceName, String address, byte[] description, Date establishedAt, Date createdAt, Date updatedAt) {
+    public MedicalFacility(int id, int provinceId, String provinceName, String address, String description, Date establishedAt, Date createdAt, Date updatedAt) {
         this.id = id;
         this.provinceId = provinceId;
         this.provinceName = provinceName;
@@ -59,11 +59,11 @@ public class MedicalFacility {
         this.address = address;
     }
 
-    public byte[] getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(byte[] description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
