@@ -149,7 +149,7 @@
         <div class="container d-flex justify-content-center mt-50 mb-50">
             <h1>Chuyên khoa phổ biến</h1>
             <div class="row">
-                <c:forEach var="item" items="${specialtys}">
+                <c:forEach var="item" items="${specialties}">
                     <div class="col-md-4 mt-2">
 
 
@@ -157,7 +157,7 @@
 
                             <div class="card-body">
                                 <div class="card-img-actions">
-                                    <img src="https://cdn.medicalfuturist.com/wp-content/uploads/2020/03/top-medical-specialties-small.jpg" class="card-img img-fluid" width="96" height="350" alt="">
+                                    <img src="static/images/Specialty/${item.image}" class="card-img img-fluid" width="96" height="350" alt="">
                                 </div>
                             </div>
 
@@ -178,10 +178,10 @@
                     <c:if test="${currentPage != 1}">
                         <c:choose>
                             <c:when test="${isSearching}">
-                                <a href="specialty-list?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
+                                <a href="public-specialty-list?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="specialty-list?page=${currentPage-1}">Trang trước</a>
+                                <a href="public-specialty-list?page=${currentPage-1}">Trang trước</a>
                             </c:otherwise>
                         </c:choose>
                     </c:if>
@@ -191,20 +191,20 @@
                                 <a href="" class="active">${i}</a>
                             </c:when>
                             <c:when test="${isSearching}">
-                                <a href="specialty-list?search=${nameSearch}&page=${i}">${i}</a>
+                                <a href="public-specialty-list?search=${nameSearch}&page=${i}">${i}</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="specialty-list?page=${i}">${i}</a>
+                                <a href="public-specialty-list?page=${i}">${i}</a>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
                     <c:if test="${currentPage lt noOfPages}">
                         <c:choose>
                             <c:when test="${isSearching}">
-                                <a href="specialty-list?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
+                                <a href="public-specialty-list?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="specialty-list?page=${currentPage+1}">Trang sau</a>
+                                <a href="public-specialty-list?page=${currentPage+1}">Trang sau</a>
                             </c:otherwise>
                         </c:choose>
                     </c:if>
