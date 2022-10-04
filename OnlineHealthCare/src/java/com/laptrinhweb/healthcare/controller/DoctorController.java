@@ -1,5 +1,6 @@
 package com.laptrinhweb.healthcare.controller;
 
+import com.laptrinhweb.healthcare.model.User;
 import com.laptrinhweb.healthcare.services.DoctorService;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -8,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
@@ -41,7 +43,7 @@ public class DoctorController extends HttpServlet {
             search = request.getParameter("codeSearch").trim();
             search = search.replaceAll("\\s+", " ");
             DoctorService doctorService = new DoctorService();
-
+            List<User> u = doctorService.getDoctorsSearchByName(page, search);
             request.setAttribute("accounts", doctorService.getDoctorsSearchByName(page, search));
             request.setAttribute("noOfPages", doctorService.getNoOfPage(search));
             request.setAttribute("currentPage", page);
