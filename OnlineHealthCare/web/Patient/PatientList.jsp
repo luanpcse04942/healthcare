@@ -44,7 +44,7 @@
                                     <i class="ace-icon fa fa-home home-icon"></i>
                                     <a href="<c:url value='/admin-home'/>">Trang chủ</a>
                                 </li>
-                                <li class="active">Danh sách tài khoản</li>
+                                <li class="active">Danh sách bệnh nhân</li>
                             </ul>
                             <!-- /.breadcrumb -->
                             <div class="nav-search" id="nav-search">
