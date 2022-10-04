@@ -1,205 +1,197 @@
-<%-- 
-    Document   : PatientList
-    Created on : Oct 1, 2022, 7:25:37 PM
-    Author     : Y545
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@include file="/common/taglib.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="<c:url value='/template/admin/assets/css/bootstrap.min.css' />" />
+        <link rel="stylesheet" href="<c:url value='/static/css/accountList.css' />" />
+        <link rel="stylesheet" href="<c:url value='/template/admin/font-awesome/4.5.0/css/font-awesome.min.css' />" />
+        <link rel="stylesheet" href="<c:url value='/template/admin/assets/css/ace.min.css' />" class="ace-main-stylesheet" id="main-ace-style" />
+        <script src="<c:url value='/template/admin/assets/js/ace-extra.min.js' />"></script>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type='text/javascript' src='<c:url value="/template/admin/js/jquery-2.2.3.min.js" />'></script>
+        <script src="<c:url value='/template/admin/assets/js/jquery.2.1.1.min.js' />"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="<c:url value='/ckeditor/ckeditor.js' />"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-        <!-- Boostrap Css -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
-
-        <!-- Google Font -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
-
-        <!-- Font Awesome -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
-
-        <!-- Css -->
-        <link rel="stylesheet" href="../css/patient/patientList.css">
-
-        <title>Danh sách tài khoản bệnh nhân</title>
+        <title>Quản lý  tài khoản</title>
     </head>
-    <body>
-        <header>
-            <div class="container-fluid">
-                <div class="row">
+    <body class="no-skin">
+        <!-- header -->
+        <%@ include file="/common/header.jsp" %>
+        <!-- header -->
 
-                    <!-- Logo -->
-                    <div class="col-md-6">
-                        <a href="#" class="text-decoration-none" id="logo">
-                            <h1>Heath Care</h1>
-                        </a>
-                    </div>
+        <div class="main-container" id="main-container">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('main-container', 'fixed');
+                } catch (e) {
+                }
+            </script>
+            <!-- header -->
+            <%@ include file="/Admin/menu.jsp" %>
+            <!-- header -->
 
-                    <!-- Avatar -->
-                    <div class="col-md-6 wrapper-avatar">
-                        <a href="#" class="text-decoration-none ">
-                            Bác sĩ, Phí Công Luân
-                        </a>
-                        <div>
-                            <a href="#">
-                                <img class="avatar img-responsive rounded-circle" src="https://source.unsplash.com/random/avatar"/> 
-                            </a>
+            <div class="main-content">
+                <form action="<c:url value='/admin-account-search'/>" method="get">
+                    <div class="main-content-inner">
+                        <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                            <ul class="breadcrumb">
+                                <li>
+                                    <i class="ace-icon fa fa-home home-icon"></i>
+                                    <a href="<c:url value='/admin-home'/>">Trang chủ</a>
+                                </li>
+                                <li class="active">Danh sách tài khoản</li>
+                            </ul>
+                            <!-- /.breadcrumb -->
+                            <div class="nav-search" id="nav-search">
+                                <form class="form-search">
+                                    <span class="input-icon">
+                                        <input name="search" value="${nameSearch}" type="text" placeholder="Tìm tên, email ..." class="nav-search-input" style="width:300px !important" id="nav-search-input" autocomplete="off" />
+                                        <button type="submit" class="ace-icon fa fa-search nav-search-icon"></button>
+                                    </span>
+                                </form>
+                            </div>
                         </div>
-                    </div>
-
-                </div>
-            </div>
-        </header>
-
-        <main class="container-fluid">
-            <div class="row">
-
-                <!-- Sidebar -->
-                <article class="col-md-3 p-4">
-                    <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action">
-                            Lịch hẹn của tôi 
-                        </a> 
-                        <a href="#" class="list-group-item list-group-item-action active">
-                            Bệnh nhân của tôi 
-                        </a>  
-                        <a href="#" class="list-group-item list-group-item-action">
-                            Phản hồi của bệnh nhân
-                        </a> 
-                    </div>
-                </article> 
-
-                <!-- Search Bar -->
-                <div class="col-md-6 d-flex align-items-center justify-content-center">
-                    <div class="input-group">
-                        <input class="w-90 rounded form-control" type="text" 
-                               placeholder="Tìm tên bệnh nhân..."
-                               aria-label="search" aria-describedby="search">
-                        <a class="input-group-text rounded text-decoration-none" href="#">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Filter -->
-                <div class="col-md-1 d-flex align-items-center justify-content-center">
-                    <button type="button" class="w-100 btn btn-primary">Lọc</button>
-                </div>
-
-            </div>
-
-            <!-- Patient List -->
-            <div class="row d-flex justify-content-center mt-3">
-                <div class="col-8">
-                    <table class="table table-striped text-center">
-                        <thead>
-                            <tr>
-                                <th scope="col">No.</th>
-                                <th scope="col">Tên bệnh nhân</th>
-                                <th scope="col">Số điện thoại</th>
-                                <th scope="col">Ngày đặt lịch</th>
-                                <th scope="col">Trạng thái</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-
-                        <tbody class="align-middle">
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Nguyễn Văn A</td>
-                                <td>0963562002</td>
-                                <td>20/09/2022</td>
-                                <td>Đã khám xong</td>
-                                <td>
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailPatient">
-                                        Xem chi tiết
-                                    </button>
-
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="detailPatient" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" 
-                                         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="staticBackdropLabel">Thông tin bệnh nhân</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <h2>Thông tin bệnh nhân</h2>
-
-                                                    <!-- Personal Information -->
-                                                    <h6 class="text-start text-decoration-underline mb-3">
-                                                        Thông tin cá nhân
-                                                    </h6>
-                                                    <div class="container w-100 text-start">
-                                                        <div class="row">
-                                                            <div class="col-4">
-                                                                <p>Họ và tên: Nguyễn Văn A</p>
-                                                            </div>
-                                                            <div class="col-4">
-                                                                <p>Giới tính: Nam</p>
-                                                            </div>
-                                                            <div class="col-4">
-                                                                <p>Email: nguyenvana@gmail.com</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-4">
-                                                                <p>Ngày sinh: 02/12/1978</p>
-                                                            </div>
-                                                            <div class="col-4">
-                                                                <p>Số điện thoại: 0963562002</p>
-                                                            </div>
-                                                            <div class="col-4">
-                                                                <p>Địa chỉ: Hà Nội</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Appointment schedule -->
-                                                    <h6 class="text-start text-decoration-underline mb-3">
-                                                        Danh sách lịch hẹn
-                                                    </h6>
-                                                    <table class="table table-striped text-center">
-                                                        <thead>
-                                                            <tr>
-                                                                <th scope="col">ID</th>
-                                                                <th scope="col">Ngày</th>
-                                                                <th scope="col">Thời gian chi tiết</th>
-                                                            </tr>
-                                                        </thead> 
-                                                        <tbody>
-                                                            <tr>
-                                                                <th scope="row">1</th>
-                                                                <td>22/09/2022</td>
-                                                                <td>8:00 - 9:00</td>  
-                                                            </tr> 
-                                                        </tbody>
-
-                                                    </table>
-
+                        <div class="page-content">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <c:if test="${not empty messageResponse}">
+                                        <div class="alert alert-${alert}">
+                                            ${messageResponse}
+                                        </div>
+                                    </c:if>
+                                    <div class="widget-box table-filter">
+                                        <div class="table-btn-controls">
+                                            <div class="pull-right tableTools-container">
+                                                <div class="dt-buttons btn-overlap btn-group">
+                                                    <a flag="info"
+                                                       class="dt-button buttons-colvis btn btn-white btn-primary btn-bold" data-toggle="tooltip"
+                                                       title='Thêm tài khoản' href='<c:url value="/admin-add-account"/>'>
+                                                        <span>
+                                                            <i class="fa fa-plus-circle bigger-110 purple"></i>
+                                                        </span>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
-                                </td>
-                            </tr>
-                        </tbody>
-
-                    </table> 
-                </div>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No.</th>
+                                                            <th>Họ và tên</th>
+                                                            <th>Số điện thoại</th>
+                                                            <th>Ngày đặt lịch</th>
+                                                            <th>Trạng thái</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        
+                                                        <c:choose>
+                                                            <c:when test="${empty accounts}">
+                                                            <p>Không có thông tin!</p>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <c:forEach var="item" items="${accounts}" varStatus="loop">
+                                                                <c:set var="count" value="${(currentPage - 1) * 4}"/>
+                                                                <tr>
+                                                                    <td>${loop.index + count + 1}</td>
+                                                                    <td>${item.firstName} ${item.lastName}</td>
+                                                                    <td>${item.email}</td>
+                                                                    <td>${item.gender}</td>
+                                                                    <td>${item.phoneNumber}</td>
+                                                                    <td>${item.roleName}</td>
+                                                                    <td>
+                                                                        <c:url var="viewDetail" value="/admin-account-detail">
+                                                                            <c:param name="userId" value="${item.id}"/>
+                                                                        </c:url>
+                                                                        <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
+                                                                           title="Xem chi tiết" href="${viewDetail}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    </tbody>
+                                                </table>
+                                                <c:if test="${noOfPages > 1}">
+                                                    <div class="pagination">
+                                                        <c:if test="${currentPage != 1}">
+                                                            <c:choose>
+                                                                <c:when test="${isSearching}">
+                                                                    <a href="admin-account-search?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <a href="admin-account?page=${currentPage-1}">Trang trước</a>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </c:if>
+                                                        <c:forEach begin="1" end="${noOfPages}" var="i">
+                                                            <c:choose>
+                                                                <c:when test="${currentPage eq i}">
+                                                                    <a href="" class="active">${i}</a>
+                                                                </c:when>
+                                                                <c:when test="${isSearching}">
+                                                                    <a href="admin-account-search?search=${nameSearch}&page=${i}">${i}</a>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <a href="admin-account?page=${i}">${i}</a>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </c:forEach>
+                                                        <c:if test="${currentPage lt noOfPages}">
+                                                            <c:choose>
+                                                                <c:when test="${isSearching}">
+                                                                    <a href="admin-account-search?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <a href="admin-account?page=${currentPage+1}">Trang sau</a>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </c:if>
+                                                    </div>
+                                                </c:if>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </main>
 
-        <!-- Boostrap Jquery -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+            <!-- footer -->
+            <%@ include file="/common/footer.jsp" %>
+            <!-- footer -->
 
-        <!-- Boostrap js -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+            <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse display">
+                <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+            </a>
+        </div>
+
+        <script src="<c:url value='/template/admin/assets/js/bootstrap.min.js' />"></script>
+        <script src="<c:url value='/template/admin/assets/js/jquery-ui.custom.min.js' />"></script>
+        <script src="<c:url value='/template/admin/assets/js/jquery.ui.touch-punch.min.js' />"></script>
+        <script src="<c:url value='/template/admin/assets/js/jquery.easypiechart.min.js' />"></script>
+        <script src="<c:url value='/template/admin/assets/js/jquery.sparkline.min.js' />"></script>
+        <script src="<c:url value='/template/admin/assets/js/jquery.flot.min.js' />"></script>
+        <script src="<c:url value='/template/admin/assets/js/jquery.flot.pie.min.js' />"></script>
+        <script src="<c:url value='/template/admin/assets/js/jquery.flot.resize.min.js' />"></script>
+        <script src="<c:url value='/template/admin/assets/js/ace-elements.min.js' />"></script>
+        <script src="<c:url value='/template/admin/assets/js/ace.min.js' />"></script>
+        <script src="<c:url value='/template/admin/assets/js/bootstrap.min.js'/>"></script>
+
+        <!-- page specific plugin scripts -->
+        <script src="<c:url value='/template/admin/assets/js/jquery-ui.min.js'/>"></script>
     </body>
 </html>
