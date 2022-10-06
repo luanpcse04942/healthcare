@@ -59,7 +59,7 @@ public class DoctorDAO extends DBContext {
     }
     
     public ArrayList<User> searchDoctor(String codeSearch,int start, int total) {
-        String sql = "select * from [User] where (convert(VARCHAR(255), firstName)+' '+convert(VARCHAR(255), lastName)) like '%" + codeSearch + "%' and roleId like 2 ORDER BY userId OFFSET " + start + " ROWS FETCH NEXT " + total + " ROWS ONLY";
+        String sql = "select * from [Users] a join User_Roles b on b.userId = a.id join Roles c on c.id = b.roleId join User_Profile d on d.userId = a.id where (convert(VARCHAR(255), a.firstName)+' '+convert(VARCHAR(255), a.lastName)) like '%" + codeSearch + "%' and b.roleId like 2 ORDER BY a.id OFFSET " + start + " ROWS FETCH NEXT " + total + " ROWS ONLY";
         PreparedStatement ps = null;
         ResultSet rs = null;
         DBContext db = new DBContext();
@@ -101,7 +101,7 @@ public class DoctorDAO extends DBContext {
     
     
     public int getNoOfRecordAccounts() {
-        String query = "SELECT count(*) FROM [User] where roleId like 2";
+        String query = "select count(*) from Users a join User_Roles b on b.userId = a.id where b.roleId = 2";
         DBContext db = new DBContext();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -141,7 +141,7 @@ public class DoctorDAO extends DBContext {
     }
     
     public int getNoOfRecordAccountsSeach(String search) {
-        String query = "SELECT count(*) FROM [User] a join (select u.userId ,CONCAT(u.[firstName],' ',u.[lastName]) as name from [dbo].[User] u) t on t.userId = a.userId where t.name like '%" + search + "%' and roleId like 2";
+        String query = "SELECT count(*) FROM Users a join (select u.id ,CONCAT(u.[firstName],' ',u.[lastName]) as name from Users u) t on t.id = a.id join User_Roles b on b.userId = a.id where t.name like '%" + search + "%' and b.roleId like 2";
         DBContext db = new DBContext();
         PreparedStatement ps = null;
         ResultSet rs = null;
