@@ -87,8 +87,8 @@
                                                         <tr>
                                                             <th class="col-xs-1 center">No.</th>
                                                             <th class="col-xs-2 center">Tên chuyên khoa</th>
-                                                            <th class="col-xs-7 center">Mô tả </th>
-                                                            <th class="col-xs-2 center">Thao tác</th>
+                                                            <th class="col-xs-8 center">Mô tả </th>
+                                                            <th class="col-xs-1 center">Thao tác</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -108,10 +108,6 @@
                                                                         <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
                                                                            title="Xem chi tiết" href="<c:url value='/admin-specialty-detail?specialtyId=${item.id}'/>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                                                             Sửa
-                                                                        </a>
-                                                                        <a class="btn btn-sm btn-danger btn-edit" data-toggle="tooltip"
-                                                                           title="Xoá ́" href="${viewDetail}"><i class="ace-icon fa fa-trash-o smaller-90" aria-hidden="true"></i>
-                                                                            Xóa
                                                                         </a>
                                                                     </td>
                                                                 </tr>

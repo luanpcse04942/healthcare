@@ -1,6 +1,7 @@
 package com.laptrinhweb.healthcare.services;
 
 import com.laptrinhweb.healthcare.dao.DoctorDAO;
+import com.laptrinhweb.healthcare.dao.UserDAO;
 import com.laptrinhweb.healthcare.model.User;
 import java.util.ArrayList;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  */
 public class DoctorService {
     public ArrayList<User> getListAccounts(int page) {
-        DoctorDAO doctorDAO = new DoctorDAO();
+        UserDAO doctorDAO = new UserDAO();
         ArrayList<User> doctors = new ArrayList<>();
         int recordsPerPage = 6;
         doctors = doctorDAO.findAllDoctor((page - 1) * recordsPerPage, recordsPerPage);
@@ -40,6 +41,7 @@ public class DoctorService {
         DoctorDAO doctorDAO = new DoctorDAO();
         ArrayList<User> doctors = new ArrayList<>();
         int recordsPerPage = 4;
+        page = 1;
         doctors = doctorDAO.searchDoctor(search, (page - 1) * recordsPerPage, recordsPerPage);
         return doctors;
     }

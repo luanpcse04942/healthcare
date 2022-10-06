@@ -81,7 +81,7 @@ public class SpecialtyController extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("Admin/Specialty/SpecialtyDetail.jsp");
             rd.forward(request, response);
         }
-
+    
     }
 
     @Override
