@@ -480,4 +480,49 @@ public class UserDAO extends DBContext {
             }
         }
     }
+    
+        public ArrayList<User> findAllDoctor(int start, int total) {
+        String sql = "select * from Users a join User_Roles b on b.userId = a.id join Roles c on c.id = b.roleId join User_Profile d on d.userId = a.id where c.id = 2 ORDER BY a.id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DBContext db = new DBContext();
+        ArrayList<User> listUser = new ArrayList<>();
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, start);
+            ps.setInt(2, total);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                User acc = new User();
+                acc.setId(rs.getInt("id"));
+                acc.setRoleId(rs.getInt("roleId"));
+                acc.setFirstName(rs.getString("firstName"));
+                acc.setLastName(rs.getString("lastName"));
+                acc.setEmail(rs.getString("email"));
+                acc.setGender(rs.getString("gender"));
+                acc.setPhoneNumber(rs.getString("phoneNumber"));
+                acc.setAddress(rs.getString("address"));
+                acc.setImages(rs.getString("image"));
+                listUser.add(acc);
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return listUser;
+    }
+        
+     
 }
