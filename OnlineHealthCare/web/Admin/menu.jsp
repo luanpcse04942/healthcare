@@ -67,7 +67,7 @@
                 </li>
                 
                 <li>
-                    <a href='#'>
+                    <a href='<c:url value="/admin-facility-list"/>'>
                         <i class="menu-icon fa fa-caret-right"></i>
                         Quản lý cơ sở y tế
                     </a>
