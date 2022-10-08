@@ -48,7 +48,7 @@
             </button>
 
             <div class="navbar-header pull-left">
-                <a href="index.html" class="navbar-brand">
+                <a href="<c:url value='/trang-chu' />" class="navbar-brand">
                     <small>
                         <i class="fa fa-leaf"></i>
                         Trang chủ

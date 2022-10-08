@@ -6,35 +6,22 @@ import java.sql.Date;
  *
  * @author LuanPC
  */
-public class MedicalFacility {
-    private int id;
+public class MedicalFacility extends User{
     private int provinceId;
     private String provinceName;
-    private String address;
     private String description;
     private Date establishedAt;
-    private Date createdAt;
-    private Date updatedAt;
 
-    public MedicalFacility(int id, int provinceId, String provinceName, String address, String description, Date establishedAt, Date createdAt, Date updatedAt) {
-        this.id = id;
+    public MedicalFacility() {
+    }
+
+    public MedicalFacility(int id, int provinceId, String provinceName, String description, Date establishedAt) {
         this.provinceId = provinceId;
         this.provinceName = provinceName;
-        this.address = address;
         this.description = description;
         this.establishedAt = establishedAt;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
     
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getProvinceId() {
         return provinceId;
     }
@@ -49,14 +36,6 @@ public class MedicalFacility {
 
     public void setProvinceName(String provinceName) {
         this.provinceName = provinceName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getDescription() {
@@ -74,22 +53,4 @@ public class MedicalFacility {
     public void setEstablishedAt(Date establishedAt) {
         this.establishedAt = establishedAt;
     }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-    
-    
 }
