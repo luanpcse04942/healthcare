@@ -44,7 +44,7 @@
                                     <i class="ace-icon fa fa-home home-icon"></i>
                                     <a href="<c:url value='/admin-home'/>">Trang chủ</a>
                                 </li>
-                                <li class="active">Danh sách tài khoản</li>
+                                <li class="active">Danh sách bệnh nhân</li>
                             </ul>
                             <!-- /.breadcrumb -->
                             <div class="nav-search" id="nav-search">
@@ -87,11 +87,10 @@
                                                         <tr>
                                                             <th>No.</th>
                                                             <th>Họ và tên</th>
-                                                            <th>Email</th>
-                                                            <th>Giới tính</th>
                                                             <th>Số điện thoại</th>
-                                                            <th>Vai trò</th>
-                                                            <th>Thao tác</th>
+                                                            <th>Ngày đặt lịch</th>
+                                                            <th>Trạng thái</th>
+                                                            <th></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>

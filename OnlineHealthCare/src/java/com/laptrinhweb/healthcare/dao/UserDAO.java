@@ -224,7 +224,7 @@ public class UserDAO extends DBContext {
         sql.append(" where (u.email like ? or u.firstName like ? or u.lastName like ?) and ur.roleId not like 4 ORDER BY u.id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
         PreparedStatement ps = null;
         ResultSet rs = null;
-         DBContext db = new DBContext();
+        DBContext db = new DBContext();
         ArrayList<User> listAccount = new ArrayList<>();
         try {
             conn = db.getConn();
@@ -325,7 +325,7 @@ public class UserDAO extends DBContext {
 
     public void addUser(String email, String password, String firstName, String lastName) {
         String sql = "INSERT INTO Users(firstName, lastName, email, password) VALUES (?, ?, ?, ?)";
-        
+
         DBContext db = new DBContext();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -362,10 +362,10 @@ public class UserDAO extends DBContext {
             }
         }
     }
-    
+
     public void addUserProfile(int userId, String imageName) {
         String sql = "INSERT INTO User_Profile(userId, image) VALUES (?, ?)";
-        
+
         DBContext db = new DBContext();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -400,9 +400,10 @@ public class UserDAO extends DBContext {
             }
         }
     }
+
     public int getUserId(String email) {
         String sql = "SELECT id from Users where email = ? ";
-        
+
         DBContext db = new DBContext();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -444,7 +445,7 @@ public class UserDAO extends DBContext {
 
     public void addUserRole(int userId, int roleId) {
         String sql = "INSERT INTO User_Roles(userId, roleId) VALUES (?, ?)";
-        
+
         DBContext db = new DBContext();
         PreparedStatement ps = null;
         ResultSet rs = null;
