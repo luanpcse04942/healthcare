@@ -178,10 +178,10 @@
                     <c:if test="${currentPage != 1}">
                         <c:choose>
                             <c:when test="${isSearching}">
-                                <a href="public-specialty-list?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
+                                <a href="facility-list-public?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="public-specialty-list?page=${currentPage-1}">Trang trước</a>
+                                <a href="facility-list-public?page=${currentPage-1}">Trang trước</a>
                             </c:otherwise>
                         </c:choose>
                     </c:if>
@@ -191,20 +191,20 @@
                                 <a href="" class="active">${i}</a>
                             </c:when>
                             <c:when test="${isSearching}">
-                                <a href="public-specialty-list?search=${nameSearch}&page=${i}">${i}</a>
+                                <a href="facility-list-public?search=${nameSearch}&page=${i}">${i}</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="public-specialty-list?page=${i}">${i}</a>
+                                <a href="facility-list-public?page=${i}">${i}</a>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
                     <c:if test="${currentPage lt noOfPages}">
                         <c:choose>
                             <c:when test="${isSearching}">
-                                <a href="public-specialty-list?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
+                                <a href="facility-list-public?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="public-specialty-list?page=${currentPage+1}">Trang sau</a>
+                                <a href="facility-list-public?page=${currentPage+1}">Trang sau</a>
                             </c:otherwise>
                         </c:choose>
                     </c:if>
