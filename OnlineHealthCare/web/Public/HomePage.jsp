@@ -9,16 +9,19 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" type="text/css" /> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="static/css/home.css">
-        <link rel="stylesheet" href="static/css/footer.css">
-        <script type="text/javascript" src="static/js/scrollTop.js"></script>
+        <link rel="stylesheet" href="template/login/assets/font-awesome/4.2.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="template/login/assets/fonts/fonts.googleapis.com.css">
+        <link rel="stylesheet" href="<c:url value='/static/css/home.css' />"">
+        <link rel="stylesheet" href="<c:url value='/static/css/footer.css' />"">
     </head>
     <body>
         <div class="top-area">
             <div class="img-area">
                 <a href="#">
-                    <img src="static/images/bookingcare-2020.svg" width="160" height="35"
-                         alt="">
+                    <h1>
+                        <i class="ace-icon fa fa-leaf green"></i>
+                        HealthCare
+                    </h1>
                 </a>
             </div>
             <div class="navbar-pc">
@@ -43,7 +46,7 @@
             </div>
             <div class="top-right-area">
                 <div class="layout">
-                    <button class="btn-login" onclick="location.href='<c:url value="/dang-nhap"/>'">Đăng Nhập</button>
+                    <button class="btn-login" onclick="location.href = '<c:url value="/dang-nhap"/>'">Đăng Nhập</button>
                 </div>
             </div>
         </div>
@@ -65,8 +68,7 @@
                             <i class="fas fa-times"></i>
                         </label>
                         <a href="#">
-                            <img src="static/images/bookingcare-2020.svg" width="164" height="30"
-                                 alt="">
+                            HealthCare
                         </a>
                     </div>
 
@@ -93,7 +95,7 @@
             </div>
         </div>
         <div class="home-header-banner">
-            <img src="static/images/header-background.jpg" width="1349" height="691"
+            <img src="static/images/header-background.jpg" width="100%" height="691"
                  alt="">
             <div class="content-up">
                 <div class="search">
@@ -166,26 +168,36 @@
                 <div class="title">Chuyên khoa nổi bật</div>
             </div>
         </div>
-       
-        <div>
-            <c:forEach var="specialty" items="${listSpecialty}">
-            <div class="comic">
-                <div class="grid-img"> 
-                    <img src='data:image/jpeg;charset=utf-8;base64,${specialty.image}' />
-                </div>
-                <div class="grid-name">${specialty.name}</div>
-            </div>
-        </c:forEach>
-        </div>
-         
-      
 
+        <div class="spec-list">
+            <c:forEach var="specialty" items="${listSpecialty}">
+                <div class="comic">
+                    <div class="grid-img"> 
+                        <img width="300px" height="200px" src="<c:url value='/static/images/Specialty/${specialty.image}' />" />
+                    </div>
+                    <div class="grid-name">${specialty.name}</div>
+                </div>
+            </c:forEach>
+        </div>
+
+     
         <div class="top-title">
             <div class="heading">
                 <div class="title">Cơ sở nổi bật</div>
             </div>
         </div>
-
+                
+        <div class="spec-list">
+            <c:forEach var="facility" items="${listFacility}">
+                <div class="comic">
+                    <div class="grid-img"> 
+                        <img width="300px" height="200px" src="<c:url value='/static/images/Facility/${facility.images}' />" />
+                    </div>
+                    <div class="grid-name">${facility.firstName} ${facility.lastName}</div>
+                </div>
+            </c:forEach>
+        </div>
+                
         <div class="top-title">
             <div class="heading">
                 <div class="title">Bác sĩ nổi bật</div>
@@ -197,8 +209,10 @@
             <div class="top-footer"></div>
             <div class="down-footer">
                 <div class="img-footer">
-                    <img src="static/images/bookingcare-2020.svg" width="300" height="50"
-                         alt=" Nhập tên bác sĩ cần tìm...">
+                    <h1>
+                        <i class="ace-icon fa fa-leaf green"></i>
+                        HealthCare
+                    </h1>
                 </div>
             </div>
         </div>

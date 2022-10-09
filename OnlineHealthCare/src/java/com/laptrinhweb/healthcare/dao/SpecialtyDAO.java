@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,21 +13,19 @@ import java.util.logging.Logger;
 public class SpecialtyDAO extends DBContext {
 
     public ArrayList<Specialty> getAllSpecialty() throws SQLException {
-        String sql = "select * from Specialties";
+        String sql = "select TOP 4 * from Specialties ORDER BY specialtyId";
         PreparedStatement ps = null;
         ResultSet rs = null;
         ArrayList<Specialty> listSpecialty = new ArrayList<Specialty>();
         try {
             ps = conn.prepareStatement(sql);
-
             rs = ps.executeQuery();
             while (rs.next()) {
                 Specialty spec = new Specialty();
                 spec.setId(rs.getInt("specialtyId"));
                 spec.setName(rs.getString("name"));
                 spec.setDescription(rs.getString("description"));
-                String encodeBase64 = Base64.getEncoder().encodeToString(rs.getBytes("image"));
-                spec.setImage(encodeBase64);
+                spec.setImage(rs.getString("image"));
                 listSpecialty.add(spec);
             }
         } catch (Exception e) {

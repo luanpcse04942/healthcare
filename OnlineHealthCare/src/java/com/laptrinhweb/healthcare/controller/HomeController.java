@@ -1,7 +1,9 @@
 package com.laptrinhweb.healthcare.controller;
 
+import com.laptrinhweb.healthcare.dao.FacilityDAO;
 import com.laptrinhweb.healthcare.dao.UserDAO;
 import com.laptrinhweb.healthcare.dao.SpecialtyDAO;
+import com.laptrinhweb.healthcare.model.MedicalFacility;
 import com.laptrinhweb.healthcare.model.User;
 import com.laptrinhweb.healthcare.model.Specialty;
 import jakarta.servlet.RequestDispatcher;
@@ -31,7 +33,12 @@ public class HomeController extends HttpServlet {
         if (request.getServletPath().equals("/trang-chu")) {
             SpecialtyDAO specDAO = new SpecialtyDAO();
             ArrayList<Specialty> listSpecialty = specDAO.getAllSpecialty();
+            
+            FacilityDAO facDAO = new FacilityDAO();
+            ArrayList<MedicalFacility> listFac = facDAO.getAllFacility();
+            
             request.setAttribute("listSpecialty", listSpecialty);
+            request.setAttribute("listFacility", listFac);
             RequestDispatcher rd = request.getRequestDispatcher("Public/HomePage.jsp");
             rd.forward(request, response);
         }
