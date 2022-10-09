@@ -149,7 +149,7 @@
         <div class="container d-flex justify-content-center mt-50 mb-50">
             <h1>Bệnh viện, phòng khám nổi bật</h1>
             <div class="row">
-                <c:forEach var="item" items="${medicalfacility}">
+                <c:forEach var="item" items="${medicalfacilitys}">
                     <div class="col-md-4 mt-2">
 
 
@@ -157,14 +157,14 @@
 
                             <div class="card-body">
                                 <div class="card-img-actions">
-                                    <img src="static/images/Specialty/${item.image}" class="card-img img-fluid" width="96" height="350" alt="">
+                                    <img src="static/images/Facility/${item.fimage}" class="card-img img-fluid" width="96" height="350" alt="">
                                 </div>
                             </div>
 
                             <div class="card-body bg-light text-center">
                                 <div class="mb-2">
                                     <h6 class="font-weight-semibold mb-2">
-                                        <a href="#" class="text-default mb-2" data-abc="true">${item.name}</a>
+                                        <a href="#" class="text-default mb-2" data-abc="true">${item.fname}</a>
                                     </h6>
                                 </div>
                             </div> 
