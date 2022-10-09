@@ -96,14 +96,6 @@
                                             <div class="space-6"></div>
 
                                             <div class="social-login center">
-                                                <a class="btn btn-primary">
-                                                    <i class="ace-icon fa fa-facebook"></i>
-                                                </a>
-
-                                                <a class="btn btn-info">
-                                                    <i class="ace-icon fa fa-twitter"></i>
-                                                </a>
-
                                                 <a class="btn btn-danger">
                                                     <i class="ace-icon fa fa-google-plus"></i>
                                                 </a>

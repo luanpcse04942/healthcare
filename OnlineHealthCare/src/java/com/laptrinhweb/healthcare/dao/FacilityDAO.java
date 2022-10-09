@@ -14,6 +14,64 @@ import java.util.logging.Logger;
  * @author LuanPC
  */
 public class FacilityDAO  extends DBContext{
+    
+    //get all facility for HomePage
+    public ArrayList<MedicalFacility> getAllFacility() {
+        StringBuilder sql = new StringBuilder("SELECT TOP 4 u.id, u.firstName, u.lastName, u.email, u.onlineStatus, u.activedStatus, up.phoneNumber, p.provinceId, p.name, ");
+        sql.append(" up.address, up.image, r.id, r.roleName, mfi.established, mfi.description FROM Users u ");
+        sql.append(" join MedicalFacilityInfo mfi on mfi.medicalFacilityId = u.id ");
+        sql.append(" join  User_Profile up on u.id = up.id ");
+        sql.append(" join User_Roles ur on ur.userId = u.id ");
+        sql.append(" join Roles r on ur.roleId = r.id ");
+        sql.append(" join User_Province upr on upr.userId = u.id ");
+        sql.append(" join Provinces p on p.provinceId = upr.provinceId ");
+        sql.append(" where ur.roleId = 4 ORDER BY u.id");
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DBContext db = new DBContext();
+        ArrayList<MedicalFacility> listFacility = new ArrayList<>();
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql.toString());
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                MedicalFacility mf = new MedicalFacility();
+                mf.setId(rs.getInt(1));
+                mf.setFirstName(rs.getString(2));
+                mf.setLastName(rs.getString(3));
+                mf.setEmail(rs.getString(4));
+                mf.setOnlineStatus(rs.getBoolean(5));
+                mf.setActivedStatus(rs.getBoolean(6));
+                mf.setPhoneNumber(rs.getString(7));
+                mf.setProvinceId(rs.getInt(8));
+                mf.setProvinceName(rs.getString(9));
+                mf.setAddress(rs.getString(10));
+                mf.setImages(rs.getString(11));
+                mf.setRoleId(rs.getInt(12));
+                mf.setRoleName(rs.getString(13));
+                //mf.setEstablishedAt(rs.getDate(14));
+                mf.setDescription(rs.getString(15));
+                listFacility.add(mf);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return listFacility;
+    }
+    
     public ArrayList<MedicalFacility> findAll(int start, int total) {
         StringBuilder sql = new StringBuilder("SELECT u.id, u.firstName, u.lastName, u.email, u.onlineStatus, u.activedStatus, up.phoneNumber, p.provinceId, p.name, ");
         sql.append(" up.address, up.image, r.id, r.roleName, mfi.established, mfi.description FROM Users u ");
