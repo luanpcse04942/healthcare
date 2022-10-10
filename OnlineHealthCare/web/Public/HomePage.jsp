@@ -95,7 +95,7 @@
             </div>
         </div>
         <div class="home-header-banner">
-            <img src="static/images/header-background.jpg" width="1349" height="691"
+            <img src="static/images/header-background.jpg" width="100%" height="691"
                  alt="">
             <div class="content-up">
                 <div class="search">
