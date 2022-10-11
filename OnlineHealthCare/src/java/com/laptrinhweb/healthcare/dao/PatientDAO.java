@@ -33,7 +33,7 @@ public class PatientDAO extends DBContext {
                 acc.setEmail(rs.getString(4));
                 acc.setPassword(rs.getString(5));
                 acc.setOnlineStatus(rs.getBoolean(6));
-                acc.setActivedStatus(rs.getBoolean(7));
+                acc.setActivedStatus(rs.getInt(7));
                 acc.setGender(rs.getString(8));
                 acc.setPhoneNumber(rs.getString(9));
                 acc.setAddress(rs.getString(10));
