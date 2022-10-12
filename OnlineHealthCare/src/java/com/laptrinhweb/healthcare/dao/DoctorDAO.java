@@ -15,8 +15,59 @@ import java.util.logging.Logger;
  */
 public class DoctorDAO extends DBContext {
     
+    //Function for display in HomePage
+    public ArrayList<User> getAllDoctorPublic() {
+        StringBuilder sql = new StringBuilder("SELECT TOP 4 u.id, u.firstName, u.lastName, u.email, u.onlineStatus, u.activedStatus, up.phoneNumber, ");
+        sql.append(" up.address, up.image, r.id, r.roleName, up.gender FROM Users u ");
+        sql.append(" join  User_Profile up on u.id = up.id ");
+        sql.append(" join User_Roles ur on ur.userId = u.id ");
+        sql.append(" join Roles r on ur.roleId = r.id ");
+        sql.append(" where ur.roleId = 2 ORDER BY u.id");
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DBContext db = new DBContext();
+        ArrayList<User> listAccount = new ArrayList<>();
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql.toString());
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                User acc = new User();
+                acc.setId(rs.getInt(1));
+                acc.setRoleId(rs.getInt(10));
+                acc.setRoleName(rs.getString(11));
+                acc.setFirstName(rs.getString(2));
+                acc.setLastName(rs.getString(3));
+                acc.setEmail(rs.getString(4));
+                acc.setGender(rs.getString(12));
+                acc.setPhoneNumber(rs.getString(7));
+                acc.setAddress(rs.getString(8));
+                acc.setImages(rs.getString(9));
+                acc.setOnlineStatus(rs.getBoolean(5));
+                acc.setActivedStatus(rs.getInt(6));
+                listAccount.add(acc);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return listAccount;
+    }
+    
     public ArrayList<User> findAllDoctor(int start, int total) {
-        String sql = "SELECT * FROM [User] where roleId like 2 ORDER BY userId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        String sql = "SELECT * FROM Users where roleId like 2 ORDER BY userId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         PreparedStatement ps = null;
         ResultSet rs = null;
         DBContext db = new DBContext();

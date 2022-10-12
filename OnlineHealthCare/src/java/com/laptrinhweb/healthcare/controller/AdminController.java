@@ -54,6 +54,8 @@ public class AdminController extends HttpServlet {
         }
 
         if (request.getServletPath().equals("/admin-add-account")) {
+            UserService userService = new UserService();
+            request.setAttribute("provinces", userService.getAllProvinces());
             RequestDispatcher rd = request.getRequestDispatcher("Admin/Account/AddAccount.jsp");
             rd.forward(request, response);
         }
@@ -93,7 +95,7 @@ public class AdminController extends HttpServlet {
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
             int roleId = Integer.parseInt(request.getParameter("role"));
-
+            int provinceId = Integer.parseInt(request.getParameter("province"));
             Part filePart = request.getPart("file");
             String fileName = filePart.getSubmittedFileName();
 
@@ -110,7 +112,14 @@ public class AdminController extends HttpServlet {
                 ex.printStackTrace();
             }
             UserService userService = new UserService();
-            userService.addUser(email, password, firstName, lastName, fileName, roleId);
+            boolean addSuccess = userService.addUser(email, password, firstName, lastName, fileName, roleId, provinceId);
+            if(addSuccess) {
+                request.setAttribute("messageResponse", "Thêm mới thành công !");
+                request.setAttribute("alert", "success");
+            }else {
+                request.setAttribute("messageResponse", "Thêm mới không thành công !");
+                request.setAttribute("alert", "danger");
+            }
             RequestDispatcher rd = request.getRequestDispatcher("Admin/Account/AddAccount.jsp");
             rd.forward(request, response);
         }

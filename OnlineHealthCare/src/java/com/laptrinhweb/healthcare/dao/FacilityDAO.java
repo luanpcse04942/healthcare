@@ -41,7 +41,7 @@ public class FacilityDAO  extends DBContext{
                 mf.setLastName(rs.getString(3));
                 mf.setEmail(rs.getString(4));
                 mf.setOnlineStatus(rs.getBoolean(5));
-                mf.setActivedStatus(rs.getBoolean(6));
+                mf.setActivedStatus(rs.getInt(6));
                 mf.setPhoneNumber(rs.getString(7));
                 mf.setProvinceId(rs.getInt(8));
                 mf.setProvinceName(rs.getString(9));
@@ -99,7 +99,7 @@ public class FacilityDAO  extends DBContext{
                 mf.setLastName(rs.getString(3));
                 mf.setEmail(rs.getString(4));
                 mf.setOnlineStatus(rs.getBoolean(5));
-                mf.setActivedStatus(rs.getBoolean(6));
+                mf.setActivedStatus(rs.getInt(6));
                 mf.setPhoneNumber(rs.getString(7));
                 mf.setProvinceId(rs.getInt(8));
                 mf.setProvinceName(rs.getString(9));
@@ -131,7 +131,7 @@ public class FacilityDAO  extends DBContext{
     }
     
     
-     public int getNoOfRecordAccounts() {
+     public int getNoOfRecordFacilities() {
         String query = "SELECT count(*) FROM Users u join User_Roles ur on u.id = ur.userId where ur.roleId = 4";
         DBContext db = new DBContext();
         PreparedStatement ps = null;
@@ -172,10 +172,10 @@ public class FacilityDAO  extends DBContext{
     }
      
     
-      public int getNoOfRecordSearchAccounts(String search) {
+      public int getNoOfRecordSearchFacilities(String search) {
         StringBuilder sql = new StringBuilder("SELECT count(*) FROM Users u join User_Roles ur on u.id = ur.userId ");
         sql.append(" join (select t.id ,CONCAT(t.[firstName],' ',t.[lastName]) as name from Users t) n ");
-        sql.append(" on n.id = u.id and (u.email like ? or n.name like ?) and ur.roleId = 4");
+        sql.append(" on n.id = u.id and  n.name like ? and ur.roleId = 4");
         DBContext db = new DBContext();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -184,7 +184,6 @@ public class FacilityDAO  extends DBContext{
             conn = db.getConn();
             ps = conn.prepareStatement(sql.toString());
             ps.setString(1, '%' + search.trim() + '%');
-            ps.setString(2, '%' + search.trim() + '%');
             rs = ps.executeQuery();
             while (rs.next()) {
                 count = rs.getInt(1);
@@ -214,5 +213,127 @@ public class FacilityDAO  extends DBContext{
             }
         }
         return count;
+    }
+
+    public MedicalFacility getFacilityDetail(int facilityId) {
+        StringBuilder sql = new StringBuilder("SELECT u.id, u.firstName, u.lastName, u.email, u.onlineStatus, u.activedStatus, up.phoneNumber, p.provinceId, p.name, ");
+        sql.append(" up.address, up.image, r.id, r.roleName, mfi.established, mfi.description FROM Users u ");
+        sql.append(" join MedicalFacilityInfo mfi on mfi.medicalFacilityId = u.id ");
+        sql.append(" join  User_Profile up on u.id = up.id ");
+        sql.append(" join User_Roles ur on ur.userId = u.id ");
+        sql.append(" join Roles r on ur.roleId = r.id ");
+        sql.append(" join User_Province upr on upr.userId = u.id ");
+        sql.append(" join Provinces p on p.provinceId = upr.provinceId ");
+        sql.append(" where u.id = ?");
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DBContext db = new DBContext();
+        MedicalFacility mf = new MedicalFacility();
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql.toString());
+            ps.setInt(1, facilityId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                mf.setId(rs.getInt(1));
+                mf.setFirstName(rs.getString(2));
+                mf.setLastName(rs.getString(3));
+                mf.setEmail(rs.getString(4));
+                mf.setOnlineStatus(rs.getBoolean(5));
+                mf.setActivedStatus(rs.getInt(6));
+                mf.setPhoneNumber(rs.getString(7));
+                mf.setProvinceId(rs.getInt(8));
+                mf.setProvinceName(rs.getString(9));
+                mf.setAddress(rs.getString(10));
+                mf.setImages(rs.getString(11));
+                mf.setRoleId(rs.getInt(12));
+                mf.setRoleName(rs.getString(13));
+                //mf.setEstablishedAt(rs.getDate(14));
+                mf.setDescription(rs.getString(15));
+            }
+        } catch (SQLException e) {
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return mf;
+    }
+
+    public ArrayList<MedicalFacility> getFacilitiesSearchByName(String search, int start, int total) {
+       StringBuilder sql = new StringBuilder("SELECT u.id, u.firstName, u.lastName, u.email, u.onlineStatus, u.activedStatus, up.phoneNumber, p.provinceId, p.name, ");
+        sql.append(" up.address, up.image, r.id, r.roleName, mfi.established, mfi.description FROM Users u ");
+        sql.append(" join MedicalFacilityInfo mfi on mfi.medicalFacilityId = u.id ");
+        sql.append(" join  User_Profile up on u.id = up.id ");
+        sql.append(" join User_Roles ur on ur.userId = u.id ");
+        sql.append(" join Roles r on ur.roleId = r.id ");
+        sql.append(" join User_Province upr on upr.userId = u.id ");
+        sql.append(" join Provinces p on p.provinceId = upr.provinceId ");
+        sql.append(" where convert(VARCHAR(255), u.firstName)+' '+convert(VARCHAR(255), u.lastName) like ? and ur.roleId = 4 ORDER BY u.id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DBContext db = new DBContext();
+        ArrayList<MedicalFacility> listFacility = new ArrayList<>();
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql.toString());
+            ps.setString(1, '%' + search.trim() + '%');
+            ps.setInt(2, start);
+            ps.setInt(3, total);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                MedicalFacility mf = new MedicalFacility();
+                mf.setId(rs.getInt(1));
+                mf.setFirstName(rs.getString(2));
+                mf.setLastName(rs.getString(3));
+                mf.setEmail(rs.getString(4));
+                mf.setOnlineStatus(rs.getBoolean(5));
+                mf.setActivedStatus(rs.getInt(6));
+                mf.setPhoneNumber(rs.getString(7));
+                mf.setProvinceId(rs.getInt(8));
+                mf.setProvinceName(rs.getString(9));
+                mf.setAddress(rs.getString(10));
+                mf.setImages(rs.getString(11));
+                mf.setRoleId(rs.getInt(12));
+                mf.setRoleName(rs.getString(13));
+                //mf.setEstablishedAt(rs.getDate(14));
+                mf.setDescription(rs.getString(15));
+                listFacility.add(mf);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return listFacility;
     }
 }

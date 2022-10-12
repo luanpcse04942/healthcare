@@ -1,5 +1,6 @@
 package com.laptrinhweb.healthcare.controller;
 
+import com.laptrinhweb.healthcare.dao.DoctorDAO;
 import com.laptrinhweb.healthcare.dao.FacilityDAO;
 import com.laptrinhweb.healthcare.dao.UserDAO;
 import com.laptrinhweb.healthcare.dao.SpecialtyDAO;
@@ -37,8 +38,12 @@ public class HomeController extends HttpServlet {
             FacilityDAO facDAO = new FacilityDAO();
             ArrayList<MedicalFacility> listFac = facDAO.getAllFacility();
             
+            DoctorDAO doctorDAO = new DoctorDAO();
+            ArrayList<User> listDoctor = doctorDAO.getAllDoctorPublic();
+            
             request.setAttribute("listSpecialty", listSpecialty);
             request.setAttribute("listFacility", listFac);
+            request.setAttribute("listDoctor", listDoctor);
             RequestDispatcher rd = request.getRequestDispatcher("Public/HomePage.jsp");
             rd.forward(request, response);
         }

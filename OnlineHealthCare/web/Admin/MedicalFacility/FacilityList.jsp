@@ -36,7 +36,7 @@
             <!-- header -->
 
             <div class="main-content">
-                <form action="<c:url value='/admin-specialty-search'/>" method="get">
+                <form action="<c:url value='/admin-facility-search'/>" method="get">
                     <div class="main-content-inner">
                         <div class="breadcrumbs ace-save-state" id="breadcrumbs">
                             <ul class="breadcrumb">
@@ -50,7 +50,7 @@
                             <div class="nav-search" id="nav-search">
                                 <form class="form-search">
                                     <span class="input-icon">
-                                        <input name="search" value="${nameSearch}" type="text" placeholder="Tìm tên chuyên khoa..." class="nav-search-input" style="width:300px !important" id="nav-search-input" autocomplete="off" />
+                                        <input name="search" value="${nameSearch}" type="text" placeholder="Tìm tên cơ sở..." class="nav-search-input" style="width:300px !important" id="nav-search-input" autocomplete="off" />
                                         <button type="submit" class="ace-icon fa fa-search nav-search-icon"></button>
                                     </span>
                                 </form>
@@ -70,7 +70,7 @@
                                                 <div class="dt-buttons btn-overlap btn-group">
                                                     <a flag="info"
                                                        class="dt-button buttons-colvis btn btn-white btn-primary btn-bold" data-toggle="tooltip"
-                                                       title='Thêm chuyên khoa' href='<c:url value="/admin-add-specialty"/>'>
+                                                       title='Thêm cơ sở' href='<c:url value="/admin-add-facility"/>'>
                                                         <span>
                                                             <i class="fa fa-plus-circle bigger-110 purple"></i>
                                                         </span>
@@ -108,8 +108,9 @@
                                                                     <td class="center">${item.phoneNumber}</td>
                                                                     <td>${item.address}</td>
                                                                     <td>
-                                                                        <c:if test="${item.activedStatus eq true}">Đã xác thực</c:if>
-                                                                        <c:if test="${item.activedStatus eq false}">Chưa xác thực</c:if>
+                                                                        <c:if test="${item.activedStatus == 5}">Đã xác thực</c:if>
+                                                                        <c:if test="${item.activedStatus == 6}">Chưa xác thực</c:if>
+                                                                        <c:if test="${item.activedStatus == 7}">Đã khóa</c:if>
                                                                     </td>
                                                                     <td class="center">
                                                                         <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"

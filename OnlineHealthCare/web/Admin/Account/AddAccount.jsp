@@ -46,6 +46,11 @@
                     </div>
                     <div class="container">
                         <h2>Thêm mới tài khoản</h2>
+                        <c:if test="${not empty messageResponse}">
+                            <div id="message" class="alert alert-${alert}">
+                                ${messageResponse}
+                            </div>
+                        </c:if>
                         <form action="<c:url value='/add-account'/>" id="formSubmit" method="post" enctype="multipart/form-data">
                             <div class="form-group col-sm-12">
                                 <label>Email</label>
@@ -75,6 +80,16 @@
                                 </select>
                             </div>
                             <div class="form-group col-sm-12">
+                                <select class="form-control" id="form-field-select-1" name="province">
+                                    <option >--Chọn tỉnh/thành--</option>
+                                    <c:forEach items="${provinces}" var="province">
+                                        <option value="${province.id}">
+                                            ${province.name}
+                                        </option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-12">
                                 <div class="input-group">
                                     <div class="custom-file">
                                         <label class="custom-file-label" >Chọn ảnh</label>
@@ -83,7 +98,7 @@
                                 </div>
                             </div>
                             <div class="form-group col-sm-9">
-                                <button type="submit" class="btn btn-primary">Thêm</button>
+                                <button type="submit" onclick="hideMessage()" class="btn btn-primary">Thêm</button>
                             </div>
                         </form>
                     </div>
@@ -98,7 +113,11 @@
                 <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
             </a>
         </div>
-
+        <script>
+            function hideMessage() {
+                setTimeout(function() { $("#message").hide(); }, 3000);
+            }
+        </script>
 
         <script src="<c:url value='/template/admin/assets/js/bootstrap.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/jquery-ui.custom.min.js' />"></script>

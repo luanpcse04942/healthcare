@@ -26,9 +26,9 @@ public class FacilityService {
         FacilityDAO facilityDAO = new FacilityDAO();
         int noOfRecords = 0;
         if (search.isEmpty()) {
-            noOfRecords = facilityDAO.getNoOfRecordAccounts();
+            noOfRecords = facilityDAO.getNoOfRecordFacilities();
         } else {
-            noOfRecords = facilityDAO.getNoOfRecordSearchAccounts(search);
+            noOfRecords = facilityDAO.getNoOfRecordSearchFacilities(search);
         }
 
         //calculate number of page
@@ -38,6 +38,20 @@ public class FacilityService {
             noOfPages++;
         }
         return noOfPages;
+    }
+
+    public MedicalFacility getFacilityDetail(int facilityId) {
+        FacilityDAO facDAO = new FacilityDAO();
+        MedicalFacility facility = facDAO.getFacilityDetail(facilityId);
+        return facility;
+    }
+
+    public ArrayList<MedicalFacility> getFacilitiesSearchByName(int page, String search) {
+        FacilityDAO facDAO = new FacilityDAO();
+        ArrayList<MedicalFacility> facilities = new ArrayList<>();
+        int recordsPerPage = 4;
+        facilities = facDAO.getFacilitiesSearchByName(search, (page - 1) * recordsPerPage, recordsPerPage);
+        return facilities;
     }
     
 }
