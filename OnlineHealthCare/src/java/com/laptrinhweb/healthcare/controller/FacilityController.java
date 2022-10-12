@@ -1,6 +1,7 @@
 package com.laptrinhweb.healthcare.controller;
 
 import com.laptrinhweb.healthcare.model.MedicalFacility;
+import com.laptrinhweb.healthcare.services.DoctorService;
 import com.laptrinhweb.healthcare.services.FacilityService;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -20,7 +21,7 @@ import java.io.InputStream;
  */
 @MultipartConfig
 @WebServlet(name="FacilityController", urlPatterns={"/admin-facility-list", "/admin-facility-detail", "/edit-facility",
-            "/admin-facility-search", "/admin-add-facility"})
+            "/admin-facility-search", "/admin-add-facility", "/booking-schedule", "/facility-home"})
 public class FacilityController extends HttpServlet {
    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -75,6 +76,23 @@ public class FacilityController extends HttpServlet {
             rd.forward(request, response);
         }
         
+        if (request.getServletPath().equals("/booking-schedule")) {
+            int facilityId = Integer.parseInt(request.getParameter("facilityId"));
+            DoctorService ds = new DoctorService();
+            FacilityService fs = new FacilityService();
+            request.setAttribute("times", fs.getAllTimes());
+            request.setAttribute("doctors", ds.getDoctorsOfFacility(facilityId));
+            request.setAttribute("facilityId", facilityId);
+            RequestDispatcher rd = request.getRequestDispatcher("Medical Facility/BookingSchedule.jsp");
+            rd.forward(request, response);
+        }
+        
+        if (request.getServletPath().equals("/facility-home")) {
+            int facilityId = Integer.parseInt(request.getParameter("facilityId"));
+            request.setAttribute("facilityId", facilityId);
+            RequestDispatcher rd = request.getRequestDispatcher("Medical Facility/HomeFacility.jsp");
+            rd.forward(request, response);
+        }
     } 
 
     @Override

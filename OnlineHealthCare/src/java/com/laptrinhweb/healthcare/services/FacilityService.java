@@ -6,6 +6,7 @@ package com.laptrinhweb.healthcare.services;
 
 import com.laptrinhweb.healthcare.dao.FacilityDAO;
 import com.laptrinhweb.healthcare.model.MedicalFacility;
+import com.laptrinhweb.healthcare.model.Time;
 import java.util.ArrayList;
 
 /**
@@ -52,6 +53,11 @@ public class FacilityService {
         int recordsPerPage = 4;
         facilities = facDAO.getFacilitiesSearchByName(search, (page - 1) * recordsPerPage, recordsPerPage);
         return facilities;
+    }
+
+    public ArrayList<Time> getAllTimes() {
+        FacilityDAO facDAO = new FacilityDAO();
+        return facDAO.getAllTimes();
     }
     
 }

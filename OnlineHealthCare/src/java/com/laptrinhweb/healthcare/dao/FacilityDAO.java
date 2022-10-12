@@ -2,6 +2,7 @@ package com.laptrinhweb.healthcare.dao;
 
 import com.laptrinhweb.healthcare.context.DBContext;
 import com.laptrinhweb.healthcare.model.MedicalFacility;
+import com.laptrinhweb.healthcare.model.Time;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -335,5 +336,39 @@ public class FacilityDAO  extends DBContext{
             }
         }
         return listFacility;
+    }
+    
+    public ArrayList<Time> getAllTimes() {
+        String sql = "SELECT * FROM Times";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DBContext db = new DBContext();
+        ArrayList<Time> times = new ArrayList<>();
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Time time = new Time();
+                time.setId(rs.getInt("timeId"));
+                time.setValue(rs.getString("timeValue"));
+                times.add(time);
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return times;
     }
 }

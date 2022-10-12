@@ -95,6 +95,7 @@ public class HomeController extends HttpServlet {
                 }
             case 4:
                 {
+                    request.setAttribute("facilityId", acc.getId());
                     RequestDispatcher rd = request.getRequestDispatcher("Medical Facility/HomeFacility.jsp");
                     rd.forward(request, response);
                     break;

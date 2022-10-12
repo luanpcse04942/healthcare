@@ -45,4 +45,9 @@ public class DoctorService {
         doctors = doctorDAO.searchDoctor(search, (page - 1) * recordsPerPage, recordsPerPage);
         return doctors;
     }
+
+    public ArrayList<User> getDoctorsOfFacility(int facilityId) {
+        DoctorDAO doctorDAO = new DoctorDAO();
+        return doctorDAO.getDoctorsOfFacility(facilityId);
+    }
 }

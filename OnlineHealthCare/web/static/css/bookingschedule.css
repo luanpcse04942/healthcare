@@ -1,0 +1,31 @@
+.pick-hour-container {
+    display: flex;
+    flex-wrap: wrap;
+    grid-gap: 20px;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.pick-hour-container > span {
+    padding: 5px 15px;
+    border: 1px solid #8ab5f5;
+    margin-left: 15px;
+    width: 120px;
+}
+
+.pick-hour-container > span:hover {
+    cursor: pointer;
+}
+
+.col-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+
+#select-doctor:hover {
+    cursor: pointer;
+}
+
+#datepicker:hover {
+    cursor: pointer;
+}
