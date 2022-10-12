@@ -1,6 +1,7 @@
 package com.laptrinhweb.healthcare.dao;
 
 import com.laptrinhweb.healthcare.context.DBContext;
+import com.laptrinhweb.healthcare.model.Province;
 import com.laptrinhweb.healthcare.model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,7 +40,7 @@ public class UserDAO extends DBContext {
                 acc.setEmail(rs.getString(4));
                 acc.setPassword(rs.getString(5));
                 acc.setOnlineStatus(rs.getBoolean(6));
-                acc.setActivedStatus(rs.getBoolean(7));
+                acc.setActivedStatus(rs.getInt(7));
                 acc.setGender(rs.getString(8));
                 acc.setPhoneNumber(rs.getString(9));
                 acc.setAddress(rs.getString(10));
@@ -90,7 +91,7 @@ public class UserDAO extends DBContext {
                 acc.setEmail(rs.getString(4));
                 acc.setPassword(rs.getString(5));
                 acc.setOnlineStatus(rs.getBoolean(6));
-                acc.setActivedStatus(rs.getBoolean(7));
+                acc.setActivedStatus(rs.getInt(7));
                 acc.setGender(rs.getString(8));
                 acc.setPhoneNumber(rs.getString(9));
                 acc.setAddress(rs.getString(10));
@@ -180,7 +181,7 @@ public class UserDAO extends DBContext {
                 acc.setEmail(rs.getString(4));
                 acc.setPassword(rs.getString(5));
                 acc.setOnlineStatus(rs.getBoolean(6));
-                acc.setActivedStatus(rs.getBoolean(7));
+                acc.setActivedStatus(rs.getInt(7));
                 acc.setGender(rs.getString(8));
                 acc.setPhoneNumber(rs.getString(9));
                 acc.setAddress(rs.getString(10));
@@ -221,7 +222,7 @@ public class UserDAO extends DBContext {
         sql.append(" join  User_Profile up on u.id = up.userId ");
         sql.append(" join User_Roles ur on ur.userId = u.id ");
         sql.append(" join Roles r on ur.roleId = r.id ");
-        sql.append(" where (u.email like ? or u.firstName like ? or u.lastName like ?) and ur.roleId not like 4 ORDER BY u.id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
+        sql.append(" where (u.email like ? or convert(VARCHAR(255), u.firstName)+' '+convert(VARCHAR(255), u.lastName) like ?) and ur.roleId not like 4 ORDER BY u.id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
         PreparedStatement ps = null;
         ResultSet rs = null;
         DBContext db = new DBContext();
@@ -231,9 +232,8 @@ public class UserDAO extends DBContext {
             ps = conn.prepareStatement(sql.toString());
             ps.setString(1, '%' + search.trim() + '%');
             ps.setString(2, '%' + search.trim() + '%');
-            ps.setString(3, '%' + search.trim() + '%');
-            ps.setInt(4, start);
-            ps.setInt(5, total);
+            ps.setInt(3, start);
+            ps.setInt(4, total);
             rs = ps.executeQuery();
             while (rs.next()) {
                 User acc = new User();
@@ -243,7 +243,7 @@ public class UserDAO extends DBContext {
                 acc.setEmail(rs.getString(4));
                 acc.setPassword(rs.getString(5));
                 acc.setOnlineStatus(rs.getBoolean(6));
-                acc.setActivedStatus(rs.getBoolean(7));
+                acc.setActivedStatus(rs.getInt(7));
                 acc.setGender(rs.getString(8));
                 acc.setPhoneNumber(rs.getString(9));
                 acc.setAddress(rs.getString(10));
@@ -278,7 +278,49 @@ public class UserDAO extends DBContext {
         }
         return listAccount;
     }
-
+     public ArrayList<Province> getAllProvinces() {
+        String sql = "SELECT * FROM Provinces";
+        DBContext db = new DBContext();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<Province> proList = new ArrayList<>();
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Province pro = new Province();
+                pro.setId(rs.getInt(1));
+                pro.setName(rs.getString(2));
+                proList.add(pro);
+            }
+        } catch (SQLException e) {
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return proList;
+    }
+     
     public int getNoOfRecordSearchAccounts(String search) {
         StringBuilder sql = new StringBuilder("SELECT count(*) FROM Users u join User_Roles ur on u.id = ur.userId ");
         sql.append(" join (select t.id ,CONCAT(t.[firstName],' ',t.[lastName]) as name from Users t) n ");
@@ -323,12 +365,13 @@ public class UserDAO extends DBContext {
         return count;
     }
 
-    public void addUser(String email, String password, String firstName, String lastName) {
-        String sql = "INSERT INTO Users(firstName, lastName, email, password) VALUES (?, ?, ?, ?)";
+    public boolean addUser(String email, String password, String firstName, String lastName) {
+        String sql = "INSERT INTO Users(firstName, lastName, email, password, activedStatus) VALUES (?, ?, ?, ?, ?)";
 
         DBContext db = new DBContext();
         PreparedStatement ps = null;
         ResultSet rs = null;
+        boolean addSuccess = false;
         try {
             conn = db.getConn();
             ps = conn.prepareStatement(sql);
@@ -336,7 +379,9 @@ public class UserDAO extends DBContext {
             ps.setString(2, lastName);
             ps.setString(3, email);
             ps.setString(4, password);
-            rs = ps.executeQuery();
+            ps.setInt(5, 5);
+            ps.executeUpdate();
+            addSuccess = true;
         } catch (SQLException e) {
         } finally {
             if (rs != null) {
@@ -361,6 +406,7 @@ public class UserDAO extends DBContext {
                 }
             }
         }
+        return addSuccess;
     }
 
     public void addUserProfile(int userId, String imageName) {
@@ -374,7 +420,7 @@ public class UserDAO extends DBContext {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, userId);
             ps.setString(2, imageName);
-            rs = ps.executeQuery();
+            ps.executeUpdate();
         } catch (SQLException e) {
         } finally {
             if (rs != null) {
@@ -454,7 +500,7 @@ public class UserDAO extends DBContext {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, userId);
             ps.setInt(2, roleId);
-            rs = ps.executeQuery();
+            ps.executeUpdate();
         } catch (SQLException e) {
         } finally {
             if (rs != null) {
@@ -480,8 +526,44 @@ public class UserDAO extends DBContext {
             }
         }
     }
-    
-        public ArrayList<User> findAllDoctor(int start, int total) {
+
+    public void addMedicalFacilityInfo(int medicalFacilityId) {
+        String sql = "INSERT INTO MedicalFacilityInfo(medicalFacilityId) VALUES (?)";
+
+        DBContext db = new DBContext();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, medicalFacilityId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+    public ArrayList<User> findAllDoctor(int start, int total) {
         String sql = "select * from Users a join User_Roles b on b.userId = a.id join Roles c on c.id = b.roleId join User_Profile d on d.userId = a.id where c.id = 2 ORDER BY a.id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -523,6 +605,43 @@ public class UserDAO extends DBContext {
         }
         return listUser;
     }
-        
-     
+
+    public void addUserProvince(int userId, int provinceId) {
+         String sql = "INSERT INTO User_Province(userId, provinceId) VALUES (?, ?)";
+
+        DBContext db = new DBContext();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+            ps.setInt(2, provinceId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
 }

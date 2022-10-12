@@ -1,6 +1,7 @@
 package com.laptrinhweb.healthcare.services;
 
 import com.laptrinhweb.healthcare.dao.UserDAO;
+import com.laptrinhweb.healthcare.model.Province;
 import com.laptrinhweb.healthcare.model.User;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -52,11 +53,19 @@ public class UserService {
         return users;
     }
 
-    public void addUser(String email, String password, String firstName, String lastName, String imageName, int roleId) throws FileNotFoundException, IOException {
+    public boolean addUser(String email, String password, String firstName, String lastName, String imageName, int roleId, int provinceId) throws FileNotFoundException, IOException {
    
         UserDAO userDAO = new UserDAO();
-        userDAO.addUser(email, password, firstName, lastName);
+        boolean addSuccess = userDAO.addUser(email, password, firstName, lastName);
+        userDAO.addUserProvince(userDAO.getUserId(email), provinceId);
         userDAO.addUserProfile(userDAO.getUserId(email), imageName);
         userDAO.addUserRole(userDAO.getUserId(email), roleId);
+        userDAO.addMedicalFacilityInfo(userDAO.getUserId(email));
+        return addSuccess;
+    }
+
+    public ArrayList<Province> getAllProvinces() {
+        UserDAO userDAO = new UserDAO();
+        return userDAO.getAllProvinces();
     }
 }

@@ -78,7 +78,7 @@
                                 <i class="fas fa-search"></i>
                                 <input class="input-search" type="text" placeholder="Nhập tên bác sĩ cần tìm..." />
                                 <a class="btn-search">
-                                    <img class="img-search" src="static/images/icon-search.png" width="21" height="23"
+                                    <img src="static/images/icon-search.png" width="21" height="23"
                                          alt=" Nhập tên bác sĩ cần tìm...">
                                 </a>
                             </form>
@@ -171,7 +171,7 @@
 
         <div class="spec-list">
             <c:forEach var="specialty" items="${listSpecialty}">
-                <div class="comic">
+                <div class="specialty">
                     <div class="grid-img"> 
                         <img width="300px" height="200px" src="<c:url value='/static/images/Specialty/${specialty.image}' />" />
                     </div>
@@ -180,32 +180,44 @@
             </c:forEach>
         </div>
 
-     
+
         <div class="top-title">
             <div class="heading">
                 <div class="title">Cơ sở nổi bật</div>
             </div>
         </div>
-                
+
         <div class="spec-list">
             <c:forEach var="facility" items="${listFacility}">
-                <div class="comic">
+                <div class="specialty">
                     <div class="grid-img"> 
                         <img width="300px" height="200px" src="<c:url value='/static/images/Facility/${facility.images}' />" />
                     </div>
-                    <div class="grid-name">${facility.firstName} ${facility.lastName}</div>
+                    <div class="grid-name">
+                        <span>${facility.firstName} ${facility.lastName}</span>
+                    </div>
                 </div>
             </c:forEach>
         </div>
-                
+
         <div class="top-title">
             <div class="heading">
                 <div class="title">Bác sĩ nổi bật</div>
             </div>
         </div>
 
+        <div class="spec-list">
+            <c:forEach var="doctor" items="${listDoctor}">
+                <div class="doctors">
+                    <div class="doctors-image grid-img"> 
+                        <img width="120" height="120" src="<c:url value='/static/images/Doctor/${doctor.images}' />" />
+                    </div>
+                    <div class="doctor-name">${doctor.firstName} ${doctor.lastName}</div>
+                </div>
+            </c:forEach>
+        </div>
+
         <div class="footer">
-            <img src="static/images/back-to-top-icon.png" class="scrollToTopBtn hide" id="scrollToTopBtn" width="36" height="36"></img>
             <div class="top-footer"></div>
             <div class="down-footer">
                 <div class="img-footer">
