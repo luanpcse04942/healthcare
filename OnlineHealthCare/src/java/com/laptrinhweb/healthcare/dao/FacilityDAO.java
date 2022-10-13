@@ -1,8 +1,10 @@
 package com.laptrinhweb.healthcare.dao;
 
 import com.laptrinhweb.healthcare.context.DBContext;
+import com.laptrinhweb.healthcare.model.DoctorInfo;
 import com.laptrinhweb.healthcare.model.MedicalFacility;
 import com.laptrinhweb.healthcare.model.Time;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,8 +16,8 @@ import java.util.logging.Logger;
  *
  * @author LuanPC
  */
-public class FacilityDAO  extends DBContext{
-    
+public class FacilityDAO extends DBContext {
+
     //get all facility for HomePage
     public ArrayList<MedicalFacility> getAllFacility() {
         StringBuilder sql = new StringBuilder("SELECT TOP 4 u.id, u.firstName, u.lastName, u.email, u.onlineStatus, u.activedStatus, up.phoneNumber, p.provinceId, p.name, ");
@@ -72,7 +74,7 @@ public class FacilityDAO  extends DBContext{
         }
         return listFacility;
     }
-    
+
     public ArrayList<MedicalFacility> findAll(int start, int total) {
         StringBuilder sql = new StringBuilder("SELECT u.id, u.firstName, u.lastName, u.email, u.onlineStatus, u.activedStatus, up.phoneNumber, p.provinceId, p.name, ");
         sql.append(" up.address, up.image, r.id, r.roleName, mfi.established, mfi.description FROM Users u ");
@@ -130,9 +132,8 @@ public class FacilityDAO  extends DBContext{
         }
         return listFacility;
     }
-    
-    
-     public int getNoOfRecordFacilities() {
+
+    public int getNoOfRecordFacilities() {
         String query = "SELECT count(*) FROM Users u join User_Roles ur on u.id = ur.userId where ur.roleId = 4";
         DBContext db = new DBContext();
         PreparedStatement ps = null;
@@ -171,9 +172,8 @@ public class FacilityDAO  extends DBContext{
         }
         return count;
     }
-     
-    
-      public int getNoOfRecordSearchFacilities(String search) {
+
+    public int getNoOfRecordSearchFacilities(String search) {
         StringBuilder sql = new StringBuilder("SELECT count(*) FROM Users u join User_Roles ur on u.id = ur.userId ");
         sql.append(" join (select t.id ,CONCAT(t.[firstName],' ',t.[lastName]) as name from Users t) n ");
         sql.append(" on n.id = u.id and  n.name like ? and ur.roleId = 4");
@@ -280,7 +280,7 @@ public class FacilityDAO  extends DBContext{
     }
 
     public ArrayList<MedicalFacility> getFacilitiesSearchByName(String search, int start, int total) {
-       StringBuilder sql = new StringBuilder("SELECT u.id, u.firstName, u.lastName, u.email, u.onlineStatus, u.activedStatus, up.phoneNumber, p.provinceId, p.name, ");
+        StringBuilder sql = new StringBuilder("SELECT u.id, u.firstName, u.lastName, u.email, u.onlineStatus, u.activedStatus, up.phoneNumber, p.provinceId, p.name, ");
         sql.append(" up.address, up.image, r.id, r.roleName, mfi.established, mfi.description FROM Users u ");
         sql.append(" join MedicalFacilityInfo mfi on mfi.medicalFacilityId = u.id ");
         sql.append(" join  User_Profile up on u.id = up.id ");
@@ -337,7 +337,7 @@ public class FacilityDAO  extends DBContext{
         }
         return listFacility;
     }
-    
+
     public ArrayList<Time> getAllTimes() {
         String sql = "SELECT * FROM Times";
         PreparedStatement ps = null;
@@ -371,4 +371,128 @@ public class FacilityDAO  extends DBContext{
         }
         return times;
     }
+
+    public int getDoctorWorkingInfoId(int doctorId) {
+        String sql = "SELECT id FROM Doctor_Working_Info WHERE doctorId = ?";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DBContext db = new DBContext();
+        int doctorWorkingInfo = 0;
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, doctorId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                doctorWorkingInfo = rs.getInt("id");
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return doctorWorkingInfo;
+    }
+
+    public void addSchedule(int doctorWorkingInfoId, Date scheduleDate) {
+        String sql = "INSERT INTO Schedules(doctorWorkingInfoId, scheduleDate) VALUES(?,?);";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DBContext db = new DBContext();
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, doctorWorkingInfoId);
+            ps.setDate(2, scheduleDate);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+    }
+
+    public int getScheduleID(int doctorWorkingInfoId, Date scheduleDate) {
+        String sql = "SELECT scheduleId FROM Schedules WHERE doctorWorkingInfoId = ? and scheduleDate = ?";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DBContext db = new DBContext();
+        int scheduleID = 0;
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, doctorWorkingInfoId);
+            ps.setDate(2, scheduleDate);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                scheduleID = rs.getInt("scheduleId");
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return scheduleID;
+    }
+
+    public void addScheduleTime(int scheduleID, ArrayList<Time> listTime) {
+        String sql = "INSERT INTO Schedule_Time(scheduleId, timeId) VALUES(?,?);";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DBContext db = new DBContext();
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql);
+            for (Time time : listTime) {
+                ps.setInt(1, scheduleID);
+                ps.setInt(2, time.getId());
+                ps.executeUpdate();
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+    }
+
 }

@@ -1,12 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.laptrinhweb.healthcare.services;
 
 import com.laptrinhweb.healthcare.dao.FacilityDAO;
 import com.laptrinhweb.healthcare.model.MedicalFacility;
 import com.laptrinhweb.healthcare.model.Time;
+import java.sql.Date;
 import java.util.ArrayList;
 
 /**
@@ -59,5 +56,25 @@ public class FacilityService {
         FacilityDAO facDAO = new FacilityDAO();
         return facDAO.getAllTimes();
     }
-    
+
+    public int getDoctorWorkingInfoId(int doctorId) {
+        FacilityDAO facDAO = new FacilityDAO();
+        return facDAO.getDoctorWorkingInfoId(doctorId);
+    }
+
+    public void addSchedule(int doctorWorkingInfoId, Date scheduleDate) {
+        FacilityDAO facDAO = new FacilityDAO();
+        facDAO.addSchedule(doctorWorkingInfoId, scheduleDate);
+    }
+
+    public int getScheduleID(int doctorWorkingInfoId, Date scheduleDate) {
+        FacilityDAO facDAO = new FacilityDAO();
+        return facDAO.getScheduleID(doctorWorkingInfoId, scheduleDate); 
+    }
+
+    public void addScheduleTime(int scheduleID, ArrayList<Time> listTime) {
+        FacilityDAO facDAO = new FacilityDAO();
+        facDAO.addScheduleTime(scheduleID, listTime);
+    }
+
 }

@@ -45,7 +45,7 @@
                             <ul class="breadcrumb">
                                 <li>
                                     <i class="ace-icon fa fa-home home-icon"></i>
-                                    <a href="<c:url value='/facility-home?facilityId=${facilityId}'/>">Trang chủ</a>
+                                    <a href="<c:url value='/facility-home?facilityId=${facilityId}'/>">Trang chủ cơ sở</a>
                                 </li>
                                 <li class="active">Đặt lịch cho bác sĩ</li>
                             </ul>
@@ -75,7 +75,7 @@
                                 <div class="row">
                                     <div class="col-xs-6">
                                         <div class="input-group input-group-sm">
-                                            <input type="text" id="datepicker" class="form-control" />
+                                            <input type="text" id="datepicker" data-date-format='yyyy-mm-dd' class="form-control" />
                                             <span class="input-group-addon">
                                                 <i class="ace-icon fa fa-calendar"></i>
                                             </span>
@@ -131,18 +131,19 @@
                     $(this).removeAttr('style');
                 } else {
                     $("." + className).css("background-color", "Orange");
+                    $("." + className).css("color", "#fff");
                     $("." + className).addClass("active");
                 }
             });
 
             $('.btn-save-schedule').on("click", function (e) {
                 var doctorId = $('#select-doctor').find(":selected").val();
-                var selected = $("#datepicker").val();
+                var selectedDate = $("#datepicker").val().toString();
                 var listTimeActived = [];
                 $('.pick-hour-container').find('span.active').each(function () {
                     listTimeActived.push($(this).attr('class'));
                 });
-                if (selected === "" && listTimeActived.length === 0) {
+                if (selectedDate === "" && listTimeActived.length === 0) {
                     $("#datepicker").css('border-color', 'red');
                     $('.pick-hour-container span').css('border-color', 'red');
                     $("#alert").addClass("alert alert-danger");
@@ -153,8 +154,8 @@
                         $('#alert').hide();
                     }, 3000);
                     e.preventDefault();
-                } else if (selected === "" || listTimeActived.length === 0) {
-                    if (selected === "") {
+                } else if (selectedDate === "" || listTimeActived.length === 0) {
+                    if (selectedDate === "") {
                         $("#datepicker").css('border-color', 'red');
                         $("#alert").addClass("alert alert-danger");
                         $('#alert').text('Vui lòng chọn ngày !');
@@ -176,17 +177,34 @@
                         }, 3000);
                     }
                     e.preventDefault();
+                } else {
+                    $.ajax({
+                        method: "POST",
+                        url: 'facility-add-schedule',
+                        dataType: 'json',
+                        data: {
+                            doctorId: doctorId,
+                            selectedDate: selectedDate,
+                            listTimeId: JSON.stringify(listTimeId)
+                        }
+                    });
+                    $("#alert").addClass("alert alert-success");
+                    $('#alert').text('Thêm lịch thành công !');
+                    $('#alert').show();
+                    setTimeout(function () {
+                        $('#alert').hide();
+                    }, 3000);
+                    e.preventDefault();
                 }
-                
-                e.preventDefault();
             });
             jQuery(function ($) {
 
                 $("#datepicker").datepicker({
                     showOtherMonths: true,
                     selectOtherMonths: false,
-                    format: 'mm/dd/yyyy',
-                    minDate: new Date()
+                    minDate: new Date(),
+                    changeMonth: true,
+                    changeYear: true,
                     //isRTL:true,
 
 
