@@ -10,7 +10,7 @@ public class Time {
 
     public Time() {
     }
-    
+
     public Time(int id, String value) {
         this.id = id;
         this.value = value;
