@@ -5,6 +5,7 @@ package com.laptrinhweb.healthcare.model;
  * @author LuanPC
  */
 public class DoctorInfo {
+    private int id;
     private int doctorId;
     private String doctorName;
     private int facilityId;
@@ -16,7 +17,11 @@ public class DoctorInfo {
     private int priceId;
     private String priceValue;
 
-    public DoctorInfo(int doctorId, String doctorName, int facilityId, String facilityName, int specialtyId, String specialtyName, int positionId, String positionName, int priceId, String priceValue) {
+    public DoctorInfo() {
+    }
+
+    public DoctorInfo(int id, int doctorId, String doctorName, int facilityId, String facilityName, int specialtyId, String specialtyName, int positionId, String positionName, int priceId, String priceValue) {
+        this.id = id;
         this.doctorId = doctorId;
         this.doctorName = doctorName;
         this.facilityId = facilityId;
@@ -27,6 +32,14 @@ public class DoctorInfo {
         this.positionName = positionName;
         this.priceId = priceId;
         this.priceValue = priceValue;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
     public int getDoctorId() {
