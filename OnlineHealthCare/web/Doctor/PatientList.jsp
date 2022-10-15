@@ -94,11 +94,11 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        
+
                                                         <c:choose>
                                                             <c:when test="${empty accounts}">
                                                             <p>Không có thông tin!</p>
-                                                        </c:when>
+                                                            </c:when>
                                                         <c:otherwise>
                                                             <c:forEach var="item" items="${accounts}" varStatus="loop">
                                                                 <c:set var="count" value="${(currentPage - 1) * 4}"/>
