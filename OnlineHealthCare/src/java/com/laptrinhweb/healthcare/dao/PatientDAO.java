@@ -174,7 +174,9 @@ public class PatientDAO extends DBContext {
                 + "where up.userId = u.id \n"
                 + "and a.statusId = 3 \n"
                 + "and a.userId = u.id \n"
-                + "and doctorWorkingInfoId = 1";
+                + "and doctorWorkingInfoId = 1"
+                + "CONCAT(firstName, ' ', lastName) like '%" + str + "%'\n";
+
         DBContext db = new DBContext();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -211,5 +213,61 @@ public class PatientDAO extends DBContext {
             }
         }
         return count;
+    }
+
+    public List<PatientSmall> searchPatientOfDoctor(int doctorID, String codeSearch, int start, int total) {
+        String sql = "select u.id, firstName, lastName, phoneNumber, a.bookingDate \n"
+                + "from Users u, User_Profile up, Appointment a\n"
+                + "where up.userId = u.id\n"
+                + "and a.statusId = 3 \n"
+                + "and a.userId = u.id \n"
+                + "and doctorWorkingInfoId = " + doctorID + "\n"
+                + "and CONCAT(firstName, ' ', lastName) like ? \n"
+                + "ORDER BY a.userId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DBContext db = new DBContext();
+        List<PatientSmall> listAccount = new ArrayList<>();
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql);
+            ps.setNString(1, "%" + codeSearch + "%");
+            ps.setInt(2, start);
+            ps.setInt(3, total);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                PatientSmall acc = new PatientSmall();
+                acc.setId(rs.getInt(1));
+                acc.setFirstName(rs.getNString(2));
+                acc.setLastName(rs.getNString(3));
+                acc.setPhoneNumber(rs.getString(4));
+                acc.setBookingDate(rs.getDate(5));
+                listAccount.add(acc);
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return listAccount;
+    }
+
+    public static void main(String[] args) {
+        PatientDAO patientDAO = new PatientDAO();
+        int recordsPerPage = 4;
+        List<PatientSmall> a = patientDAO.searchPatientOfDoctor(1, "N", 0, recordsPerPage);
+        for (PatientSmall patientSmall : a) {
+            System.out.println(patientSmall);
+        }
     }
 }

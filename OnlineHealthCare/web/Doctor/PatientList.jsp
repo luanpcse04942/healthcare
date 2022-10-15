@@ -50,7 +50,7 @@
                             <div class="nav-search" id="nav-search">
                                 <form class="form-search">
                                     <span class="input-icon">
-                                        <input name="search" value="${nameSearch}" type="text" 
+                                        <input name="NameSearch" value="${nameSearch}" type="text" 
                                                placeholder="Tìm tên, email ..." class="nav-search-input" 
                                                style="width:300px !important" id="nav-search-input" autocomplete="off" />
                                         <button type="submit" class="ace-icon fa fa-search nav-search-icon"></button>
