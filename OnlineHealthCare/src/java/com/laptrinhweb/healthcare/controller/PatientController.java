@@ -1,5 +1,8 @@
 package com.laptrinhweb.healthcare.controller;
 
+import com.laptrinhweb.healthcare.model.User;
+import com.laptrinhweb.healthcare.model.dto.PatientSmall;
+import com.laptrinhweb.healthcare.services.DoctorService;
 import com.laptrinhweb.healthcare.services.PatientService;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -8,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
@@ -30,6 +34,25 @@ public class PatientController extends HttpServlet {
             request.setAttribute("accounts", patientService.getListAccounts(page, 1));
             request.setAttribute("noOfPages", patientService.getNoOfPage(search));
             request.setAttribute("currentPage", page);
+            RequestDispatcher rd = request.getRequestDispatcher("Doctor/PatientList.jsp");
+            rd.forward(request, response);
+        }
+
+        if (request.getServletPath().equals("/doctor-patient-search")) {
+            if (request.getParameter("page") != null) {
+                page = Integer.parseInt(request.getParameter("page"));
+            }
+            
+            search = request.getParameter("NameSearch").trim();
+            search = search.replaceAll("\\s+", " ");
+
+            PatientService patientService = new PatientService();
+
+            request.setAttribute("accounts", patientService.getPatientsSearchByName(1, page, search));
+            request.setAttribute("noOfPages", patientService.getNoOfPage(search));
+            request.setAttribute("currentPage", page);
+            request.setAttribute("nameSearch", search);
+            request.setAttribute("isSearching", true);
             RequestDispatcher rd = request.getRequestDispatcher("Doctor/PatientList.jsp");
             rd.forward(request, response);
         }

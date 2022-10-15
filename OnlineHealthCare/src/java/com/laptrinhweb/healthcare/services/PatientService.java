@@ -4,8 +4,11 @@
  */
 package com.laptrinhweb.healthcare.services;
 
+import com.laptrinhweb.healthcare.dao.DoctorDAO;
 import com.laptrinhweb.healthcare.dao.PatientDAO;
+import com.laptrinhweb.healthcare.model.User;
 import com.laptrinhweb.healthcare.model.dto.PatientSmall;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,22 +16,23 @@ import java.util.List;
  * @author LuanPC
  */
 public class PatientService {
-       public List<PatientSmall> getListAccounts(int page, int doctorID) {
+
+    public List<PatientSmall> getListAccounts(int page, int doctorID) {
         PatientDAO patientDAO = new PatientDAO();
         int recordsPerPage = 6;
-        return patientDAO.findAllPatients((page - 1) * recordsPerPage, recordsPerPage, doctorID);    
+        return patientDAO.findAllPatients((page - 1) * recordsPerPage, recordsPerPage, doctorID);
     }
-       
-       public int getNoOfPage(String search) {
+
+    public int getNoOfPage(String search) {
         PatientDAO patientDAO = new PatientDAO();
         int noOfRecords = 0;
-        if(search.isEmpty()) 
-        {
+        
+        if (search.isEmpty()) {
             noOfRecords = patientDAO.getNoOfRecordAccounts();
-        }else {
+        } else {
             noOfRecords = patientDAO.getNoOfRecordAccountsSearch(search);
         }
-        
+
         //calculate number of page
         int recordsPerPage = 6;
         int noOfPages = noOfRecords / recordsPerPage;
@@ -37,4 +41,12 @@ public class PatientService {
         }
         return noOfPages;
     }
+
+    public List<PatientSmall> getPatientsSearchByName(int doctorID, int page, String search) {
+        PatientDAO patientDAO = new PatientDAO();
+        int recordsPerPage = 4;
+        page = 1;
+        return patientDAO.searchPatientOfDoctor(doctorID,search, (page - 1) * recordsPerPage, recordsPerPage);
+    }
+    
 }
