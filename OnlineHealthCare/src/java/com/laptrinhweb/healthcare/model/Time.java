@@ -8,6 +8,9 @@ public class Time {
     private int id;
     private String value;
 
+    public Time() {
+    }
+    
     public Time(int id, String value) {
         this.id = id;
         this.value = value;

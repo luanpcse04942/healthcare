@@ -4,10 +4,12 @@
  */
 package com.laptrinhweb.healthcare.services;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author LuanPC
  */
 public class PatientService {
-    
+   
 }
