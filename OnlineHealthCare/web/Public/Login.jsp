@@ -10,11 +10,13 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="User login page" />
+
         <title>Trang Đăng Nhập</title>
 
-        <meta name="description" content="User login page" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
         <link rel="stylesheet" href="template/login/assets/css/bootstrap.min.css" />
         <link rel="stylesheet" href="template/login/assets/font-awesome/4.2.0/css/font-awesome.min.css" />
         <link rel="stylesheet" href="template/login/assets/fonts/fonts.googleapis.com.css" />
@@ -36,12 +38,7 @@
                                     <span class="white" id="id-text2">System</span>
                                 </h1>
                             </div>
-                            <div>
-                                <a href='<c:url value="/trang-chu" />' data-target="#forgot-box" class="forgot-password-link">
-                                    <i class="ace-icon fa fa-arrow-left"></i>
-                                    Quay lại trang chủ
-                                </a>
-                            </div>
+
                             <div class="space-6"></div>
 
                             <div class="position-relative">
@@ -59,14 +56,16 @@
                                                 <fieldset>
                                                     <label class="block clearfix">
                                                         <span class="block input-icon input-icon-right">
-                                                            <input type="text" class="form-control" name="username" placeholder="Email" />
+                                                            <input type="email" class="form-control" 
+                                                                   name="email-login" placeholder="Email" />
                                                             <i class="ace-icon fa fa-user"></i>
                                                         </span>
                                                     </label>
 
                                                     <label class="block clearfix">
                                                         <span class="block input-icon input-icon-right">
-                                                            <input type="password" class="form-control" name="password" placeholder="Mật khẩu" />
+                                                            <input type="password" class="form-control" 
+                                                                   name="password-login" placeholder="Mật khẩu" />
                                                             <i class="ace-icon fa fa-lock"></i>
                                                         </span>
                                                     </label>
@@ -74,11 +73,6 @@
                                                     <div class="space"></div>
 
                                                     <div class="clearfix">
-                                                        <label class="inline">
-                                                            <input type="checkbox" class="ace" />
-                                                            <span class="lbl"> Ghi nhớ</span>
-                                                        </label>
-
                                                         <button type="submit" class="width-40 pull-right btn btn-sm btn-primary">
                                                             <i class="ace-icon fa fa-key"></i>
                                                             <span class="bigger-110">Đăng Nhập</span>
@@ -228,20 +222,28 @@
                                         </div>
                                     </div><!-- /.widget-body -->
                                 </div><!-- /.signup-box -->
+
+                                <div>
+                                    <a href='<c:url value="/trang-chu" />' 
+                                       data-target="#forgot-box" class="forgot-password-link">
+                                        <i class="ace-icon fa fa-arrow-left"></i>
+                                        Quay lại trang chủ
+                                    </a>
+                                </div>
                             </div><!-- /.position-relative -->
 
                             <div class="navbar-fixed-top align-right">
                                 <br />
                                 &nbsp;
-                                <a id="btn-login-dark" href="#">Dark</a>
+                                <button id="btn-login-dark">Dark</button>
                                 &nbsp;
                                 <span class="blue">/</span>
                                 &nbsp;
-                                <a id="btn-login-blur" href="#">Blur</a>
+                                <button id="btn-login-blur">Blur</button>
                                 &nbsp;
                                 <span class="blue">/</span>
                                 &nbsp;
-                                <a id="btn-login-light" href="#">Light</a>
+                                <button id="btn-login-light">Light</button>
                                 &nbsp; &nbsp; &nbsp;
                             </div>
                         </div>

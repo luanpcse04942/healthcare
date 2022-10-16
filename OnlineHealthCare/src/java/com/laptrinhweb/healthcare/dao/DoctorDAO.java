@@ -44,7 +44,7 @@ public class DoctorDAO extends DBContext {
                 acc.setAddress(rs.getString(8));
                 acc.setImages(rs.getString(9));
                 acc.setOnlineStatus(rs.getBoolean(5));
-                acc.setActivedStatus(rs.getInt(6));
+                acc.setActivedStatus(rs.getBoolean(6));
                 listAccount.add(acc);
             }
         } catch (SQLException e) {

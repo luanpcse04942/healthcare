@@ -1,0 +1,46 @@
+package com.laptrinhweb.healthcare.dao;
+
+import com.laptrinhweb.healthcare.context.DBContext;
+import com.laptrinhweb.healthcare.model.User;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class LoginDAO extends DBContext {
+
+    public User login(String email, String password) {
+        String sql = "SELECT * FROM Users u, User_Profile p\n"
+                + "where email like ? and password like ?\n"
+                + "and u.id =p.userId";
+        PreparedStatement ps;
+        ResultSet rs;
+        DBContext db = new DBContext();
+        User acc = null;
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+            ps.setString(2, password);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                acc = new User();
+                acc.setId(rs.getInt(1));
+                acc.setFirstName(rs.getNString(2));
+                acc.setLastName(rs.getNString(3));
+                acc.setEmail(rs.getString(4));
+                acc.setPassword(rs.getString(5));
+                acc.setOnlineStatus(rs.getBoolean(6));
+                acc.setActivedStatus(rs.getBoolean(7));
+                acc.setCreatedAt(rs.getDate(8));
+                acc.setUpdatedAt(rs.getDate(9));
+                acc.setGender(rs.getString(12));
+                acc.setPhoneNumber(rs.getString(13));
+                acc.setAddress(rs.getNString(14));
+                acc.setImages(rs.getString(15));
+            }
+        } catch (SQLException e) {
+        }
+        return acc;
+    }
+
+}
