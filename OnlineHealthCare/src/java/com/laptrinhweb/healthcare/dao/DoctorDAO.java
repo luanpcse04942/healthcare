@@ -231,4 +231,44 @@ public class DoctorDAO extends DBContext {
         }
         return count;
     }
+
+    public ArrayList<User> getDoctorsOfFacility(int facilityId) {
+        StringBuilder sql = new StringBuilder("SELECT dwi.doctorId, n.firstName, n.lastName FROM Doctor_Working_Info dwi ");
+        sql.append(" JOIN [MedicalFacilityInfo] mfi ON dwi.medicalFacilityInfoId = mfi.id ");
+        sql.append(" JOIN Users u ON u.id = mfi.medicalFacilityId ");
+        sql.append(" JOIN (SELECT t.id AS id ,t.firstName ,t.lastName FROM Users t) n ");
+        sql.append(" ON n.id = dwi.doctorId and u.id = ? ");
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DBContext db = new DBContext();
+        ArrayList<User> doctors = new ArrayList<>();
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql.toString());
+            ps.setInt(1, facilityId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                User acc = new User();
+                acc.setId(rs.getInt("doctorId"));
+                acc.setFirstName(rs.getString("firstName"));
+                acc.setLastName(rs.getString("lastName"));
+                doctors.add(acc);
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return doctors;
+    }
 }

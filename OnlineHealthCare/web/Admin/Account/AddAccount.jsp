@@ -51,51 +51,16 @@
                                 ${messageResponse}
                             </div>
                         </c:if>
-                        <form action="<c:url value='/add-account'/>" id="formSubmit" method="post" enctype="multipart/form-data">
-                            <div class="form-group col-sm-12">
-                                <label>Email</label>
-                                <input name="email" type="email" class="form-control"  aria-describedby="emailHelp" placeholder="Nhập vào email">
-                            </div>
-                            <div class="form-group col-sm-12">
-                                <label>Mật khẩu</label>
-                                <input name="password" type="password" class="form-control" placeholder="Nhập vào mật khẩu">
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label>Họ</label>
-                                    <input name="firstName" type="text" class="form-control">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label>Tên</label>
-                                    <input name="lastName" type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-12">
-                                <select class="form-control" id="form-field-select-1" name="role">
-                                    <option >--Chọn vai trò--</option>
-                                    <option value="1">Quản trị viên</option>
-                                    <option value="2">Bác sĩ</option>
-                                    <option value="4">Cơ sở y tế</option>
-                                </select>
-                            </div>
+                        <form action="<c:url value='/'/>" id="formSubmit" method="post" enctype="multipart/form-data">
                             <div class="form-group col-sm-12">
                                 <select class="form-control" id="form-field-select-1" name="province">
-                                    <option >--Chọn tỉnh/thành--</option>
-                                    <c:forEach items="${provinces}" var="province">
-                                        <option value="${province.id}">
-                                            ${province.name}
+                                    <option >--Chọn bác sĩ--</option>
+                                    <c:forEach items="${doctors}" var="doctor">
+                                        <option value="${doctor.id}">
+                                            ${doctor.firstName} ${doctor.lastName}
                                         </option>
                                     </c:forEach>
                                 </select>
-                            </div>
-                            <div class="form-group col-sm-12">
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <label class="custom-file-label" >Chọn ảnh</label>
-                                        <input type="file" name="file" class="custom-file-input">
-                                    </div>
-                                </div>
                             </div>
                             <div class="form-group col-sm-9">
                                 <button type="submit" onclick="hideMessage()" class="btn btn-primary">Thêm</button>

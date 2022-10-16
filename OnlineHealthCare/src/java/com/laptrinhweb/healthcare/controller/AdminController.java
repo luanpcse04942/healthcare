@@ -19,7 +19,7 @@ import java.io.InputStream;
  */
 @MultipartConfig
 @WebServlet(name = "AdminController", urlPatterns = {"/admin-account", "/admin-account-detail",
-    "/admin-add-account", "/admin-account-search", "/admin-home", "/add-account"})
+    "/admin-add-account", "/admin-account-search", "/admin-home", "/add-account", "/admin-dashboard"})
 public class AdminController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -31,7 +31,11 @@ public class AdminController extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("Admin/HomeAdmin.jsp");
             rd.forward(request, response);
         }
-
+        
+        if (request.getServletPath().equals("/admin-dashboard")) {
+            RequestDispatcher rd = request.getRequestDispatcher("Admin/Dashboard.jsp");
+            rd.forward(request, response);
+        }
         if (request.getServletPath().equals("/admin-account")) {
             if (request.getParameter("page") != null) {
                 page = Integer.parseInt(request.getParameter("page"));

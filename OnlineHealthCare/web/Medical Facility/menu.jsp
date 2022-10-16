@@ -52,7 +52,7 @@
                 </li>
                 
                 <li>
-                    <a href='#'>
+                    <a href='<c:url value="/booking-schedule?facilityId=${facilityId}"/>'>
                         <i class="menu-icon fa fa-caret-right"></i>
                         Tạo lịch cho bác sĩ
                     </a>
