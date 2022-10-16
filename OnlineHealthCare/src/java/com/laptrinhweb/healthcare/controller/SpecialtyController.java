@@ -153,15 +153,17 @@ public class SpecialtyController extends HttpServlet {
             boolean editSpecSuccess = false;
             editSpecSuccess = specialtyService.updateSpecialty(id, name, description, fileName);
             if(editSpecSuccess) {
-                request.setAttribute("messageResponse", "Thêm mới thành công !");
+                request.setAttribute("messageResponse", "Update thành công !");
                 request.setAttribute("alert", "success");
             }else {
-                request.setAttribute("messageResponse", "Thêm mới không thành công !");
+                request.setAttribute("messageResponse", "Update không thành công !");
                 request.setAttribute("alert", "danger");
             }
-            RequestDispatcher rd = request.getRequestDispatcher("Admin/Specialty/AddSpecialty.jsp");
-            rd.forward(request, response);
             
+            Specialty spec = specialtyService.getSpecialtyInfo(id);
+            request.setAttribute("specialty", spec);
+            RequestDispatcher rd = request.getRequestDispatcher("Admin/Specialty/SpecialtyDetail.jsp");
+            rd.forward(request, response);
         }
     }
 }

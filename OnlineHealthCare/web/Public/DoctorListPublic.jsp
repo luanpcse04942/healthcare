@@ -172,7 +172,7 @@
 
                             <div class="card-body">
                                 <div class="card-img-actions">
-                                    <img src="static/images/Doctor/${item.images}" class="card-img img-fluid" width="85" height="350" alt="">
+                                    <img src="static/images/avatars/${item.images}" class="card-img img-fluid" width="85" height="350" alt="">
                                 </div>
                             </div>
 
