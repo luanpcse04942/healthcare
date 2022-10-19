@@ -56,7 +56,7 @@
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-3 center">
                                         <span class="profile-picture">
-                                            <img alt="Avatar" src="<c:url value='/static/images/avatars/${account.images}' />" />
+                                            <img alt="Avatar" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${account.images}' />" />
                                         </span>
                                     </div><!-- /.col -->
 

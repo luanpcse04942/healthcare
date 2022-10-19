@@ -173,7 +173,7 @@
             <c:forEach var="specialty" items="${listSpecialty}">
                 <div class="specialty">
                     <div class="grid-img"> 
-                        <img width="300px" height="200px" src="<c:url value='/static/images/Specialty/${specialty.image}' />" />
+                        <img alt="Specialty Image" width="300px" height="200px" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${specialty.image}' />" />
                     </div>
                     <div class="grid-name">${specialty.name}</div>
                 </div>
@@ -191,7 +191,7 @@
             <c:forEach var="facility" items="${listFacility}">
                 <div class="specialty">
                     <div class="grid-img"> 
-                        <img width="300px" height="200px" src="<c:url value='/static/images/Facility/${facility.images}' />" />
+                        <img width="300px" height="200px" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${facility.images}' />" />
                     </div>
                     <div class="grid-name">
                         <span>${facility.firstName} ${facility.lastName}</span>
@@ -209,8 +209,8 @@
         <div class="spec-list">
             <c:forEach var="doctor" items="${listDoctor}">
                 <div class="doctors">
-                    <div class="doctors-image grid-img"> 
-                        <img width="120" height="120" src="<c:url value='/static/images/Doctor/${doctor.images}' />" />
+                    <div class="doctors-image grid-img">
+                        <img width="120" height="120" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${doctor.images}' />" />
                     </div>
                     <div class="doctor-name">${doctor.firstName} ${doctor.lastName}</div>
                 </div>

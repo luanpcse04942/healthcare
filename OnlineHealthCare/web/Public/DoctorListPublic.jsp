@@ -172,7 +172,7 @@
 
                             <div class="card-body">
                                 <div class="card-img-actions">
-                                    <img src="static/images/avatars/${item.images}" class="card-img img-fluid" width="85" height="350" alt="">
+                                    <img alt="Avatar" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${item.images}' />" class="card-img img-fluid" width="85" height="350" alt=""/>
                                 </div>
                             </div>
 

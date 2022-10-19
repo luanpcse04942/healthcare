@@ -157,7 +157,7 @@
 
                             <div class="card-body">
                                 <div class="card-img-actions">
-                                    <img src="static/images/Specialty/${item.image}" class="card-img img-fluid" width="96" height="350" alt="">
+                                    <img alt="Avatar" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${item.image}' />"  class="card-img img-fluid" width="96" height="350" alt=""/>
                                 </div>
                             </div>
 

@@ -42,12 +42,13 @@ public class DoctorDAO extends DBContext {
                 acc.setGender(rs.getString(12));
                 acc.setPhoneNumber(rs.getString(7));
                 acc.setAddress(rs.getString(8));
-                acc.setImages(rs.getString(9));
+                String base64StringImage = new String(rs.getBytes(9), "UTF-8");
+                acc.setImages(base64StringImage);
                 acc.setOnlineStatus(rs.getBoolean(5));
                 acc.setActivedStatus(rs.getInt(6));
                 listAccount.add(acc);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
@@ -88,10 +89,11 @@ public class DoctorDAO extends DBContext {
                 acc.setGender(rs.getString("gender"));
                 acc.setPhoneNumber(rs.getString("phoneNumber"));
                 acc.setAddress(rs.getString("address"));
-                acc.setImages(rs.getString("image"));
+                String base64StringImage = new String(rs.getBytes("image"), "UTF-8");
+                acc.setImages(base64StringImage);
                 listAccount.add(acc);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
         } finally {
             try {
                 if (conn != null) {
@@ -129,10 +131,11 @@ public class DoctorDAO extends DBContext {
                 acc.setGender(rs.getString("gender"));
                 acc.setPhoneNumber(rs.getString("phoneNumber"));
                 acc.setAddress(rs.getString("address"));
-                acc.setImages(rs.getString("image"));
+                String base64StringImage = new String(rs.getBytes("image"), "UTF-8");
+                acc.setImages(base64StringImage);
                 listAccount.add(acc);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
         } finally {
             try {
                 if (conn != null) {
