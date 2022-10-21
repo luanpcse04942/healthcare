@@ -11,8 +11,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
-import java.io.FileOutputStream;
-import java.io.InputStream;
+import java.io.FileInputStream;
+import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.apache.tomcat.util.codec.binary.Base64;
 
 /**
  *
@@ -101,22 +102,19 @@ public class SpecialtyController extends HttpServlet {
             Part filePart = request.getPart("file");
             String fileName = filePart.getSubmittedFileName();
 
-            String path = request.getServletContext().getRealPath("/static/images/Specialty/" + fileName);
-            FileOutputStream fops = new FileOutputStream(path);
-            InputStream is = filePart.getInputStream();
-            try {
-                byte[] byt = new byte[is.available()];
-                is.read();
-                fops.write(byt);
-                fops.close();
-                System.out.println(path);
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            FileInputStream mFileInputStream = new FileInputStream("C:\\Users\\Administrator\\Desktop\\images\\Specialty\\" + fileName);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] b = new byte[1024];
+            int bytesRead = 0;
+            while ((bytesRead = mFileInputStream.read(b)) != -1) {
+                bos.write(b, 0, bytesRead);
             }
+            byte[] ba = bos.toByteArray();
+            byte[] encoded = Base64.encodeBase64(ba);
             
             SpecialtyService specialtyService = new SpecialtyService();
             boolean addSpecSuccess = false;
-            addSpecSuccess = specialtyService.addSpecialty(name, description, fileName);
+            addSpecSuccess = specialtyService.addSpecialty(name, description, encoded);
             if(addSpecSuccess) {
                 request.setAttribute("messageResponse", "Thêm mới thành công !");
                 request.setAttribute("alert", "success");
@@ -136,32 +134,31 @@ public class SpecialtyController extends HttpServlet {
             Part filePart = request.getPart("file");
             String fileName = filePart.getSubmittedFileName();
 
-            String path = request.getServletContext().getRealPath("/static/images/Specialty/" + fileName);
-            FileOutputStream fops = new FileOutputStream(path);
-            InputStream is = filePart.getInputStream();
-            try {
-                byte[] byt = new byte[is.available()];
-                is.read();
-                fops.write(byt);
-                fops.close();
-                System.out.println(path);
-            } catch (Exception ex) {
-                ex.printStackTrace();
+             FileInputStream mFileInputStream = new FileInputStream("C:\\Users\\Administrator\\Desktop\\images\\Specialty\\" + fileName);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] b = new byte[1024];
+            int bytesRead = 0;
+            while ((bytesRead = mFileInputStream.read(b)) != -1) {
+                bos.write(b, 0, bytesRead);
             }
+            byte[] ba = bos.toByteArray();
+            byte[] encoded = Base64.encodeBase64(ba);
             
             SpecialtyService specialtyService = new SpecialtyService();
             boolean editSpecSuccess = false;
-            editSpecSuccess = specialtyService.updateSpecialty(id, name, description, fileName);
+            editSpecSuccess = specialtyService.updateSpecialty(id, name, description, encoded);
             if(editSpecSuccess) {
-                request.setAttribute("messageResponse", "Thêm mới thành công !");
+                request.setAttribute("messageResponse", "Update thành công !");
                 request.setAttribute("alert", "success");
             }else {
-                request.setAttribute("messageResponse", "Thêm mới không thành công !");
+                request.setAttribute("messageResponse", "Update không thành công !");
                 request.setAttribute("alert", "danger");
             }
-            RequestDispatcher rd = request.getRequestDispatcher("Admin/Specialty/AddSpecialty.jsp");
-            rd.forward(request, response);
             
+            Specialty spec = specialtyService.getSpecialtyInfo(id);
+            request.setAttribute("specialty", spec);
+            RequestDispatcher rd = request.getRequestDispatcher("Admin/Specialty/SpecialtyDetail.jsp");
+            rd.forward(request, response);
         }
     }
 }

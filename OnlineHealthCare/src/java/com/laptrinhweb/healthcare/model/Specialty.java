@@ -41,6 +41,6 @@ public class Specialty {
     public void setImage(String image) {
         this.image = image;
     }
-    
-    
+
+   
 }

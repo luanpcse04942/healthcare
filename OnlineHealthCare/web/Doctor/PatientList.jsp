@@ -36,13 +36,13 @@
             <!-- header -->
 
             <div class="main-content">
-                <form action="<c:url value='/admin-account-search'/>" method="get">
+                <form action="<c:url value='/doctor-patient-search'/>" method="get">
                     <div class="main-content-inner">
                         <div class="breadcrumbs ace-save-state" id="breadcrumbs">
                             <ul class="breadcrumb">
                                 <li>
                                     <i class="ace-icon fa fa-home home-icon"></i>
-                                    <a href="<c:url value='/admin-home'/>">Trang chủ</a>
+                                    <a href="<c:url value='/doctor-patient-list'/>">Trang chủ</a>
                                 </li>
                                 <li class="active">Danh sách bệnh nhân</li>
                             </ul>
@@ -50,7 +50,9 @@
                             <div class="nav-search" id="nav-search">
                                 <form class="form-search">
                                     <span class="input-icon">
-                                        <input name="search" value="${nameSearch}" type="text" placeholder="Tìm tên, email ..." class="nav-search-input" style="width:300px !important" id="nav-search-input" autocomplete="off" />
+                                        <input name="NameSearch" value="${nameSearch}" type="text" 
+                                               placeholder="Tìm tên, email ..." class="nav-search-input" 
+                                               style="width:300px !important" id="nav-search-input" autocomplete="off" />
                                         <button type="submit" class="ace-icon fa fa-search nav-search-icon"></button>
                                     </span>
                                 </form>
@@ -64,21 +66,6 @@
                                             ${messageResponse}
                                         </div>
                                     </c:if>
-                                    <div class="widget-box table-filter">
-                                        <div class="table-btn-controls">
-                                            <div class="pull-right tableTools-container">
-                                                <div class="dt-buttons btn-overlap btn-group">
-                                                    <a flag="info"
-                                                       class="dt-button buttons-colvis btn btn-white btn-primary btn-bold" data-toggle="tooltip"
-                                                       title='Thêm tài khoản' href='<c:url value="/admin-add-account"/>'>
-                                                        <span>
-                                                            <i class="fa fa-plus-circle bigger-110 purple"></i>
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="row">
                                         <div class="col-xs-12">
                                             <div class="table-responsive">
@@ -94,27 +81,26 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        
                                                         <c:choose>
                                                             <c:when test="${empty accounts}">
                                                             <p>Không có thông tin!</p>
-                                                        </c:when>
+                                                            </c:when>
                                                         <c:otherwise>
                                                             <c:forEach var="item" items="${accounts}" varStatus="loop">
                                                                 <c:set var="count" value="${(currentPage - 1) * 4}"/>
                                                                 <tr>
                                                                     <td>${loop.index + count + 1}</td>
                                                                     <td>${item.firstName} ${item.lastName}</td>
-                                                                    <td>${item.email}</td>
-                                                                    <td>${item.gender}</td>
                                                                     <td>${item.phoneNumber}</td>
-                                                                    <td>${item.roleName}</td>
+                                                                    <td>${item.bookingDate}</td>
+                                                                    <td>Đã khám xong</td>
                                                                     <td>
                                                                         <c:url var="viewDetail" value="/admin-account-detail">
                                                                             <c:param name="userId" value="${item.id}"/>
                                                                         </c:url>
                                                                         <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
-                                                                           title="Xem chi tiết" href="${viewDetail}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                                           title="Xem chi tiết" href="${viewDetail}">
+                                                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                                                         </a>
                                                                     </td>
                                                                 </tr>

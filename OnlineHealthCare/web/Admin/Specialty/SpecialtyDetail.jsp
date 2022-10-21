@@ -50,6 +50,7 @@
                     </div>
                     <div class="container">
                         <h2>Chi tiết chuyên khoa</h2>
+                        <div id="alert"></div>
                         <c:if test="${not empty messageResponse}">
                             <div class="alert alert-${alert}">
                                 ${messageResponse}
@@ -58,27 +59,27 @@
                         <form action="<c:url value='/edit-specialty?specialtyId=${specialty.id}'/>" id="formSubmit" method="post" enctype="multipart/form-data">
                             <div class="form-group col-sm-12">
                                 <label>Tên chuyên khoa</label>
-                                <input name="name" type="text" value="${specialty.name}" class="form-control"  aria-describedby="emailHelp" placeholder="Nhập vào tên chuyên khoa">
+                                <input id="name" name="name" type="text" value="${specialty.name}" class="form-control" placeholder="Nhập vào tên chuyên khoa">
                             </div>
                             <div class="form-group col-sm-12">
                                 <label>Mô tả </label>
-                                <textarea name="description" type="text" class="form-control" placeholder="Nhập vào mô tả ">${specialty.description}</textarea>
+                                <textarea id="description" name="description" type="text" class="form-control" placeholder="Nhập vào mô tả ">${specialty.description}</textarea>
                             </div>
                             <div class="form-group col-sm-12">
                                 <span class="profile-picture">
-                                    <img class="editable img-responsive" alt="Alex's Avatar" id="avatar2" src="<c:url value='/static/images/Specialty/${specialty.image}' />" />
+                                    <img alt="Avatar" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${specialty.image}' />" />
                                 </span>
                             </div>
                             <div class="form-group col-sm-12">
                                 <div class="input-group">
                                     <div class="custom-file">
                                         <label class="custom-file-label" >Chọn ảnh</label>
-                                        <input type="file" name="file" class="custom-file-input">
+                                        <input id="file" type="file" name="file" class="custom-file-input">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group col-sm-9">
-                                <button type="submit" class="btn btn-primary">Sửa</button>
+                                <button type="submit" class="btn btn-primary btn-edit-specialty">Sửa</button>
                             </div>
                         </form>
                     </div>
@@ -94,7 +95,40 @@
             </a>
         </div>
 
-
+        <script>
+            $('.btn-edit-specialty').on("click", function (e) {
+                var name = $('#name').val();
+                var description = $('#description').val();
+                var file = $('#file').val();
+                if (name === "" || description === "" || file === "") {
+                    if (name === "") {
+                        $('#name').css('border-color', 'red');
+                        setTimeout(function () {
+                            $("#name").css('border-color', '#d5d5d5');
+                        }, 3000);
+                    }
+                    if (description === "") {
+                        $('#description').css('border-color', 'red');
+                        setTimeout(function () {
+                            $("#description").css('border-color', '#d5d5d5');
+                        }, 3000);
+                    }
+                    if (file === "") {
+                        $('#choose-image').css('border-color', 'red ');
+                        setTimeout(function () {
+                            $("#file").css('border', '#d5d5d5');
+                        }, 3000);
+                    }
+                    $("#alert").addClass("alert alert-danger");
+                    $('#alert').text('Vui lòng nhập thông tin !');
+                    $('#alert').show();
+                    setTimeout(function () {
+                        $('#alert').hide();
+                    }, 3000);
+                    e.preventDefault();
+                }
+            });
+        </script>
         <script src="<c:url value='/template/admin/assets/js/bootstrap.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/jquery-ui.custom.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/jquery.ui.touch-punch.min.js' />"></script>
@@ -110,103 +144,5 @@
         <script src="<c:url value='/template/admin/assets/js/ace-editable.min.js ' />"></script>
         <!-- page specific plugin scripts -->
         <script src="<c:url value='/template/admin/assets/js/jquery-ui.min.js'/>"></script>
-        <!-- inline scripts related to this page -->
-        <script type="text/javascript">
-        jQuery(function ($) {
-            //another option is using modals
-            $('#avatar2').on('click', function () {
-                var modal =
-                        '<div class="modal fade">\
-                                  <div class="modal-dialog">\
-                                   <div class="modal-content">\
-                                        <div class="modal-header">\
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>\
-                                                <h4 class="blue">Change Avatar</h4>\
-                                        </div>\
-                                        \
-                                        <form class="no-margin">\
-                                         <div class="modal-body">\
-                                                <div class="space-4"></div>\
-                                                <div style="width:75%;margin-left:12%;"><input type="file" name="file-input" /></div>\
-                                         </div>\
-                                        \
-                                         <div class="modal-footer center">\
-                                                <button type="submit" class="btn btn-sm btn-success"><i class="ace-icon fa fa-check"></i> Submit</button>\
-                                                <button type="button" class="btn btn-sm" data-dismiss="modal"><i class="ace-icon fa fa-times"></i> Cancel</button>\
-                                         </div>\
-                                        </form>\
-                                  </div>\
-                                 </div>\
-                                </div>';
-
-
-                var modal = $(modal);
-                modal.modal("show").on("hidden", function () {
-                    modal.remove();
-                });
-
-                var working = false;
-
-                var form = modal.find('form:eq(0)');
-                var file = form.find('input[type=file]').eq(0);
-                file.ace_file_input({
-                    style: 'well',
-                    btn_choose: 'Click to choose new avatar',
-                    btn_change: null,
-                    no_icon: 'ace-icon fa fa-picture-o',
-                    thumbnail: 'small',
-                    before_remove: function () {
-                        //don't remove/reset files while being uploaded
-                        return !working;
-                    },
-                    allowExt: ['jpg', 'jpeg', 'png', 'gif'],
-                    allowMime: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']
-                });
-
-                form.on('submit', function () {
-                    if (!file.data('ace_input_files'))
-                        return false;
-
-                    file.ace_file_input('disable');
-                    form.find('button').attr('disabled', 'disabled');
-                    form.find('.modal-body').append("<div class='center'><i class='ace-icon fa fa-spinner fa-spin bigger-150 orange'></i></div>");
-
-                    var deferred = new $.Deferred;
-                    working = true;
-                    deferred.done(function () {
-                        form.find('button').removeAttr('disabled');
-                        form.find('input[type=file]').ace_file_input('enable');
-                        form.find('.modal-body > :last-child').remove();
-
-                        modal.modal("hide");
-
-                        var thumb = file.next().find('img').data('thumb');
-                        if (thumb)
-                            $('#avatar2').get(0).src = thumb;
-
-                        working = false;
-                    });
-
-
-                    setTimeout(function () {
-                        deferred.resolve();
-                    }, parseInt(Math.random() * 800 + 800));
-
-                    return false;
-                });
-
-            });
-
-            /////////////////////////////////////
-            $(document).one('ajaxloadstart.page', function (e) {
-                //in ajax mode, remove remaining elements before leaving page
-                try {
-                    $('.editable').editable('destroy');
-                } catch (e) {
-                }
-                $('[class*=select2]').remove();
-            });
-        });
-        </script>
     </body>
 </html>

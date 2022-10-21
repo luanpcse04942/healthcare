@@ -44,7 +44,7 @@ public class SpecialtyService {
         return specialties;
     }
 
-    public boolean addSpecialty(String name, String description, String fileName) {
+    public boolean addSpecialty(String name, String description, byte[] fileName) {
         SpecialtyDAO specialtyDAO = new SpecialtyDAO();
         boolean addSpecSuccess = false;
         addSpecSuccess = specialtyDAO.addSpecialty(name, description, fileName);
@@ -57,7 +57,7 @@ public class SpecialtyService {
         return spec;
     }
 
-    public boolean updateSpecialty(int id, String name, String description, String fileName) {
+    public boolean updateSpecialty(int id, String name, String description, byte[] fileName) {
         SpecialtyDAO specialtyDAO = new SpecialtyDAO();
         boolean editSpecSuccess = false;
         editSpecSuccess = specialtyDAO.updateSpecialty(id, name, description, fileName);
