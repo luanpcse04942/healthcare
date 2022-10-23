@@ -100,7 +100,7 @@
                 var name = $('#name').val();
                 var description = $('#description').val();
                 var file = $('#file').val();
-                if (name === "" || description === "" || file === "") {
+                if (name === "" || description === "") {
                     if (name === "") {
                         $('#name').css('border-color', 'red');
                         setTimeout(function () {
@@ -111,12 +111,6 @@
                         $('#description').css('border-color', 'red');
                         setTimeout(function () {
                             $("#description").css('border-color', '#d5d5d5');
-                        }, 3000);
-                    }
-                    if (file === "") {
-                        $('#choose-image').css('border-color', 'red ');
-                        setTimeout(function () {
-                            $("#file").css('border', '#d5d5d5');
                         }, 3000);
                     }
                     $("#alert").addClass("alert alert-danger");
