@@ -27,7 +27,10 @@ public class User {
         
     }
     
-    public User(Integer id, Integer roleId, String roleName, String firstName, String lastName, String email, String password, String gender, String phoneNumber, String address, String images, Date createdAt, Date updatedAt, boolean onlineStatus, int activedStatus) {
+    public User(Integer id, Integer roleId, String roleName, String firstName, 
+            String lastName, String email, String password, String gender, 
+            String phoneNumber, String address, String images, Date createdAt, 
+            Date updatedAt, boolean onlineStatus, int activedStatus) {
         this.id = id;
         this.roleId = roleId;
         this.roleName = roleName;

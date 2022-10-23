@@ -52,7 +52,7 @@
                 </li>
                 
                 <li>
-                    <a href='#'>
+                    <a href="<c:url value='/doctor-patient-list'/>">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Bệnh nhân của tôi
                     </a>
@@ -60,7 +60,7 @@
                 </li>
                 
                 <li>
-                    <a href='#'>
+                    <a href="<c:url value='/doctor-feedback'/>">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Phản hồi của bệnh nhân
                     </a>

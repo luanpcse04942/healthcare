@@ -10,11 +10,13 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="User login page" />
+
         <title>Trang Đăng Nhập</title>
 
-        <meta name="description" content="User login page" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
         <link rel="stylesheet" href="template/login/assets/css/bootstrap.min.css" />
         <link rel="stylesheet" href="template/login/assets/font-awesome/4.2.0/css/font-awesome.min.css" />
         <link rel="stylesheet" href="template/login/assets/fonts/fonts.googleapis.com.css" />
@@ -36,10 +38,12 @@
                                     <span class="white" id="id-text2">System</span>
                                 </h1>
                             </div>
-                            
+
                             <div class="space-6"></div>
 
                             <div class="position-relative">
+                                
+                                <!-- /.login-box -->
                                 <div id="login-box" class="login-box visible widget-box no-border">
                                     <div class="widget-body">
                                         <div class="widget-main">
@@ -47,6 +51,11 @@
                                                 <i class="ace-icon fa fa-coffee green"></i>
                                                 Vui lòng điền thông tin
                                             </h4>
+                                            <c:if test="${not empty MessageLogin}">
+                                                <p class="alert">
+                                                    ${MessageLogin}
+                                                </p>
+                                            </c:if>
 
                                             <div class="space-6"></div>
 
@@ -54,14 +63,16 @@
                                                 <fieldset>
                                                     <label class="block clearfix">
                                                         <span class="block input-icon input-icon-right">
-                                                            <input type="text" class="form-control" name="username" placeholder="Email" />
+                                                            <input type="email" class="form-control" 
+                                                                   name="email-login" placeholder="Email" required/>
                                                             <i class="ace-icon fa fa-user"></i>
                                                         </span>
                                                     </label>
 
                                                     <label class="block clearfix">
                                                         <span class="block input-icon input-icon-right">
-                                                            <input type="password" class="form-control" name="password" placeholder="Mật khẩu" />
+                                                            <input type="password" class="form-control" 
+                                                                   name="password-login" placeholder="Mật khẩu" required/>
                                                             <i class="ace-icon fa fa-lock"></i>
                                                         </span>
                                                     </label>
@@ -69,11 +80,6 @@
                                                     <div class="space"></div>
 
                                                     <div class="clearfix">
-                                                        <label class="inline">
-                                                            <input type="checkbox" class="ace" />
-                                                            <span class="lbl"> Ghi nhớ</span>
-                                                        </label>
-
                                                         <button type="submit" class="width-40 pull-right btn btn-sm btn-primary">
                                                             <i class="ace-icon fa fa-key"></i>
                                                             <span class="bigger-110">Đăng Nhập</span>
@@ -113,13 +119,9 @@
                                             </div>
                                         </div>
                                     </div><!-- /.widget-body -->
-                                </div><!-- /.login-box -->
-                                <div>
-                                    <a href='<c:url value="/trang-chu" />' data-target="#forgot-box" class="forgot-password-link">
-                                        <i class="ace-icon fa fa-arrow-left"></i>
-                                        Quay lại trang chủ
-                                    </a>
                                 </div>
+
+                                <!-- /.forgot-box -->                
                                 <div id="forgot-box" class="forgot-box widget-box no-border">
                                     <div class="widget-body">
                                         <div class="widget-main">
@@ -159,8 +161,9 @@
                                             </a>
                                         </div>
                                     </div><!-- /.widget-body -->
-                                </div><!-- /.forgot-box -->
-
+                                </div>
+                                
+                                <!-- /.signup-box -->
                                 <div id="signup-box" class="signup-box widget-box no-border">
                                     <div class="widget-body">
                                         <div class="widget-main">
@@ -172,25 +175,49 @@
                                             <div class="space-6"></div>
                                             <p> Vui lòng điền thông tin: </p>
 
-                                            <form>
+                                            <form action="<c:url value='/dang-ky'/>" method="post">
                                                 <fieldset>
                                                     <label class="block clearfix">
                                                         <span class="block input-icon input-icon-right">
-                                                            <input type="email" class="form-control" placeholder="Email" />
+                                                            <input name="email-reg" type="email" 
+                                                                   class="form-control" 
+                                                                   placeholder="Email" required/>
                                                             <i class="ace-icon fa fa-envelope"></i>
                                                         </span>
                                                     </label>
 
                                                     <label class="block clearfix">
                                                         <span class="block input-icon input-icon-right">
-                                                            <input type="password" class="form-control" placeholder="Mật khẩu" />
+                                                            <input name="first-name" type="text" 
+                                                                   class="form-control" 
+                                                                   placeholder="Họ" required/>
+                                                            <i class="ace-icon fa fa-user"></i>
+                                                        </span>
+                                                    </label>
+
+                                                    <label class="block clearfix">
+                                                        <span class="block input-icon input-icon-right">
+                                                            <input name="last-name" type="text" 
+                                                                   class="form-control" 
+                                                                   placeholder="Tên" required/>
+                                                            <i class="ace-icon fa fa-user"></i>
+                                                        </span>
+                                                    </label>
+
+                                                    <label class="block clearfix">
+                                                        <span class="block input-icon input-icon-right">
+                                                            <input type="password" class="form-control"
+                                                                   name="password-reg" id="password"
+                                                                   placeholder="Mật khẩu" required/>
                                                             <i class="ace-icon fa fa-lock"></i>
                                                         </span>
                                                     </label>
 
                                                     <label class="block clearfix">
                                                         <span class="block input-icon input-icon-right">
-                                                            <input type="password" class="form-control" placeholder="Nhập lại mật khẩu" />
+                                                            <input type="password" class="form-control" 
+                                                                   id="confirm_password"
+                                                                   placeholder="Nhập lại mật khẩu" required/>
                                                             <i class="ace-icon fa fa-retweet"></i>
                                                         </span>
                                                     </label>
@@ -203,7 +230,7 @@
                                                             <span class="bigger-110">Reset</span>
                                                         </button>
 
-                                                        <button type="button" class="width-65 pull-right btn btn-sm btn-success">
+                                                        <button type="submit" class="width-65 pull-right btn btn-sm btn-success">
                                                             <span class="bigger-110">Đăng ký</span>
 
                                                             <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
@@ -220,21 +247,29 @@
                                             </a>
                                         </div>
                                     </div><!-- /.widget-body -->
-                                </div><!-- /.signup-box -->
+                                </div>
+
+                                <div>
+                                    <a href='<c:url value="/trang-chu" />' 
+                                       data-target="#forgot-box" class="forgot-password-link">
+                                        <i class="ace-icon fa fa-arrow-left"></i>
+                                        Quay lại trang chủ
+                                    </a>
+                                </div>
                             </div><!-- /.position-relative -->
 
                             <div class="navbar-fixed-top align-right">
                                 <br />
                                 &nbsp;
-                                <a id="btn-login-dark" href="#">Dark</a>
+                                <button id="btn-login-dark">Dark</button>
                                 &nbsp;
                                 <span class="blue">/</span>
                                 &nbsp;
-                                <a id="btn-login-blur" href="#">Blur</a>
+                                <button id="btn-login-blur">Blur</button>
                                 &nbsp;
                                 <span class="blue">/</span>
                                 &nbsp;
-                                <a id="btn-login-light" href="#">Light</a>
+                                <button id="btn-login-light">Light</button>
                                 &nbsp; &nbsp; &nbsp;
                             </div>
                         </div>
@@ -268,7 +303,22 @@ window.jQuery || document.write("<script src='assets/js/jquery1x.min.js'>"+"<"+"
 <![endif]-->
         <script type="text/javascript">
             if ('ontouchstart' in document.documentElement)
-                document.write("<script src='template/login/assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+                document.write("<script src='template/login/assets/js/jquery.mobile.custom.min.js'>"
+                        + "<" + "/script>");
+
+            var password = document.getElementById("password")
+                    , confirm_password = document.getElementById("confirm_password");
+
+            function validatePassword() {
+                if (password.value !== confirm_password.value) {
+                    confirm_password.setCustomValidity("Passwords Don't Match");
+                } else {
+                    confirm_password.setCustomValidity('');
+                }
+            }
+
+            password.onchange = validatePassword;
+            confirm_password.onkeyup = validatePassword;
         </script>
 
         <!-- inline scripts related to this page -->
