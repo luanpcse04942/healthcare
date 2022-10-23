@@ -15,7 +15,7 @@ import java.util.ArrayList;
  *
  * @author LuanPC
  */
-@WebServlet(name="HandbookController", urlPatterns={"/HandbookController", "/handbook-list-admin"})
+@WebServlet(name="HandbookController", urlPatterns={"/HandbookController", "/handbook-list-admin", "/handbook-detail-admin"})
 public class HandbookController extends HttpServlet {
    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -33,6 +33,16 @@ public class HandbookController extends HttpServlet {
 
             request.setAttribute("currentPage", page);
             RequestDispatcher rd = request.getRequestDispatcher("Admin/Handbook/HandbookList.jsp");
+            rd.forward(request, response);
+        }
+        
+        if (request.getServletPath().equals("/handbook-detail-admin")) {
+            HandbookService hanbookService = new HandbookService();
+            ArrayList<Handbook> u = new ArrayList<>();
+            u = hanbookService.getHandbook();
+            request.setAttribute("handbooks", hanbookService.getHandbook());
+
+            RequestDispatcher rd = request.getRequestDispatcher("Admin/Handbook/HandbookDetail.jsp");
             rd.forward(request, response);
         }
     } 
