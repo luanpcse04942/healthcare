@@ -2,16 +2,18 @@ package com.laptrinhweb.healthcare.dao;
 
 import com.laptrinhweb.healthcare.context.DBContext;
 import com.laptrinhweb.healthcare.model.User;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 
 public class LoginDAO extends DBContext {
 
     public User login(String email, String password) {
         String sql = "SELECT * FROM Users u, User_Profile p\n"
                 + "where email like ? and password like ?\n"
-                + "and u.id =p.userId";
+                + "and u.id = p.userId";
         PreparedStatement ps;
         ResultSet rs;
         DBContext db = new DBContext();
@@ -30,7 +32,7 @@ public class LoginDAO extends DBContext {
                 acc.setEmail(rs.getString(4));
                 acc.setPassword(rs.getString(5));
                 acc.setOnlineStatus(rs.getBoolean(6));
-                acc.setActivedStatus(rs.getBoolean(7));
+                acc.setActivedStatus(rs.getInt(7));
                 acc.setCreatedAt(rs.getDate(8));
                 acc.setUpdatedAt(rs.getDate(9));
                 acc.setGender(rs.getString(12));
@@ -41,6 +43,26 @@ public class LoginDAO extends DBContext {
         } catch (SQLException e) {
         }
         return acc;
+    }
+
+    public void register(String email, String password, String fname, String lname) {
+        String sql = "INSERT INTO Users(firstName, lastName, email, password, "
+                + "onlineStatus, createdAt)\n"
+                + "VALUES (?, ?, ?, ?, ?, GETDATE())";
+        PreparedStatement ps;
+        DBContext db = new DBContext();
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql);
+            ps.setNString(1, fname);
+            ps.setNString(2, lname);
+            ps.setString(3, email);
+            ps.setString(4, password);
+            ps.setBoolean(5, true);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+        }
     }
 
 }

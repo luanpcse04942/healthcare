@@ -21,7 +21,7 @@ public class User {
     private Date createdAt;
     private Date updatedAt;
     private boolean onlineStatus;
-    private boolean activedStatus;
+    private int activedStatus;
 
     public User() {
         
@@ -30,7 +30,7 @@ public class User {
     public User(Integer id, Integer roleId, String roleName, String firstName, 
             String lastName, String email, String password, String gender, 
             String phoneNumber, String address, String images, Date createdAt, 
-            Date updatedAt, boolean onlineStatus, boolean activedStatus) {
+            Date updatedAt, boolean onlineStatus, int activedStatus) {
         this.id = id;
         this.roleId = roleId;
         this.roleName = roleName;
@@ -160,11 +160,11 @@ public class User {
         this.onlineStatus = onlineStatus;
     }
 
-    public boolean getActivedStatus() {
+    public int getActivedStatus() {
         return activedStatus;
     }
 
-    public void setActivedStatus(boolean activedStatus) {
+    public void setActivedStatus(int activedStatus) {
         this.activedStatus = activedStatus;
     }
    

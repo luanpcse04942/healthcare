@@ -1,7 +1,6 @@
 package com.laptrinhweb.healthcare.dao;
 
 import com.laptrinhweb.healthcare.context.DBContext;
-import com.laptrinhweb.healthcare.model.DoctorInfo;
 import com.laptrinhweb.healthcare.model.MedicalFacility;
 import com.laptrinhweb.healthcare.model.Time;
 import java.sql.Date;
@@ -44,7 +43,7 @@ public class FacilityDAO extends DBContext {
                 mf.setLastName(rs.getString(3));
                 mf.setEmail(rs.getString(4));
                 mf.setOnlineStatus(rs.getBoolean(5));
-                mf.setActivedStatus(rs.getBoolean(6));
+                mf.setActivedStatus(rs.getInt(6));
                 mf.setPhoneNumber(rs.getString(7));
                 mf.setProvinceId(rs.getInt(8));
                 mf.setProvinceName(rs.getString(9));
@@ -102,7 +101,7 @@ public class FacilityDAO extends DBContext {
                 mf.setLastName(rs.getString(3));
                 mf.setEmail(rs.getString(4));
                 mf.setOnlineStatus(rs.getBoolean(5));
-                mf.setActivedStatus(rs.getBoolean(6));
+                mf.setActivedStatus(rs.getInt(6));
                 mf.setPhoneNumber(rs.getString(7));
                 mf.setProvinceId(rs.getInt(8));
                 mf.setProvinceName(rs.getString(9));
@@ -241,7 +240,7 @@ public class FacilityDAO extends DBContext {
                 mf.setLastName(rs.getString(3));
                 mf.setEmail(rs.getString(4));
                 mf.setOnlineStatus(rs.getBoolean(5));
-                mf.setActivedStatus(rs.getBoolean(6));
+                mf.setActivedStatus(rs.getInt(6));
                 mf.setPhoneNumber(rs.getString(7));
                 mf.setProvinceId(rs.getInt(8));
                 mf.setProvinceName(rs.getString(9));
@@ -307,7 +306,7 @@ public class FacilityDAO extends DBContext {
                 mf.setLastName(rs.getString(3));
                 mf.setEmail(rs.getString(4));
                 mf.setOnlineStatus(rs.getBoolean(5));
-                mf.setActivedStatus(rs.getBoolean(6));
+                mf.setActivedStatus(rs.getInt(6));
                 mf.setPhoneNumber(rs.getString(7));
                 mf.setProvinceId(rs.getInt(8));
                 mf.setProvinceName(rs.getString(9));

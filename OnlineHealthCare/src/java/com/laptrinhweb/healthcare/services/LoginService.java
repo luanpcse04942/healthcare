@@ -9,4 +9,8 @@ public class LoginService {
         LoginDAO loginDAO = new LoginDAO();
         return loginDAO.login(email, password);
     }
+    
+    public void SimpleRegister(String email, String password, String fname, String lname){
+        
+    }
 }
