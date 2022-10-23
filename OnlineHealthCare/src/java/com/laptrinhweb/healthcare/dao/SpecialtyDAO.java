@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class SpecialtyDAO extends DBContext {
 
     public ArrayList<Specialty> getAllSpecialty() {
@@ -46,7 +45,7 @@ public class SpecialtyDAO extends DBContext {
         }
         return listSpecialty;
     }
-    
+
     public ArrayList<Specialty> getAllSpecialtyPublic(int start, int total) {
         String sql = "select * from Specialties ORDER BY specialtyId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         PreparedStatement ps = null;
@@ -83,7 +82,7 @@ public class SpecialtyDAO extends DBContext {
         }
         return listSpecialty;
     }
-    
+
     public int getNoOfRecordAccounts() {
         String query = "SELECT count(*) FROM Specialties";
         DBContext db = new DBContext();
@@ -128,7 +127,7 @@ public class SpecialtyDAO extends DBContext {
         String sql = "SELECT * from Specialties s where s.name like ? ORDER BY s.specialtyId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         PreparedStatement ps = null;
         ResultSet rs = null;
-         DBContext db = new DBContext();
+        DBContext db = new DBContext();
         ArrayList<Specialty> listSpec = new ArrayList<>();
         try {
             conn = db.getConn();
@@ -172,7 +171,7 @@ public class SpecialtyDAO extends DBContext {
         }
         return listSpec;
     }
-    
+
     public int getNoOfRecordSearchSpecialty(String search) {
         String sql = "SELECT count(*) FROM Specialties s where s.name like ?";
         DBContext db = new DBContext();
@@ -216,9 +215,9 @@ public class SpecialtyDAO extends DBContext {
 
     public boolean addSpecialty(String name, String description, byte[] fileName) {
         boolean addSpecSuccess = false;
-        
+
         String sql = "INSERT INTO Specialties(name, description, image) VALUES (?, ?, ?)";
-        
+
         DBContext db = new DBContext();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -258,22 +257,31 @@ public class SpecialtyDAO extends DBContext {
         }
         return addSpecSuccess;
     }
-    
+
     public boolean updateSpecialty(int id, String name, String description, byte[] fileName) {
         boolean editSpecSuccess = false;
-        
-        String sql = "UPDATE Specialties SET name = ?, description = ?, image = ? where specialtyId = ?";
-        
+        String sql;
+        if (fileName != null) {
+            sql = "UPDATE Specialties SET name = ?, description = ?, image = ? where specialtyId = ?";
+        } else {
+            sql = "UPDATE Specialties SET name = ?, description = ? where specialtyId = ?";
+        }
         DBContext db = new DBContext();
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             conn = db.getConn();
             ps = conn.prepareStatement(sql);
-            ps.setString(1, name);
-            ps.setString(2, description);
-            ps.setBytes(3, fileName);
-            ps.setInt(4, id);
+            if (fileName != null) {
+                ps.setString(1, name);
+                ps.setString(2, description);
+                ps.setBytes(3, fileName);
+                ps.setInt(4, id);
+            }else {
+                ps.setString(1, name);
+                ps.setString(2, description);
+                ps.setInt(3, id);
+            }
             ps.executeUpdate();
             editSpecSuccess = true;
         } catch (SQLException e) {
@@ -304,7 +312,7 @@ public class SpecialtyDAO extends DBContext {
         }
         return editSpecSuccess;
     }
-    
+
     public Specialty getSpecialtyInfo(int specialtyId) {
         String sql = "SELECT * from Specialties where specialtyId = ?";
         DBContext db = new DBContext();
