@@ -52,4 +52,43 @@ public class HandbookDAO extends DBContext{
         }
         return listHandbook;
     }
+    
+        public ArrayList<Handbook> getHanbookDetail() {
+        String sql = "select * from Handbooks";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DBContext db = new DBContext();
+        ArrayList<Handbook> listHandbook = new ArrayList<>();
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Handbook acc = new Handbook();
+                acc.setId(rs.getInt("handBookId"));
+                acc.setAdminId(rs.getInt("adminId"));
+                acc.setHandbookName(rs.getString("name"));
+                acc.setPublishedAt(rs.getDate("publishAt"));
+                String base64StringImage = new String(rs.getBytes("image"), "UTF-8");
+                acc.setImage(base64StringImage);
+                acc.setContent(rs.getString("content"));
+                listHandbook.add(acc);
+            }
+        } catch (Exception e) {
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return listHandbook;
+    } 
 }

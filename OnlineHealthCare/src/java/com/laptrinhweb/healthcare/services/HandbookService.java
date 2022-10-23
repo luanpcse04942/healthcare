@@ -20,4 +20,11 @@ public class HandbookService {
         hanbooks = handbookDAO.findAll((page - 1) * recordsPerPage, recordsPerPage);
         return hanbooks;
     }
+    
+        public ArrayList<Handbook> getHandbook() {
+        HandbookDAO handbookDAO = new HandbookDAO();
+        ArrayList<Handbook> hanbooks = new ArrayList<>();
+        hanbooks = handbookDAO.getHanbookDetail();
+        return hanbooks;
+    }
 }
