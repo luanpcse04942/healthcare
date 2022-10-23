@@ -4,10 +4,20 @@
  */
 package com.laptrinhweb.healthcare.services;
 
+import com.laptrinhweb.healthcare.dao.HandbookDAO;
+import com.laptrinhweb.healthcare.model.Handbook;
+import java.util.ArrayList;
+
 /**
  *
  * @author LuanPC
  */
 public class HandbookService {
-    
+    public ArrayList<Handbook> getListHandbook(int page) {
+        HandbookDAO handbookDAO = new HandbookDAO();
+        ArrayList<Handbook> hanbooks = new ArrayList<>();
+        int recordsPerPage = 4;
+        hanbooks = handbookDAO.findAll((page - 1) * recordsPerPage, recordsPerPage);
+        return hanbooks;
+    }
 }
