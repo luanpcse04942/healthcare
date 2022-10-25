@@ -25,9 +25,11 @@ import org.apache.tomcat.util.codec.binary.Base64;
  *
  * @author LuanPC
  */
+
 @MultipartConfig
 @WebServlet(name = "HandbookController", urlPatterns = {"/HandbookController", "/handbook-list-admin", "/handbook-detail-admin", "/admin-add-handbook", "/add-handbook",
                     "/edit-handbook", "/admin-handbook-search"})
+
 public class HandbookController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -79,7 +81,9 @@ public class HandbookController extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("Admin/Handbook/HandbookList.jsp");
             rd.forward(request, response);
         }
+
     }
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

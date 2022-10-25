@@ -36,12 +36,7 @@
                                     <span class="white" id="id-text2">System</span>
                                 </h1>
                             </div>
-                            <div>
-                                <a href='<c:url value="/trang-chu" />' data-target="#forgot-box" class="forgot-password-link">
-                                    <i class="ace-icon fa fa-arrow-left"></i>
-                                    Quay lại trang chủ
-                                </a>
-                            </div>
+                            
                             <div class="space-6"></div>
 
                             <div class="position-relative">
@@ -119,7 +114,12 @@
                                         </div>
                                     </div><!-- /.widget-body -->
                                 </div><!-- /.login-box -->
-
+                                <div>
+                                    <a href='<c:url value="/trang-chu" />' data-target="#forgot-box" class="forgot-password-link">
+                                        <i class="ace-icon fa fa-arrow-left"></i>
+                                        Quay lại trang chủ
+                                    </a>
+                                </div>
                                 <div id="forgot-box" class="forgot-box widget-box no-border">
                                     <div class="widget-body">
                                         <div class="widget-main">
@@ -178,13 +178,6 @@
                                                         <span class="block input-icon input-icon-right">
                                                             <input type="email" class="form-control" placeholder="Email" />
                                                             <i class="ace-icon fa fa-envelope"></i>
-                                                        </span>
-                                                    </label>
-
-                                                    <label class="block clearfix">
-                                                        <span class="block input-icon input-icon-right">
-                                                            <input type="text" class="form-control" placeholder="Tên đăng nhập" />
-                                                            <i class="ace-icon fa fa-user"></i>
                                                         </span>
                                                     </label>
 

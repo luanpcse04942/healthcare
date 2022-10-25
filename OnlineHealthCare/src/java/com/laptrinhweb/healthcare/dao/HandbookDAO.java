@@ -60,6 +60,7 @@ public class HandbookDAO extends DBContext{
         }
         return listHandbook;
     }
+
         
     public Handbook getHanbookDetail(int handbookId) {
         String sql = "select a.handBookId,a.adminId,a.name,a.publishAt,a.image,a.content,CONCAT(b.firstName , ' ', b.lastName) nameAdmin from Handbooks a join Users b on b.id = a.adminId where a.handBookId = ?";

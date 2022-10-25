@@ -71,5 +71,6 @@ public class HandbookService {
         page = 1;
         handbooks = handbookDAO.searchByNameHandbook(search, (page - 1) * recordsPerPage, recordsPerPage);
         return handbooks;
+
     }
 }
