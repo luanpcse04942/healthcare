@@ -172,10 +172,19 @@
         <div class="spec-list">
             <c:forEach var="specialty" items="${listSpecialty}">
                 <div class="specialty">
+<<<<<<< Updated upstream
                     <div class="grid-img"> 
                         <img width="300px" height="200px" src="<c:url value='/static/images/Specialty/${specialty.image}' />" />
                     </div>
                     <div class="grid-name">${specialty.name}</div>
+=======
+                    <a href="<c:url value="/public-specialty-detail?specialtyId=${specialty.id}&name=${specialty.name}"/>" style="text-decoration: none; color: black">
+                        <div class="grid-img"> 
+                            <img alt="Specialty Image" width="300px" height="200px" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${specialty.image}' />" />
+                        </div>
+                        <div class="grid-name">${specialty.name}</div>
+                    </a>
+>>>>>>> Stashed changes
                 </div>
             </c:forEach>
         </div>

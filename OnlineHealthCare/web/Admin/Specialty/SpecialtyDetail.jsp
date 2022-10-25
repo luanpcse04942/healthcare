@@ -94,7 +94,38 @@
             </a>
         </div>
 
+<<<<<<< Updated upstream
 
+=======
+        <script>
+            $('.btn-edit-specialty').on("click", function (e) {
+                var name = $('#name').val();
+                var description = $('#description').val();
+                var file = $('#file').val();
+                if (name === "" || description === "") {
+                    if (name === "") {
+                        $('#name').css('border-color', 'red');
+                        setTimeout(function () {
+                            $("#name").css('border-color', '#d5d5d5');
+                        }, 3000);
+                    }
+                    if (description === "") {
+                        $('#description').css('border-color', 'red');
+                        setTimeout(function () {
+                            $("#description").css('border-color', '#d5d5d5');
+                        }, 3000);
+                    }
+                    $("#alert").addClass("alert alert-danger");
+                    $('#alert').text('Vui lòng nhập thông tin !');
+                    $('#alert').show();
+                    setTimeout(function () {
+                        $('#alert').hide();
+                    }, 3000);
+                    e.preventDefault();
+                }
+            });
+        </script>
+>>>>>>> Stashed changes
         <script src="<c:url value='/template/admin/assets/js/bootstrap.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/jquery-ui.custom.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/jquery.ui.touch-punch.min.js' />"></script>
