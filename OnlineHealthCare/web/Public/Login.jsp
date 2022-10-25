@@ -38,11 +38,7 @@
                                     <span class="white" id="id-text2">System</span>
                                 </h1>
                             </div>
-<<<<<<< Updated upstream
 
-=======
-                            
->>>>>>> Stashed changes
                             <div class="space-6"></div>
 
                             <div class="position-relative">
@@ -123,19 +119,9 @@
                                             </div>
                                         </div>
                                     </div><!-- /.widget-body -->
-<<<<<<< Updated upstream
                                 </div>
 
                                 <!-- /.forgot-box -->                
-=======
-                                </div><!-- /.login-box -->
-                                <div>
-                                    <a href='<c:url value="/trang-chu" />' data-target="#forgot-box" class="forgot-password-link">
-                                        <i class="ace-icon fa fa-arrow-left"></i>
-                                        Quay lại trang chủ
-                                    </a>
-                                </div>
->>>>>>> Stashed changes
                                 <div id="forgot-box" class="forgot-box widget-box no-border">
                                     <div class="widget-body">
                                         <div class="widget-main">
@@ -202,7 +188,6 @@
 
                                                     <label class="block clearfix">
                                                         <span class="block input-icon input-icon-right">
-<<<<<<< Updated upstream
                                                             <input name="first-name" type="text" 
                                                                    class="form-control" 
                                                                    placeholder="Họ" required/>
@@ -224,9 +209,6 @@
                                                             <input type="password" class="form-control"
                                                                    name="password-reg" id="password"
                                                                    placeholder="Mật khẩu" required/>
-=======
-                                                            <input type="password" class="form-control" placeholder="Mật khẩu" />
->>>>>>> Stashed changes
                                                             <i class="ace-icon fa fa-lock"></i>
                                                         </span>
                                                     </label>

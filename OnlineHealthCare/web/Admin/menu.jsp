@@ -59,7 +59,7 @@
                     <b class="arrow"></b>
                 </li>
                 <li>
-                    <a href='<c:url value="/handbook-list-admin"/>'>
+                    <a href='#'>
                         <i class="menu-icon fa fa-caret-right"></i>
                         Quản lý cẩm nang
                     </a>

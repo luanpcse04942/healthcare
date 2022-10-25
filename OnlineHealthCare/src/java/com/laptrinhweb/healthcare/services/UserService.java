@@ -53,7 +53,7 @@ public class UserService {
         return users;
     }
 
-    public boolean addUser(String email, String password, String firstName, String lastName, byte[] imageName, int roleId, int provinceId) throws FileNotFoundException, IOException {
+    public boolean addUser(String email, String password, String firstName, String lastName, String imageName, int roleId, int provinceId) throws FileNotFoundException, IOException {
    
         UserDAO userDAO = new UserDAO();
         boolean addSuccess = userDAO.addUser(email, password, firstName, lastName);
