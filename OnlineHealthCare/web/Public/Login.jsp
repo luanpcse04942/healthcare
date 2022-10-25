@@ -59,7 +59,7 @@
 
                                             <div class="space-6"></div>
 
-                                            <form action="<c:url value='/dang-nhap'/>" method="post">
+                                            <form action="<c:url value='/login'/>" method="post">
                                                 <fieldset>
                                                     <label class="block clearfix">
                                                         <span class="block input-icon input-icon-right">
@@ -175,7 +175,7 @@
                                             <div class="space-6"></div>
                                             <p> Vui lòng điền thông tin: </p>
 
-                                            <form action="<c:url value='/dang-ky'/>" method="post">
+                                            <form action="<c:url value='/register'/>" method="post">
                                                 <fieldset>
                                                     <label class="block clearfix">
                                                         <span class="block input-icon input-icon-right">

@@ -10,7 +10,8 @@ public class LoginService {
         return loginDAO.login(email, password);
     }
     
-    public void SimpleRegister(String email, String password, String fname, String lname){
-        
+    public boolean SimpleRegister(String email, String password, String fname, String lname){
+        LoginDAO loginDAO = new LoginDAO();
+        return loginDAO.register(email, password, fname, lname);
     }
 }

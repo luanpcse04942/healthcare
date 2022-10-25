@@ -45,14 +45,18 @@ public class LoginDAO extends DBContext {
         return acc;
     }
 
-    public void register(String email, String password, String fname, String lname) {
+    public boolean register(String email, String password, String fname, String lname) {
         String sql = "INSERT INTO Users(firstName, lastName, email, password, "
-                + "onlineStatus, createdAt)\n"
-                + "VALUES (?, ?, ?, ?, ?, GETDATE())";
+                + "onlineStatus, activedStatus, createdAt, updatedAt)\n"
+                + "VALUES (?, ?, ?, ?, ?, 5, GETDATE(), GETDATE())\n"
+                + "Insert into User_Roles(userId, roleId)\n"
+                + "select SCOPE_IDENTITY(), 3 as roleID";
+        
         PreparedStatement ps;
         DBContext db = new DBContext();
         try {
             conn = db.getConn();
+            
             ps = conn.prepareStatement(sql);
             ps.setNString(1, fname);
             ps.setNString(2, lname);
@@ -62,7 +66,9 @@ public class LoginDAO extends DBContext {
             ps.executeUpdate();
 
         } catch (SQLException e) {
+            return false;
         }
+        return true;
     }
 
 }
