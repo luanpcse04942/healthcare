@@ -102,7 +102,7 @@ public class SpecialtyController extends HttpServlet {
             Part filePart = request.getPart("file");
             String fileName = filePart.getSubmittedFileName();
 
-            FileInputStream mFileInputStream = new FileInputStream("C:\\Users\\Administrator\\Desktop\\images\\Specialty\\" + fileName);
+            FileInputStream mFileInputStream = new FileInputStream("C:\\images\\Specialty\\" + fileName);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             byte[] b = new byte[1024];
             int bytesRead = 0;
@@ -137,7 +137,7 @@ public class SpecialtyController extends HttpServlet {
             SpecialtyService specialtyService = new SpecialtyService();
             
             if (fileName != "") {
-                FileInputStream mFileInputStream = new FileInputStream("C:\\Users\\Administrator\\Desktop\\images\\Specialty\\" + fileName);
+                FileInputStream mFileInputStream = new FileInputStream("C:\\images\\Specialty\\" + fileName);
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
                 byte[] b = new byte[1024];
                 int bytesRead = 0;

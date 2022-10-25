@@ -413,7 +413,7 @@ public class UserDAO extends DBContext {
         return addSuccess;
     }
 
-    public void addUserProfile(int userId, String imageName) {
+    public void addUserProfile(int userId, byte[] imageName) {
         String sql = "INSERT INTO User_Profile(userId, image) VALUES (?, ?)";
 
         DBContext db = new DBContext();
@@ -423,7 +423,7 @@ public class UserDAO extends DBContext {
             conn = db.getConn();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, userId);
-            ps.setString(2, imageName);
+            ps.setBytes(2, imageName);
             ps.executeUpdate();
         } catch (SQLException e) {
         } finally {
