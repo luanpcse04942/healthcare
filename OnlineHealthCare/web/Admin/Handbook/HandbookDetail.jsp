@@ -17,7 +17,7 @@
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="<c:url value='/ckeditor/ckeditor.js' />"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Quản lý  tài khoản</title>
+        <title>Quản lý Cẩm nang</title>
     </head>
     <body class="no-skin">
         <!-- header -->
@@ -52,44 +52,48 @@
                         <!-- /.breadcrumb -->
 
                     </div>
-                    <div class="page-content">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <c:if test="${not empty messageResponse}">
-                                    <div class="alert alert-${alert}">
-                                        ${messageResponse}
+                    <div class="container">
+                        <h2>Chi tiết Cẩm nang</h2>
+                        <div id="alert"></div>
+                        <c:if test="${not empty messageResponse}">
+                            <div class="alert alert-${alert}">
+                                ${messageResponse}
+                            </div>
+                        </c:if>
+                        <form action="<c:url value='/edit-handbook?handBookId=${handbooks.id}'/>" id="formSubmit" method="post" enctype="multipart/form-data">
+                            <div class="form-group col-sm-12">
+                                <label>Người viết: </label>
+                                <input id="name" name="name" type="text" value="${handbooks.fullName}" class="form-control" disabled>
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label>Xuất bản: </label>
+                                <input id="name" name="name" type="text" value="${handbooks.publishedAt}" class="form-control" disabled>
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label>Tiêu đề: </label>
+                                <input id="name" name="name" type="text" value="${handbooks.handbookName}" class="form-control" >
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label>Nội dung: </label>
+                                <textarea id="description" name="description" type="text" class="form-control" placeholder="Nhập vào mô tả ">${handbooks.content}</textarea>
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <span class="profile-picture">
+                                    <img alt="Avatar" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${handbooks.image}' />" />
+                                </span>
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <label class="custom-file-label" >Chọn ảnh</label>
+                                        <input id="file" type="file" name="file" class="custom-file-input">
                                     </div>
-                                </c:if>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <c:forEach var="item" items="${handbooks}">
-                                            <div class="form-group col-sm-12">
-                                                <label>Người viết: ${item.id}</label>
-                                                
-                                            </div>
-                                            
-                                            <div class="form-group col-sm-12">
-                                                <label>Xuất bản: ${item.publishedAt}</label>
-                                                
-                                            </div>
-                                            
-                                            <div class="form-group col-sm-12">
-                                                <label>Tiêu đề: </label>
-                                                <textarea id="description" name="description" type="text" class="form-control" placeholder="Nhập vào mô tả ">${item.handbookName}</textarea>
-                                            </div>
-                                            <div class="form-group col-sm-12">
-                                                <label>Nội dung: </label>
-                                                <textarea id="description" name="description" type="text" class="form-control" placeholder="Nhập vào mô tả ">${item.content}</textarea>
-                                            </div>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                <a href="<c:url value='/handbook-detail-admin'/>" class="btn btn-info" role="button">Lưu</a>
-                                <a href="<c:url value='/handbook-list-admin'/>" class="btn btn-info" role="button">Trở về</a>
                                 </div>
                             </div>
-                        </div>
+                            <div class="form-group col-sm-9">
+                                <button type="submit" class="btn btn-primary btn-edit-specialty">Sửa</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
