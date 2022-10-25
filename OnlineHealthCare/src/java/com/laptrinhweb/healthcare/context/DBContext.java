@@ -1,5 +1,6 @@
 package com.laptrinhweb.healthcare.context;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -26,7 +27,7 @@ public class DBContext {
         } 
     }
     public DBContext(){
-        this("jdbc:sqlserver://localhost:1433;databaseName=healthcare","sa","123");
+        this("jdbc:sqlserver://localhost:1433;databaseName=healthcare","sa","123456");
     }
     public Connection getConn() {
         return conn;

@@ -11,13 +11,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet(name = "LoginController", urlPatterns = {"/dang-nhap", "/dang-ky"})
+@WebServlet(name = "LoginController", urlPatterns = {"/login", "/register"})
 public class LoginController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        if (request.getServletPath().equals("/dang-nhap")) {
+        if (request.getServletPath().equals("/login")) {
 
             String email = request.getParameter("email-login");
             String password = request.getParameter("password-login");
@@ -37,32 +37,33 @@ public class LoginController extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher("Public/HomePage.jsp");
                 rd.forward(request, response);
             }
+
         }
 
-        /*if (request.getServletPath().equals("/dang-ky")) {
+        if (request.getServletPath().equals("/register")) {
 
             String email = request.getParameter("email-reg");
             String password = request.getParameter("password-reg");
-            
+
             String fname = request.getParameter("first-name");
             String lname = request.getParameter("last-name");
 
             LoginService lservice = new LoginService();
-            User u = lservice.SimpleRegister(email, password, fname, lname);
 
-            if (u == null) {
-                request.setAttribute("MessageLogin", "Tài khoản hoặc mật khẩu không đúng");
+            if (!lservice.SimpleRegister(email, password, fname, lname)) {
+                request.setAttribute("MessageLogin", "Đăng ký thất bại");
                 RequestDispatcher rd = request.getRequestDispatcher("Public/Login.jsp");
                 rd.include(request, response);
             } else {
+                User u = lservice.LoginWithEmail(email, password);
                 request.setAttribute("MessageLogin", null);
                 HttpSession session = request.getSession();
                 session.setAttribute("User", u);
-
+                
                 RequestDispatcher rd = request.getRequestDispatcher("Public/HomePage.jsp");
                 rd.forward(request, response);
             }
-        }*/
+        }
     }
 
     @Override
