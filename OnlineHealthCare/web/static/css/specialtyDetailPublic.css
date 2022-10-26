@@ -113,3 +113,11 @@ html, body{
     margin-top: 20px;
 }
 
+sup {
+    vertical-align: super;
+    font-size: smaller;
+}
+
+.doctor-schedules {
+    padding: 10px 0;
+}

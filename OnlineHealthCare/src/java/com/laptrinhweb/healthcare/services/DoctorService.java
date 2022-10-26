@@ -4,6 +4,8 @@ import com.laptrinhweb.healthcare.dao.DoctorDAO;
 import com.laptrinhweb.healthcare.dao.UserDAO;
 import com.laptrinhweb.healthcare.model.User;
 import com.laptrinhweb.healthcare.model.dto.DoctorInfoDTO;
+import com.laptrinhweb.healthcare.model.dto.ScheduleDTO;
+import com.laptrinhweb.healthcare.model.dto.ScheduleTimesDTO;
 import java.util.ArrayList;
 
 /**
@@ -55,6 +57,16 @@ public class DoctorService {
     public ArrayList<DoctorInfoDTO> getDoctorsForSpecialtyDetail(int specialtyId) {
         DoctorDAO doctorDAO = new DoctorDAO();
         return doctorDAO.getDoctorsForSpecialtyDetail(specialtyId);
+    }
+
+    public ArrayList<ScheduleDTO> getDoctorScheduleDates(int specialtyId) {
+        DoctorDAO doctorDAO = new DoctorDAO();
+        return doctorDAO.getDoctorScheduleDates(specialtyId);
+    }
+
+    public ArrayList<ScheduleTimesDTO> getScheduleTimes(int specialtyId) {
+        DoctorDAO doctorDAO = new DoctorDAO();
+        return doctorDAO.getScheduleTimes(specialtyId);
     }
     
     

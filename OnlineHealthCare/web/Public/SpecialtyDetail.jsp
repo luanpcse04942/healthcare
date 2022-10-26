@@ -56,16 +56,35 @@
                             </div>
                             <div class="doctor-board-right">
                                 <span><i class="fa fa-calendar bigger-110"></i>Lịch khám</span>
-                                <div class="doctor-address">
-                                    
-                                </div>
-                                <div class="board-right-text">Chọn <i class="fa fa-hand-o-up" aria-hidden="true"></i> và đặt (Phí đặt lịch 0đ)</div>
+
+                                <c:choose>
+                                    <c:when test="${empty scheduleDates}">
+                                        <p>Bác sĩ  chưa có lịch mới!</p>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="doctor-schedules">
+                                            <select class="form-control" style="width: 150px;">
+                                                <c:forEach var="item" items="${scheduleDates}" varStatus="loop">
+                                                    <c:if test="${item.doctorID eq doctor.doctorId}">
+                                                        <option value="${item.scheduleID}">
+                                                            ${item.scheduleDate}
+                                                        </option>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </select>
+                                            <div class="schedule-times">
+
+                                            </div>
+                                        </div>
+                                        <div class="board-right-text">Chọn <i class="fa fa-hand-o-up" aria-hidden="true"></i> và đặt (Phí đặt lịch 0đ)</div>
+                                    </c:otherwise>
+                                </c:choose>
                                 <span>Địa chỉ khám</span>
                                 <div class="doctor-address">
                                     ${doctor.address}
                                 </div>
                                 <span>Giá khám:</span>
-                                ${doctor.price}
+                                ${doctor.price} <sup>đ</sup>
                             </div>
                         </div>
                     </c:forEach>
@@ -87,5 +106,5 @@
 
         <!-- page specific plugin scripts -->
         <script src="<c:url value='/template/admin/assets/js/jquery-ui.min.js'/>"></script>
-    </body>
+    </body
 </html>

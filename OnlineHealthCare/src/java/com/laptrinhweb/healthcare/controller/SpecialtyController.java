@@ -88,7 +88,10 @@ public class SpecialtyController extends HttpServlet {
             DoctorService ds = new DoctorService();
             int specialtyId = Integer.parseInt(request.getParameter("specialtyId"));
             String specName = request.getParameter("name");
+            
+            request.setAttribute("scheduleDates", ds.getDoctorScheduleDates(specialtyId));
             request.setAttribute("doctors", ds.getDoctorsForSpecialtyDetail(specialtyId));
+            request.setAttribute("times", ds.getScheduleTimes(specialtyId));
             request.setAttribute("specName", specName);
             RequestDispatcher rd = request.getRequestDispatcher("Public/SpecialtyDetail.jsp");
             rd.forward(request, response);
