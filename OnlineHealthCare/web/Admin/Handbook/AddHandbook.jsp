@@ -4,20 +4,13 @@
 <html>
     <head>
         <link rel="stylesheet" href="<c:url value='/template/admin/assets/css/bootstrap.min.css' />" />
-        <link rel="stylesheet" href="<c:url value='/static/css/accountList.css' />" />
         <link rel="stylesheet" href="<c:url value='/template/admin/font-awesome/4.5.0/css/font-awesome.min.css' />" />
         <link rel="stylesheet" href="<c:url value='/template/admin/assets/css/ace.min.css' />" class="ace-main-stylesheet" id="main-ace-style" />
         <script src="<c:url value='/template/admin/assets/js/ace-extra.min.js' />"></script>
-        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script type='text/javascript' src='<c:url value="/template/admin/js/jquery-2.2.3.min.js" />'></script>
         <script src="<c:url value='/template/admin/assets/js/jquery.2.1.1.min.js' />"></script>
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script src="<c:url value='/ckeditor/ckeditor.js' />"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Quản lý Cẩm nang</title>
+        <title>Quản lý  tài khoản</title>
     </head>
     <body class="no-skin">
         <!-- header -->
@@ -47,41 +40,28 @@
                             <li>
                                 <a href="<c:url value='/handbook-list-admin'/>">Danh sách cẩm nang</a>
                             </li>
-                            <li class="active">Chi tiết cẩm nang</li>
+                            <li class="active">Thêm cẩm nang</li>
                         </ul>
                         <!-- /.breadcrumb -->
-
                     </div>
                     <div class="container">
-                        <h2>Chi tiết Cẩm nang</h2>
+                        <h2>Thêm mới Cẩm nang</h2>
                         <div id="alert"></div>
                         <c:if test="${not empty messageResponse}">
-                            <div class="alert alert-${alert}">
+                            <div id="message" class="alert alert-${alert}">
                                 ${messageResponse}
                             </div>
                         </c:if>
-                        <form action="<c:url value='/edit-handbook?handBookId=${handbooks.id}'/>" id="formSubmit" method="post" enctype="multipart/form-data">
+                        <form action="<c:url value='/add-handbook'/>" id="formSubmit" method="post" enctype="multipart/form-data">
                             <div class="form-group col-sm-12">
-                                <label>Người viết: </label>
-                                <input id="name" name="name" type="text" value="${handbooks.fullName}" class="form-control" disabled>
+                                <label>Tên chuyên khoa</label>
+                                <input id="name" name="name" type="text" class="form-control"  aria-describedby="emailHelp" placeholder="Nhập vào tên chuyên khoa">
                             </div>
                             <div class="form-group col-sm-12">
-                                <label>Xuất bản: </label>
-                                <input id="name" name="name" type="text" value="${handbooks.publishedAt}" class="form-control" disabled>
+                                <label>Mô tả </label>
+                                <textarea id="description" name="description" type="text" class="form-control" placeholder="Nhập vào mô tả "></textarea>
                             </div>
-                            <div class="form-group col-sm-12">
-                                <label>Tiêu đề: </label>
-                                <input id="name" name="name" type="text" value="${handbooks.handbookName}" class="form-control" >
-                            </div>
-                            <div class="form-group col-sm-12">
-                                <label>Nội dung: </label>
-                                <textarea id="description" name="description" type="text" class="form-control" placeholder="Nhập vào mô tả ">${handbooks.content}</textarea>
-                            </div>
-                            <div class="form-group col-sm-12">
-                                <span class="profile-picture">
-                                    <img alt="Avatar" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${handbooks.image}' />" />
-                                </span>
-                            </div>
+
                             <div class="form-group col-sm-12">
                                 <div class="input-group">
                                     <div class="custom-file">
@@ -91,13 +71,13 @@
                                 </div>
                             </div>
                             <div class="form-group col-sm-9">
-                                <button type="submit" class="btn btn-primary btn-edit-specialty">Sửa</button>
+                                <button type="submit" class="btn btn-primary btn-add-specialty">Thêm</button>
                             </div>
                         </form>
                     </div>
+
                 </div>
             </div>
-
             <!-- footer -->
             <%@ include file="/common/footer.jsp" %>
             <!-- footer -->
@@ -107,6 +87,40 @@
             </a>
         </div>
 
+        <script>
+            $('.btn-add-specialty').on("click", function (e) {
+                var name = $('#name').val();
+                var description = $('#description').val();
+                var file = $('#file').val();
+                if (name === "" || description === "" || file === "") {
+                    if (name === "") {
+                        $('#name').css('border-color', 'red');
+                        setTimeout(function () {
+                            $("#name").css('border-color', '#d5d5d5');
+                        }, 3000);
+                    }
+                    if (description === "") {
+                        $('#description').css('border-color', 'red');
+                        setTimeout(function () {
+                            $("#description").css('border-color', '#d5d5d5');
+                        }, 3000);
+                    }
+                    if (file === "") {
+                        $('#choose-image').css('border-color', 'red ');
+                        setTimeout(function () {
+                            $("#file").css('border', '#d5d5d5');
+                        }, 3000);
+                    }
+                    $("#alert").addClass("alert alert-danger");
+                    $('#alert').text('Vui lòng nhập thông tin !');
+                    $('#alert').show();
+                    setTimeout(function () {
+                        $('#alert').hide();
+                    }, 3000);
+                    e.preventDefault();
+                }
+            });
+        </script>
         <script src="<c:url value='/template/admin/assets/js/bootstrap.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/jquery-ui.custom.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/jquery.ui.touch-punch.min.js' />"></script>

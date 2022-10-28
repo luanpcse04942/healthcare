@@ -13,20 +13,32 @@ public class Handbook {
     private Date publishedAt;
     private String image;
     private String content;
+    private String fullName;
 
 
 
     public Handbook() {
     }
 
-    public Handbook(int id, int adminId, String handbookName, Date publishedAt, String image, String content) {
+    public Handbook(int id, int adminId, String handbookName, Date publishedAt, String image, String content, String fullName) {
         this.id = id;
         this.adminId = adminId;
         this.handbookName = handbookName;
         this.publishedAt = publishedAt;
         this.image = image;
         this.content = content;
+        this.fullName = fullName;
     }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+
 
 
 
