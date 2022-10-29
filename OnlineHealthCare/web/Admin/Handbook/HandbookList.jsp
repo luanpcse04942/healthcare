@@ -17,7 +17,89 @@
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="<c:url value='/ckeditor/ckeditor.js' />"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Quản lý  tài khoản</title>
+        <title>Quản lý Cẩm nang</title>
+        <style>
+            body {
+                margin: 0;
+                font-family: Roboto,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+                font-size: .8125rem;
+                font-weight: 400;
+                line-height: 1.5385;
+                color: #333;
+                text-align: left;
+            }
+
+            .mt-50{
+
+                margin-top: 50px;
+            }
+
+            .mb-50{
+
+                margin-bottom: 50px;
+            }
+
+
+
+            .card {
+                position: relative;
+                display: -ms-flexbox;
+                display: flex;
+                -ms-flex-direction: column;
+                flex-direction: column;
+                min-width: 0;
+                word-wrap: break-word;
+                background-color: #fff;
+                background-clip: border-box;
+                border: 1px solid rgba(0,0,0,.125);
+                border-radius: .1875rem;
+            }
+
+            .card-img-actions {
+                position: relative;
+            }
+            .card-body {
+                -ms-flex: 1 1 auto;
+                flex: 1 1 auto;
+                padding: 1.25rem;
+                text-align: center;
+            }
+
+            .card-img{
+
+                width: 350px;
+            }
+
+            .star{
+                color: red;
+            }
+
+            .bg-cart {
+                background-color:orange;
+                color:#fff;
+            }
+
+            .bg-cart:hover {
+
+                color:#fff;
+            }
+
+            .bg-buy {
+                background-color:green;
+                color:#fff;
+                padding-right: 29px;
+            }
+            .bg-buy:hover {
+
+                color:#fff;
+            }
+
+            a{
+
+                text-decoration: none !important;
+            }
+
+        </style>
     </head>
     <body class="no-skin">
         <!-- header -->
@@ -36,7 +118,7 @@
             <!-- header -->
 
             <div class="main-content">
-                <form action="<c:url value='/admin-specialty-search'/>" method="get">
+                <form action="<c:url value='/admin-handbook-search'/>" method="get">
                     <div class="main-content-inner">
                         <div class="breadcrumbs ace-save-state" id="breadcrumbs">
                             <ul class="breadcrumb">
@@ -47,15 +129,24 @@
                                 <li class="active">Danh sách cẩm nang</li>
                             </ul>
                             <!-- /.breadcrumb -->
-                            <div class="nav-search" id="nav-search">
-                                <form class="form-search">
-                                    <span class="input-icon">
-                                        <input name="search" value="${nameSearch}" type="text" placeholder="Tìm tên chuyên khoa..." class="nav-search-input" style="width:300px !important" id="nav-search-input" autocomplete="off" />
-                                        <button type="submit" class="ace-icon fa fa-search nav-search-icon"></button>
-                                    </span>
-                                </form>
-                            </div>
+
                         </div>
+                        <div class="search-container">
+                            <form id="form-search" action="<c:url value='/admin-handbook-search'/>" method="POST">
+                                <div class="input-group">
+                                    <c:if test="${codeSearch != null}">
+                                        <input type="text" class="form-control" name="codeSearch" value="${codeSearch}" placeholder="Tìm kiếm bác sĩ" required maxlength="50" aria-describedby="basic-addon2"/>
+                                    </c:if>
+                                    <c:if test="${codeSearch == null || codeSearch == ''}">
+                                        <input type="text" class="form-control" name="codeSearch" placeholder="Tìm kiếm bác sĩ" required/>
+                                    </c:if>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true">
+                                            </span> Search!</button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>        
                         <div class="page-content">
                             <div class="row">
                                 <div class="col-xs-12">
@@ -82,12 +173,12 @@
                                     <div class="row">
                                         <div class="col-xs-12">
                                             <div class="table-responsive">
-                                                <div class="row">
-                                                    
-                                                    <c:forEach var="item" items="${handbooks}">
-                                                        <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Toggle first element</a>
-                                                        <div class="col-md-4 mt-2" >
-                                                            <div class="card" id="multiCollapseExample1">
+                                                <div class="row" >
+
+                                                    <c:forEach var="item" items="${handbooks}" varStatus="loop">
+
+                                                        <div class="col-md-4 mt-2" id="${item.id}">
+                                                            <div class="card">
                                                                 <div class="card-body">
                                                                     <div class="card-img-actions">
                                                                         <img alt="Avatar" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${item.image}' />" class="card-img img-fluid" width="85" height="350" alt=""/>
@@ -101,10 +192,11 @@
                                                                         </h6>
                                                                     </div>
                                                                 </div> 
-                                                            <a href="<c:url value='/handbook-detail-admin?handBookId=${item.id}'/>" class="btn btn-info" role="button">Chỉnh sửa</a>
-                                                            <button type="button" class="btn btn-info">Ẩn</button>
+                                                                <a href="<c:url value='/handbook-detail-admin?handBookId=${item.id}'/>" class="btn btn-info" role="button">Chỉnh sửa</a>
+                                                                <button type="button" onclick="myFunction(${item.id})">Try it</button>
+
                                                             </div>
-                                                                        
+
                                                         </div>
                                                     </c:forEach>
                                                 </div>
@@ -114,10 +206,10 @@
                                                         <c:if test="${currentPage != 1}">
                                                             <c:choose>
                                                                 <c:when test="${isSearching}">
-                                                                    <a href="admin-specialty-search?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
+                                                                    <a href="/healthcare/admin-handbook-search?codeSearch=${nameSearch}&page=${currentPage-1}">Trang trước</a>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <a href="admin-specialty?page=${currentPage-1}">Trang trước</a>
+                                                                    <a href="/healthcare/handbook-list-admin?page=${currentPage-1}">Trang trước</a>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </c:if>
@@ -127,20 +219,21 @@
                                                                     <a href="" class="active">${i}</a>
                                                                 </c:when>
                                                                 <c:when test="${isSearching}">
-                                                                    <a href="admin-specialty-search?search=${nameSearch}&page=${i}">${i}</a>
+                                                                    <a href="/healthcare/admin-handbook-search?codeSearch=${nameSearch}&page=${i}">${i}</a>
+
                                                                 </c:when>
-                                                                <c:otherwise>
-                                                                    <a href="admin-specialty?page=${i}">${i}</a>
+                                                                <c:otherwise>                                                           
+                                                                    <a href="/healthcare/handbook-list-admin?page=${i}">${i}</a>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </c:forEach>
                                                         <c:if test="${currentPage lt noOfPages}">
                                                             <c:choose>
                                                                 <c:when test="${isSearching}">
-                                                                    <a href="admin-specialty-search?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
+                                                                    <a href="/healthcare/admin-handbook-search?codeSearch=${nameSearch}&page=${currentPage+1}">Trang sau</a>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <a href="admin-specialty?page=${currentPage+1}">Trang sau</a>
+                                                                    <a href="/healthcare/handbook-list-admin?page=${currentPage+1}">Trang sau</a>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </c:if>
@@ -176,7 +269,18 @@
         <script src="<c:url value='/template/admin/assets/js/ace-elements.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/ace.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/bootstrap.min.js'/>"></script>
+        <script>
 
+                                                                    function myFunction(id) {
+                                                                        var x = document.getElementById(id);
+                                                                        if (x.style.display === "none") {
+                                                                            x.style.display = "block";
+                                                                        } else {
+                                                                            x.style.display = "none";
+                                                                        }
+                                                                    }
+
+        </script>
         <!-- page specific plugin scripts -->
         <script src="<c:url value='/template/admin/assets/js/jquery-ui.min.js'/>"></script>
     </body>

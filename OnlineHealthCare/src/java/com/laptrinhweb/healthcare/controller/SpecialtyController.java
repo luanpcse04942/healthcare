@@ -1,6 +1,7 @@
 package com.laptrinhweb.healthcare.controller;
 
 import com.laptrinhweb.healthcare.model.Specialty;
+import com.laptrinhweb.healthcare.services.DoctorService;
 import com.laptrinhweb.healthcare.services.SpecialtyService;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -20,7 +21,7 @@ import org.apache.tomcat.util.codec.binary.Base64;
  * @author LuanPC
  */
 @MultipartConfig
-@WebServlet(name = "SpecialtyController", urlPatterns = {"/public-specialty-list", "/admin-specialty", "/admin-specialty-search",
+@WebServlet(name = "SpecialtyController", urlPatterns = {"/public-specialty-list", "/public-specialty-detail", "/admin-specialty", "/admin-specialty-search",
     "/admin-add-specialty", "/add-specialty", "/admin-specialty-detail",
     "/edit-specialty"})
 public class SpecialtyController extends HttpServlet {
@@ -82,7 +83,19 @@ public class SpecialtyController extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("Admin/Specialty/SpecialtyDetail.jsp");
             rd.forward(request, response);
         }
-
+        
+        if (request.getServletPath().equals("/public-specialty-detail")) {
+            DoctorService ds = new DoctorService();
+            int specialtyId = Integer.parseInt(request.getParameter("specialtyId"));
+            String specName = request.getParameter("name");
+            
+            request.setAttribute("scheduleDates", ds.getDoctorScheduleDates(specialtyId));
+            request.setAttribute("doctors", ds.getDoctorsForSpecialtyDetail(specialtyId));
+            request.setAttribute("times", ds.getScheduleTimes(specialtyId));
+            request.setAttribute("specName", specName);
+            RequestDispatcher rd = request.getRequestDispatcher("Public/SpecialtyDetail.jsp");
+            rd.forward(request, response);
+        }
     }
 
     @Override
@@ -102,7 +115,7 @@ public class SpecialtyController extends HttpServlet {
             Part filePart = request.getPart("file");
             String fileName = filePart.getSubmittedFileName();
 
-            FileInputStream mFileInputStream = new FileInputStream("C:\\Users\\Administrator\\Desktop\\images\\Specialty\\" + fileName);
+            FileInputStream mFileInputStream = new FileInputStream("C:\\images\\Specialty\\" + fileName);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             byte[] b = new byte[1024];
             int bytesRead = 0;
@@ -137,7 +150,7 @@ public class SpecialtyController extends HttpServlet {
             SpecialtyService specialtyService = new SpecialtyService();
             
             if (fileName != "") {
-                FileInputStream mFileInputStream = new FileInputStream("C:\\Users\\Administrator\\Desktop\\images\\Specialty\\" + fileName);
+                FileInputStream mFileInputStream = new FileInputStream("C:\\images\\Specialty\\" + fileName);
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
                 byte[] b = new byte[1024];
                 int bytesRead = 0;

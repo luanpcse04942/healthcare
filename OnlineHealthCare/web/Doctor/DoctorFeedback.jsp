@@ -1,3 +1,9 @@
+<%-- 
+    Document   : DoctorFeedback
+    Created on : Oct 16, 2022, 11:06:00 PM
+    Author     : Y545
+--%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp" %>
 <!DOCTYPE html>
@@ -17,7 +23,7 @@
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="<c:url value='/ckeditor/ckeditor.js' />"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Bệnh nhân của tôi</title>
+        <title>Phản hồi của bệnh nhân</title>
     </head>
     <body class="no-skin">
         <!-- header -->
@@ -44,7 +50,7 @@
                                     <i class="ace-icon fa fa-home home-icon"></i>
                                     <a href="<c:url value='/trang-chu'/>">Trang chủ</a>
                                 </li>
-                                <li class="active">Danh sách bệnh nhân</li>
+                                <li class="active">Danh sách phản hồi</li>
                             </ul>
                             <!-- /.breadcrumb -->
                             <div class="nav-search" id="nav-search">
@@ -73,36 +79,26 @@
                                                     <thead>
                                                         <tr>
                                                             <th>No.</th>
-                                                            <th>Họ và tên</th>
+                                                            <th>Tên bênh nhân</th>
+                                                            <th>Phản hồi/Ý kiến</th>
                                                             <th>Số điện thoại</th>
-                                                            <th>Ngày đặt lịch</th>
-                                                            <th>Trạng thái</th>
-                                                            <th></th>
+                                                            <th>Ngày khám</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <c:choose>
-                                                            <c:when test="${empty accounts}">
-                                                            <p>Không có thông tin!</p>
+                                                            <c:when test="${empty feedbacks}">
+                                                                <p>Không có thông tin!</p>
                                                             </c:when>
                                                         <c:otherwise>
-                                                            <c:forEach var="item" items="${accounts}" varStatus="loop">
+                                                            <c:forEach var="item" items="${feedbacks}" varStatus="loop">
                                                                 <c:set var="count" value="${(currentPage - 1) * 4}"/>
                                                                 <tr>
                                                                     <td>${loop.index + count + 1}</td>
-                                                                    <td>${item.firstName} ${item.lastName}</td>
+                                                                    <td>${item.fname} ${item.lname}</td>
+                                                                    <td>${item.content}</td>
                                                                     <td>${item.phoneNumber}</td>
-                                                                    <td>${item.bookingDate}</td>
-                                                                    <td>Đã khám xong</td>
-                                                                    <td>
-                                                                        <c:url var="viewDetail" value="/admin-account-detail">
-                                                                            <c:param name="userId" value="${item.id}"/>
-                                                                        </c:url>
-                                                                        <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
-                                                                           title="Xem chi tiết" href="${viewDetail}">
-                                                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                                                        </a>
-                                                                    </td>
+                                                                    <td>${item.createdAt}</td>
                                                                 </tr>
                                                             </c:forEach>
                                                         </c:otherwise>

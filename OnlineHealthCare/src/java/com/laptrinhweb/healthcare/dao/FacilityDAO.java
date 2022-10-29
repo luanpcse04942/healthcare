@@ -1,7 +1,6 @@
 package com.laptrinhweb.healthcare.dao;
 
 import com.laptrinhweb.healthcare.context.DBContext;
-import com.laptrinhweb.healthcare.model.DoctorInfo;
 import com.laptrinhweb.healthcare.model.MedicalFacility;
 import com.laptrinhweb.healthcare.model.Time;
 import java.sql.Date;
