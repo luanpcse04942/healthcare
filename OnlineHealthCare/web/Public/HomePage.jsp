@@ -32,7 +32,7 @@
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="#" class="mo-cuaso" dl-cuaso="cosoyte"> Cơ sở y tế
+                        <a href="<c:url value='/public-facility-list'/>" class="mo-cuaso" dl-cuaso="cosoyte"> Cơ sở y tế
                             <span>Chọn bệnh viện phòng khám</span>
                         </a>
                     </li>
