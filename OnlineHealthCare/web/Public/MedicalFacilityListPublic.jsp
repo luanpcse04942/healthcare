@@ -114,24 +114,26 @@
     <body>
         <div class="top-area">
             <div class="img-area">
-                <a href="#">
-                    <img src="static/images/bookingcare-2020.svg" width="160" height="35"
-                         alt="">
+                <a href="trang-chu">
+                    <h1>
+                        <i class="ace-icon fa fa-leaf green"></i>
+                        HealthCare
+                    </h1>
                 </a>
             </div>
             <div class="navbar-pc">
                 <ul class="nav-list">
-                    <li class="nav-link">
-                        <a href="specialty-list" class="mo-cuaso" dl-cuaso="chuyenkhoa"> Chuyên khoa
+                    <li class="nav-link ">
+                        <a href="public-specialty-list" class="mo-cuaso" dl-cuaso="chuyenkhoa"> Chuyên khoa
                             <span>Tìm bác sĩ theo chuyên khoa</span>
                         </a>
                     </li>
-                    <li class="nav-link">
-                        <a href="/#cosoyte" class="mo-cuaso" dl-cuaso="cosoyte"> Cơ sở y tế
+                    <li class="nav-link ">
+                        <a href="public-facility-list" class="mo-cuaso" dl-cuaso="cosoyte"> Cơ sở y tế
                             <span>Chọn bệnh viện phòng khám</span>
                         </a>
                     </li>
-                    <li class="nav-link">
+                    <li class="nav-link ">
                         <a href="doctor-list-public" class="mo-cuaso" dl-cuaso="bacsi"> Bác sĩ
                             <span>Chọn bác sĩ giỏi</span>
                         </a>
@@ -149,22 +151,23 @@
         <div class="container d-flex justify-content-center mt-50 mb-50">
             <h1>Bệnh viện, phòng khám nổi bật</h1>
             <div class="row">
-                <c:forEach var="item" items="${medicalfacility}">
+                <c:forEach var="item" items="${facilities}">
                     <div class="col-md-4 mt-2">
-
 
                         <div class="card">
 
                             <div class="card-body">
                                 <div class="card-img-actions">
-                                    <img src="static/images/Specialty/${item.image}" class="card-img img-fluid" width="96" height="350" alt="">
+                                 
+                                   <img width="300px" height="200px" alt="Avatar" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${item.images}' />" />
+
                                 </div>
                             </div>
 
-                            <div class="card-body bg-light text-center">
+                            <div class="card-body bg-light text-center ">
                                 <div class="mb-2">
                                     <h6 class="font-weight-semibold mb-2">
-                                        <a href="#" class="text-default mb-2" data-abc="true">${item.name}</a>
+                                        <a href="#" class="text-default mb-2" data-abc="true">${item.firstName} ${item.lastName}</a>
                                     </h6>
                                 </div>
                             </div> 

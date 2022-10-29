@@ -25,7 +25,7 @@ import java.util.List;
  * @author LuanPC
  */
 @MultipartConfig
-@WebServlet(name = "FacilityController", urlPatterns = {"/admin-facility-list", "/admin-facility-detail", "/edit-facility",
+@WebServlet(name = "FacilityController", urlPatterns = {"/public-facility-list","/admin-facility-list", "/admin-facility-detail", "/edit-facility",
     "/admin-facility-search", "/admin-add-facility", "/booking-schedule", "/facility-home", "/facility-add-schedule"})
 public class FacilityController extends HttpServlet {
 
@@ -33,6 +33,24 @@ public class FacilityController extends HttpServlet {
             throws ServletException, IOException {
         int page = 1;
         String search = "";
+        
+        if (request.getServletPath().equals("/public-facility-list") || request.getServletPath().equals("/admin-specialty")) {
+            if (request.getParameter("page") != null) {
+                page = Integer.parseInt(request.getParameter("page"));
+            }
+
+            FacilityService specService = new FacilityService();
+
+            request.setAttribute("facilities", specService.getListFacilities(page));
+            request.setAttribute("noOfPages", specService.getNoOfPage(search));
+            request.setAttribute("currentPage", page);
+
+            if (request.getServletPath().equals("/public-facility-list")) {
+                RequestDispatcher rd = request.getRequestDispatcher("Public/MedicalFacilityListPublic.jsp");
+                rd.forward(request, response);
+            }   
+
+        }
 
         if (request.getServletPath().equals("/admin-facility-list")) {
             if (request.getParameter("page") != null) {
