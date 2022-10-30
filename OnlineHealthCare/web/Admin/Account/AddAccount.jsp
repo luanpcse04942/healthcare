@@ -77,7 +77,6 @@
                                 <select class="form-control" id="role" name="role">
                                     <option value="1">Quản trị viên</option>
                                     <option value="2">Bác sĩ</option>
-                                    <option value="4">Cơ sở y tế</option>
                                 </select>
                             </div>
                             <div class="form-group col-sm-6">

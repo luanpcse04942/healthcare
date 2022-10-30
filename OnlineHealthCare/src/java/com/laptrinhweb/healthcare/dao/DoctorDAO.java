@@ -330,7 +330,7 @@ public class DoctorDAO extends DBContext {
     public ArrayList<ScheduleDTO> getDoctorScheduleDates(int specialtyId) {
         StringBuilder sql = new StringBuilder(" SELECT d.doctorId, s.scheduleDate, s.scheduleId  FROM Schedules s ");
         sql.append(" JOIN Doctor_Working_Info d ON s.doctorWorkingInfoId = d.id ");
-        sql.append(" WHERE d.specialtyId = ? ORDER BY s.scheduleDate");
+        sql.append(" WHERE d.specialtyId = ? and s.scheduleDate >= cast(getdate() as date) ORDER BY s.scheduleDate");
         
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -371,7 +371,7 @@ public class DoctorDAO extends DBContext {
         sql.append(" JOIN Times t ON st.timeId = t.timeId ");
         sql.append(" JOIN Schedules s ON s.scheduleId = st.scheduleId ");
         sql.append(" JOIN Doctor_Working_Info dwi ON dwi.id = s.doctorWorkingInfoId ");
-        sql.append(" WHERE dwi.specialtyId = ? ");
+        sql.append(" WHERE dwi.specialtyId = ? and s.scheduleDate >= cast(getdate() as date) ORDER BY st.timeId");
         
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -390,6 +390,7 @@ public class DoctorDAO extends DBContext {
                 times.add(s);
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
             try {
                 if (conn != null) {
