@@ -18,54 +18,12 @@ import java.util.List;
  *
  * @author LuanPC
  */
-@WebServlet(name = "PatientController", urlPatterns = {"/doctor-patient-list", 
-    "/doctor-patient-search", "/doctor-patient-detail"})
+@WebServlet(name = "PatientController", urlPatterns = {})
 public class PatientController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int page = 1;
-        String search = "";
-
-        if (request.getServletPath().equals("/doctor-patient-list")) {
-            if (request.getParameter("page") != null) {
-                page = Integer.parseInt(request.getParameter("page"));
-            }
-            PatientService patientService = new PatientService();
-
-            request.setAttribute("accounts", patientService.getListAccounts(page, 1));
-            request.setAttribute("noOfPages", patientService.getNoOfPage(search));
-            request.setAttribute("currentPage", page);
-            RequestDispatcher rd = request.getRequestDispatcher("Doctor/PatientList.jsp");
-            rd.forward(request, response);
-        }
-
-        if (request.getServletPath().equals("/doctor-patient-search")) {
-            if (request.getParameter("page") != null) {
-                page = Integer.parseInt(request.getParameter("page"));
-            }
-            
-            search = request.getParameter("NameSearch").trim();
-            search = search.replaceAll("\\s+", " ");
-
-            PatientService patientService = new PatientService();
-
-            request.setAttribute("accounts", patientService.getPatientsSearchByName(1, page, search));
-            request.setAttribute("noOfPages", patientService.getNoOfPage(search));
-            request.setAttribute("currentPage", page);
-            request.setAttribute("nameSearch", search);
-            request.setAttribute("isSearching", true);
-            RequestDispatcher rd = request.getRequestDispatcher("Doctor/PatientList.jsp");
-            rd.forward(request, response);
-        }
         
-        if (request.getServletPath().equals("/doctor-patient-detail")) {
-            int userId = Integer.parseInt(request.getParameter("userId"));
-            UserService userService = new UserService();
-            request.setAttribute("account", userService.getAccountDetail(userId));
-            RequestDispatcher rd = request.getRequestDispatcher("Doctor/PatientDetail.jsp");
-            rd.forward(request, response);
-        }
     }
 
     @Override
