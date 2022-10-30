@@ -2,6 +2,8 @@ package com.laptrinhweb.healthcare.controller;
 
 import com.laptrinhweb.healthcare.model.User;
 import com.laptrinhweb.healthcare.services.DoctorService;
+import com.laptrinhweb.healthcare.services.PatientService;
+import com.laptrinhweb.healthcare.services.UserService;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -15,7 +17,8 @@ import java.util.List;
  *
  * @author NhatDV
  */
-@WebServlet(name = "DoctorController", urlPatterns = {"/doctor-list-public", "/public-doctor-search"})
+@WebServlet(name = "DoctorController", urlPatterns = {"/doctor-list-public", "/public-doctor-search",
+    "/doctor-patient-list", "/doctor-patient-search", "/doctor-patient-detail"})
 public class DoctorController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -50,6 +53,46 @@ public class DoctorController extends HttpServlet {
             request.setAttribute("nameSearch", search);
             request.setAttribute("isSearching", true);
             RequestDispatcher rd = request.getRequestDispatcher("Public/DoctorListPublic.jsp");
+            rd.forward(request, response);
+        }
+        
+        if (request.getServletPath().equals("/doctor-patient-list")) {
+            if (request.getParameter("page") != null) {
+                page = Integer.parseInt(request.getParameter("page"));
+            }
+            PatientService patientService = new PatientService();
+
+            request.setAttribute("accounts", patientService.getListAccounts(page, 1));
+            request.setAttribute("noOfPages", patientService.getNoOfPage(search));
+            request.setAttribute("currentPage", page);
+            RequestDispatcher rd = request.getRequestDispatcher("Doctor/PatientList.jsp");
+            rd.forward(request, response);
+        }
+
+        if (request.getServletPath().equals("/doctor-patient-search")) {
+            if (request.getParameter("page") != null) {
+                page = Integer.parseInt(request.getParameter("page"));
+            }
+            
+            search = request.getParameter("NameSearch").trim();
+            search = search.replaceAll("\\s+", " ");
+
+            PatientService patientService = new PatientService();
+
+            request.setAttribute("accounts", patientService.getPatientsSearchByName(1, page, search));
+            request.setAttribute("noOfPages", patientService.getNoOfPage(search));
+            request.setAttribute("currentPage", page);
+            request.setAttribute("nameSearch", search);
+            request.setAttribute("isSearching", true);
+            RequestDispatcher rd = request.getRequestDispatcher("Doctor/PatientList.jsp");
+            rd.forward(request, response);
+        }
+        
+        if (request.getServletPath().equals("/doctor-patient-detail")) {
+            int userId = Integer.parseInt(request.getParameter("userId"));
+            UserService userService = new UserService();
+            request.setAttribute("account", userService.getAccountDetail(userId));
+            RequestDispatcher rd = request.getRequestDispatcher("Doctor/PatientDetail.jsp");
             rd.forward(request, response);
         }
 
