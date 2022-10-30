@@ -11,13 +11,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet(name = "LoginController", urlPatterns = {"/login", "/register"})
+@WebServlet(name = "LoginController", urlPatterns = {"/dang-nhap", "/register"})
 public class LoginController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        if (request.getServletPath().equals("/login")) {
+        if (request.getServletPath().equals("/dang-nhap")) {
 
             String email = request.getParameter("email-login");
             String password = request.getParameter("password-login");
