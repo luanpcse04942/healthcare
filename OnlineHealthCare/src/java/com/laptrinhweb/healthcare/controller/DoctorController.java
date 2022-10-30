@@ -100,8 +100,11 @@ public class DoctorController extends HttpServlet {
         
         if (request.getServletPath().equals("/doctor-appointment-detail")) {
             int userId = Integer.parseInt(request.getParameter("userId"));
+            int appointID = Integer.parseInt(request.getParameter("appointId"));
             UserService userService = new UserService();
+            AppointmentService appointmentService = new AppointmentService();
             request.setAttribute("account", userService.getAccountDetail(userId));
+            request.setAttribute("appoints", appointmentService.getAppointmentDetail(appointID));
             RequestDispatcher rd = request.getRequestDispatcher("Doctor/AppointmentDetail.jsp");
             rd.forward(request, response);
         }

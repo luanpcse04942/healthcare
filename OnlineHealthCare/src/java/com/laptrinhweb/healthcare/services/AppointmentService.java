@@ -5,6 +5,7 @@
 package com.laptrinhweb.healthcare.services;
 
 import com.laptrinhweb.healthcare.dao.AppointmentDAO;
+import com.laptrinhweb.healthcare.model.dto.AppointmentDTO;
 import com.laptrinhweb.healthcare.model.dto.AppointmentSmall;
 import java.util.List;
 
@@ -34,6 +35,11 @@ public class AppointmentService {
         }
         
         return noOfPages;
+    }
+
+    public AppointmentDTO getAppointmentDetail(int appointID) {
+        AppointmentDAO appDAO = new AppointmentDAO();
+        return appDAO.getAppointmentDetail(appointID);
     }
 
 }

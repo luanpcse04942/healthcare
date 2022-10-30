@@ -1,6 +1,7 @@
 package com.laptrinhweb.healthcare.dao;
 
 import com.laptrinhweb.healthcare.context.DBContext;
+import com.laptrinhweb.healthcare.model.dto.AppointmentDTO;
 import com.laptrinhweb.healthcare.model.dto.AppointmentSmall;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,15 +13,14 @@ import java.util.logging.Logger;
 
 public class AppointmentDAO extends DBContext {
 
-
     public List<AppointmentSmall> findAllAppoints(int start, int total, int doctorID) {
-                String sql = "SELECT Appointment.appointmentId, Appointment.userId, Appointment.reasonExamination, Appointment.bookingDate, \n"
+        String sql = "SELECT Appointment.appointmentId, Appointment.userId, Appointment.reasonExamination, Appointment.bookingDate, \n"
                 + "Status.statusName,  Users.firstName, Users.lastName\n"
                 + "FROM     Appointment INNER JOIN\n"
                 + "Doctor_Working_Info ON Appointment.doctorWorkingInfoId = Doctor_Working_Info.id INNER JOIN\n"
                 + "Status ON Appointment.statusId = Status.statusId INNER JOIN\n"
                 + "Users ON Appointment.userId = Users.id\n"
-                + "WHERE doctorId =  " + doctorID + "\n" 
+                + "WHERE doctorId =  " + doctorID + "\n"
                 + "ORDER BY Appointment.appointmentId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -62,10 +62,10 @@ public class AppointmentDAO extends DBContext {
     }
 
     public int getNoOfRecordAccounts() {
-                String query = "SELECT Count(*)\n" +
-                                "FROM   Appointment INNER JOIN\n" +
-                                "Doctor_Working_Info ON Appointment.doctorWorkingInfoId = Doctor_Working_Info.id\n" +
-                                "where doctorId = 1";
+        String query = "SELECT Count(*)\n"
+                + "FROM   Appointment INNER JOIN\n"
+                + "Doctor_Working_Info ON Appointment.doctorWorkingInfoId = Doctor_Working_Info.id\n"
+                + "where doctorId = 1";
         DBContext db = new DBContext();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -107,7 +107,57 @@ public class AppointmentDAO extends DBContext {
     public int getNoOfRecordAccountsSearch(String search) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
+    public AppointmentDTO getAppointmentDetail(int id) {
+        String query = "SELECT Status.statusName, Prices.priceValue, "
+                + "Appointment.reasonExamination, Appointment.bookingDate\n"
+                + "FROM Appointment INNER JOIN\n"
+                + "Status ON Appointment.statusId = Status.statusId INNER JOIN\n"
+                + "Doctor_Working_Info ON Appointment.doctorWorkingInfoId = Doctor_Working_Info.id INNER JOIN\n"
+                + "Prices ON Doctor_Working_Info.priceId = Prices.priceId\n"
+                + "WHERE appointmentId = " + id;
+        DBContext db = new DBContext();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        AppointmentDTO app = null;
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                app = new AppointmentDTO();
+                app.setStatusName(rs.getNString(1));
+                app.setPriceValue(rs.getInt(2));
+                app.setReasonExamination(rs.getNString(3));
+                app.setBookingDate(rs.getDate(4));
+            }
+        } catch (SQLException e) {
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(DoctorDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(DoctorDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(DoctorDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return app;
+    }
+
     public static void main(String[] args) {
         AppointmentDAO patientDAO = new AppointmentDAO();
         int recordsPerPage = 4;

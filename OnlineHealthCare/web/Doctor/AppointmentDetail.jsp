@@ -44,7 +44,7 @@
                                     <a href="<c:url value='/trang-chu'/>">Trang chủ</a>
                                 </li>
                                 <li>
-                                    <a href="<c:url value='/doctor-patient-list'/>">Danh sách lịch hẹn</a>
+                                    <a href="<c:url value='/doctor-appointment-list'/>">Danh sách lịch hẹn</a>
                                 </li>
                                 <li class="active">Chi tiết lịch hẹn</li>
                             </ul>
@@ -127,7 +127,7 @@
 
                                                 <div class="profile-info-value">
                                                     <i class="fa fa-map-marker light-orange bigger-110"></i>
-                                                    <span>${account.address}</span>
+                                                    <span>${appoints.bookingDate}</span>
                                                 </div>
                                             </div>
 
@@ -135,7 +135,7 @@
                                                 <div class="profile-info-name"> Lý do khám </div>
 
                                                 <div class="profile-info-value">
-                                                    <span>${account.phoneNumber}</span>
+                                                    <span>${appoints.reasonExamination}</span>
                                                 </div>
                                             </div>
 
@@ -143,7 +143,7 @@
                                                 <div class="profile-info-name"> Giá khám </div>
 
                                                 <div class="profile-info-value">
-                                                    <span>${account.email}</span>
+                                                    <span>${appoints.priceValue}</span>
                                                 </div>
                                             </div>
 
@@ -151,7 +151,7 @@
                                                 <div class="profile-info-name"> Trạng thái </div>
 
                                                 <div class="profile-info-value">
-                                                    <span>${account.gender}</span>
+                                                    <span>${appoints.statusName}</span>
                                                 </div>
                                             </div>
                                         </div>
