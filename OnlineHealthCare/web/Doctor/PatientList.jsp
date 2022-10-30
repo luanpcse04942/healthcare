@@ -95,7 +95,7 @@
                                                                     <td>${item.bookingDate}</td>
                                                                     <td>Đã khám xong</td>
                                                                     <td>
-                                                                        <c:url var="viewDetail" value="/admin-account-detail">
+                                                                        <c:url var="viewDetail" value="/doctor-patient-detail">
                                                                             <c:param name="userId" value="${item.id}"/>
                                                                         </c:url>
                                                                         <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"

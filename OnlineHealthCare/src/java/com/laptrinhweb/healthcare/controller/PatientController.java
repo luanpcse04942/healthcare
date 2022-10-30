@@ -4,6 +4,7 @@ import com.laptrinhweb.healthcare.model.User;
 import com.laptrinhweb.healthcare.model.dto.PatientSmall;
 import com.laptrinhweb.healthcare.services.DoctorService;
 import com.laptrinhweb.healthcare.services.PatientService;
+import com.laptrinhweb.healthcare.services.UserService;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -17,7 +18,8 @@ import java.util.List;
  *
  * @author LuanPC
  */
-@WebServlet(name = "PatientController", urlPatterns = {"/doctor-patient-list", "/doctor-patient-search"})
+@WebServlet(name = "PatientController", urlPatterns = {"/doctor-patient-list", 
+    "/doctor-patient-search", "/doctor-patient-detail"})
 public class PatientController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -54,6 +56,14 @@ public class PatientController extends HttpServlet {
             request.setAttribute("nameSearch", search);
             request.setAttribute("isSearching", true);
             RequestDispatcher rd = request.getRequestDispatcher("Doctor/PatientList.jsp");
+            rd.forward(request, response);
+        }
+        
+        if (request.getServletPath().equals("/doctor-patient-detail")) {
+            int userId = Integer.parseInt(request.getParameter("userId"));
+            UserService userService = new UserService();
+            request.setAttribute("account", userService.getAccountDetail(userId));
+            RequestDispatcher rd = request.getRequestDispatcher("Doctor/PatientDetail.jsp");
             rd.forward(request, response);
         }
     }
