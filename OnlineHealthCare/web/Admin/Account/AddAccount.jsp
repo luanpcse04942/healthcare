@@ -53,36 +53,11 @@
                         </c:if>
                         <form action="<c:url value='/'/>" id="formSubmit" method="post" enctype="multipart/form-data">
                             <div class="form-group col-sm-12">
-                                <label>Email</label>
-                                <input id="email" name="email" type="email" class="form-control"  aria-describedby="emailHelp" placeholder="Nhập vào email">
-                            </div>
-                            <div class="form-group col-sm-12">
-                                <label>Mật khẩu</label>
-                                <input id="password" name="password" type="password" class="form-control" placeholder="Nhập vào mật khẩu">
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label>Họ</label>
-                                    <input id="firstName" name="firstName" type="text" class="form-control">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label>Tên</label>
-                                    <input id="lastName" name="lastName" type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <label>Chọn vai trò</label>
-                                <select class="form-control" id="role" name="role">
-                                    <option value="1">Quản trị viên</option>
-                                    <option value="2">Bác sĩ</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <label>Chọn tỉnh/thành</label>
-                                <select class="form-control" id="province" name="province">
-                                    <c:forEach items="${provinces}" var="province">
-                                        <option value="${province.id}">
-                                            ${province.name}
+                                <select class="form-control" id="form-field-select-1" name="province">
+                                    <option >--Chọn bác sĩ--</option>
+                                    <c:forEach items="${doctors}" var="doctor">
+                                        <option value="${doctor.id}">
+                                            ${doctor.firstName} ${doctor.lastName}
                                         </option>
                                     </c:forEach>
                                 </select>

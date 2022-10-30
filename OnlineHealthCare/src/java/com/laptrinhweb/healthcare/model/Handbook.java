@@ -13,36 +13,17 @@ public class Handbook {
     private String handbookName;
     private byte[] content;
     private Date publishedAt;
-    private String image;
-    private String content;
+    private Date updatedAt;
 
-
-
-    public Handbook() {
-    }
-
-    public Handbook(int id, int adminId, String handbookName, Date publishedAt, String image, String content) {
+    public Handbook(int id, int adminId, String adminName, String handbookName, byte[] content, Date publishedAt, Date updatedAt) {
         this.id = id;
         this.adminId = adminId;
         this.adminName = adminName;
         this.handbookName = handbookName;
         this.content = content;
         this.publishedAt = publishedAt;
-        this.image = image;
-        this.content = content;
+        this.updatedAt = updatedAt;
     }
-
-
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-
 
     public int getId() {
         return id;
