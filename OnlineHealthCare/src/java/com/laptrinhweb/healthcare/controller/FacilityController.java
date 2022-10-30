@@ -39,10 +39,10 @@ public class FacilityController extends HttpServlet {
                 page = Integer.parseInt(request.getParameter("page"));
             }
 
-            FacilityService specService = new FacilityService();
+            FacilityService facilityService = new FacilityService();
 
-            request.setAttribute("facilities", specService.getListFacilities(page));
-            request.setAttribute("noOfPages", specService.getNoOfPage(search));
+            request.setAttribute("facilities", facilityService.getListFacilities(page));
+            request.setAttribute("noOfPages", facilityService.getNoOfPage(search));
             request.setAttribute("currentPage", page);
 
             if (request.getServletPath().equals("/public-facility-list")) {
