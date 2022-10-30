@@ -1,6 +1,7 @@
 package com.laptrinhweb.healthcare.controller;
 
 import com.laptrinhweb.healthcare.model.Specialty;
+import com.laptrinhweb.healthcare.model.dto.ScheduleTimesDTO;
 import com.laptrinhweb.healthcare.services.DoctorService;
 import com.laptrinhweb.healthcare.services.SpecialtyService;
 import jakarta.servlet.RequestDispatcher;
@@ -13,8 +14,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import java.io.FileInputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.tomcat.util.codec.binary.Base64;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 /**
  *
@@ -23,7 +29,7 @@ import org.apache.tomcat.util.codec.binary.Base64;
 @MultipartConfig
 @WebServlet(name = "SpecialtyController", urlPatterns = {"/public-specialty-list", "/public-specialty-detail", "/admin-specialty", "/admin-specialty-search",
     "/admin-add-specialty", "/add-specialty", "/admin-specialty-detail",
-    "/edit-specialty"})
+    "/edit-specialty", "/get-time-schedule"})
 public class SpecialtyController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -83,16 +89,15 @@ public class SpecialtyController extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("Admin/Specialty/SpecialtyDetail.jsp");
             rd.forward(request, response);
         }
-        
+
         if (request.getServletPath().equals("/public-specialty-detail")) {
             DoctorService ds = new DoctorService();
+            SpecialtyService ss = new SpecialtyService();
             int specialtyId = Integer.parseInt(request.getParameter("specialtyId"));
-            String specName = request.getParameter("name");
-            
+
             request.setAttribute("scheduleDates", ds.getDoctorScheduleDates(specialtyId));
             request.setAttribute("doctors", ds.getDoctorsForSpecialtyDetail(specialtyId));
-            request.setAttribute("times", ds.getScheduleTimes(specialtyId));
-            request.setAttribute("specName", specName);
+            request.setAttribute("spec", ss.getSpecialtyInfo(specialtyId));
             RequestDispatcher rd = request.getRequestDispatcher("Public/SpecialtyDetail.jsp");
             rd.forward(request, response);
         }
@@ -148,7 +153,7 @@ public class SpecialtyController extends HttpServlet {
             String fileName = filePart.getSubmittedFileName();
             boolean editSpecSuccess = false;
             SpecialtyService specialtyService = new SpecialtyService();
-            
+
             if (fileName != "") {
                 FileInputStream mFileInputStream = new FileInputStream("C:\\images\\Specialty\\" + fileName);
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -160,7 +165,7 @@ public class SpecialtyController extends HttpServlet {
                 byte[] ba = bos.toByteArray();
                 byte[] encoded = Base64.encodeBase64(ba);
                 editSpecSuccess = specialtyService.updateSpecialty(id, name, description, encoded);
-            }else{
+            } else {
                 editSpecSuccess = specialtyService.updateSpecialty(id, name, description, null);
             }
             if (editSpecSuccess) {
@@ -175,6 +180,29 @@ public class SpecialtyController extends HttpServlet {
             request.setAttribute("specialty", spec);
             RequestDispatcher rd = request.getRequestDispatcher("Admin/Specialty/SpecialtyDetail.jsp");
             rd.forward(request, response);
+        }
+        
+        if (request.getServletPath().equals("/get-time-schedule")) {
+            int specialtyId = Integer.parseInt(request.getParameter("specialtyId"));
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+            response.setHeader("Cache-control", "no-cache, no-store");
+            response.setHeader("Pragma", "no-cache");
+            response.setHeader("Expires", "-1");
+
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Access-Control-Allow-Methods", "POST");
+            response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+            response.setHeader("Access-Control-Max-Age", "86400");
+            Gson gson = new Gson();
+            JsonObject myObj = new JsonObject();
+
+            DoctorService ds = new DoctorService();
+            ArrayList<ScheduleTimesDTO> arrs = ds.getScheduleTimes(specialtyId);
+            JsonElement timeObj = gson.toJsonTree(arrs);
+            myObj.add("listTime", timeObj);
+            out.println(myObj.toString());
+            out.close();
         }
     }
 }

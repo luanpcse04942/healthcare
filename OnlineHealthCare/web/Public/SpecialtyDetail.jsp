@@ -29,11 +29,15 @@
             <a href="<c:url value='/trang-chu'/>">
                 <i class="ace-icon fa fa-arrow-left"></i>
             </a>
-            <h2 style="color: #ffffff;">${specName}</h2>
+            <h2 style="color: #ffffff;">${spec.name}</h2>
         </div>
     </header>
     <body>
         <div class="container">
+            <div class="specialty-info">
+                <div class="spec-name">${spec.name}</div>
+                <div class="spec-description">${spec.description}</div>
+            </div>
             <c:choose>
                 <c:when test="${empty doctors}">
                     <p>Không có thông tin!</p>
@@ -66,13 +70,16 @@
                                             <select class="form-control" style="width: 150px;">
                                                 <c:forEach var="item" items="${scheduleDates}" varStatus="loop">
                                                     <c:if test="${item.doctorID eq doctor.doctorId}">
-                                                        <option value="${item.scheduleID}">
+                                                        <option class="${doctor.doctorId}" value="${item.scheduleID}">
                                                             ${item.scheduleDate}
                                                         </option>
                                                     </c:if>
                                                 </c:forEach>
                                             </select>
-                                            <div class="schedule-times">
+
+
+
+                                            <div class="pick-hour-container" id="doctor-schedules-${doctor.doctorId}">
 
                                             </div>
                                         </div>
@@ -91,7 +98,33 @@
                 </c:otherwise>
             </c:choose>
         </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var params = new window.URLSearchParams(window.location.search);
+                $.ajax({
+                    type: "POST",
+                    url: 'get-time-schedule',
+                    data: {
+                        specialtyId: params.get('specialtyId')
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        $(".form-control").each(function () {
+                            var scheduleID = parseInt($(this).find(":selected").val());
+                            var doctorID = $(this).find(":selected").attr('class');
+                            $("#doctor-schedules-" + doctorID).html("");
+                            jQuery.each(data.listTime, function (index, item) {
+                                var id = item.scheduleID;
+                                if (id === scheduleID) {
+                                    $("#doctor-schedules-" + doctorID).append("<span>" + item.timeValue + "</span>")
+                                }
+                            });
+                        });
+                    }
+                });
 
+            });
+        </script>
         <script src="<c:url value='/template/admin/assets/js/bootstrap.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/jquery-ui.custom.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/jquery.ui.touch-punch.min.js' />"></script>

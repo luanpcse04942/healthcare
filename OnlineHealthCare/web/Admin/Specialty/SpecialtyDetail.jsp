@@ -16,7 +16,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Quản lý  tài khoản</title>
     </head>
-    <body class="no-skin">
+    <body class="no-skin" style="overflow-x: hidden">
         <!-- header -->
         <%@ include file="/common/header.jsp" %>
         <!-- header -->
