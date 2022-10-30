@@ -44,9 +44,9 @@
                                     <a href="<c:url value='/trang-chu'/>">Trang chủ</a>
                                 </li>
                                 <li>
-                                    <a href="<c:url value='/doctor-patient-list'/>">Danh sách bệnh nhân</a>
+                                    <a href="<c:url value='/doctor-patient-list'/>">Danh sách lịch hẹn</a>
                                 </li>
-                                <li class="active">Thông tin bệnh nhân</li>
+                                <li class="active">Chi tiết lịch hẹn</li>
                             </ul>
                             <!-- /.breadcrumb -->
                         </div>
@@ -54,15 +54,18 @@
                         <div class="tab-content no-border padding-24">
                             <div id="home" class="tab-pane in active">
                                 <div class="row">
+                                    <h1 class="h1 blue" style="margin: 0 0 1rem 0">Thông tin bệnh nhân</h1>
+                                </div>
+                                <div class="row">
                                     <div class="col-xs-12 col-sm-3 center">
                                         <span class="profile-picture">
                                             <img class="editable img-responsive" alt="Alex's Avatar" id="avatar2" src="template/admin/assets/avatars/profile-pic.jpg" />
                                         </span>
                                     </div><!-- /.col -->
-
+                                    
                                     <div class="col-xs-12 col-sm-9">
+
                                         <h4 class="blue">
-                                            <span class="middle">Bệnh nhân </span>
                                             <span class="middle">${account.firstName} ${account.lastName}</span>
 
                                             <span class="label label-purple arrowed-in-right">
@@ -112,7 +115,51 @@
                                 </div><!-- /.row -->
 
                                 <div class="space-20"></div>
+                                
+                                <div class="row">
+                                    <h1 class="h1 blue" style="margin: 0 0 1rem 0">Thông tin lịch hẹn</h1>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-9">
+                                        <div class="profile-user-info">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> Ngày đặt lịch </div>
 
+                                                <div class="profile-info-value">
+                                                    <i class="fa fa-map-marker light-orange bigger-110"></i>
+                                                    <span>${account.address}</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> Lý do khám </div>
+
+                                                <div class="profile-info-value">
+                                                    <span>${account.phoneNumber}</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> Giá khám </div>
+
+                                                <div class="profile-info-value">
+                                                    <span>${account.email}</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> Trạng thái </div>
+
+                                                <div class="profile-info-value">
+                                                    <span>${account.gender}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="hr hr-8 dotted"></div>
+
+                                    </div><!-- /.col -->
+                                </div><!-- /.row -->
                             </div>
                         </div>
                     </div>

@@ -1,6 +1,7 @@
 package com.laptrinhweb.healthcare.controller;
 
 import com.laptrinhweb.healthcare.model.User;
+import com.laptrinhweb.healthcare.services.AppointmentService;
 import com.laptrinhweb.healthcare.services.DoctorService;
 import com.laptrinhweb.healthcare.services.PatientService;
 import com.laptrinhweb.healthcare.services.UserService;
@@ -18,7 +19,8 @@ import java.util.List;
  * @author NhatDV
  */
 @WebServlet(name = "DoctorController", urlPatterns = {"/doctor-list-public", "/public-doctor-search",
-    "/doctor-patient-list", "/doctor-patient-search", "/doctor-patient-detail"})
+    "/doctor-patient-list", "/doctor-patient-search", "/doctor-patient-detail", "/doctor-appointment-detail",
+    "/doctor-appointment-list"})
 public class DoctorController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -93,6 +95,27 @@ public class DoctorController extends HttpServlet {
             UserService userService = new UserService();
             request.setAttribute("account", userService.getAccountDetail(userId));
             RequestDispatcher rd = request.getRequestDispatcher("Doctor/PatientDetail.jsp");
+            rd.forward(request, response);
+        }
+        
+        if (request.getServletPath().equals("/doctor-appointment-detail")) {
+            int userId = Integer.parseInt(request.getParameter("userId"));
+            UserService userService = new UserService();
+            request.setAttribute("account", userService.getAccountDetail(userId));
+            RequestDispatcher rd = request.getRequestDispatcher("Doctor/AppointmentDetail.jsp");
+            rd.forward(request, response);
+        }
+        
+        if (request.getServletPath().equals("/doctor-appointment-list")) {
+            if (request.getParameter("page") != null) {
+                page = Integer.parseInt(request.getParameter("page"));
+            }
+            AppointmentService appointmentService = new AppointmentService();
+
+            request.setAttribute("appoints", appointmentService.getListAccounts(page, 1));
+            request.setAttribute("noOfPages", appointmentService.getNoOfPage(search));
+            request.setAttribute("currentPage", page);
+            RequestDispatcher rd = request.getRequestDispatcher("Doctor/AppointmentList.jsp");
             rd.forward(request, response);
         }
 
