@@ -2,6 +2,9 @@ package com.laptrinhweb.healthcare.dao;
 
 import com.laptrinhweb.healthcare.context.DBContext;
 import com.laptrinhweb.healthcare.model.User;
+import com.laptrinhweb.healthcare.model.dto.DoctorInfoDTO;
+import com.laptrinhweb.healthcare.model.dto.ScheduleDTO;
+import com.laptrinhweb.healthcare.model.dto.ScheduleTimesDTO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -42,12 +45,13 @@ public class DoctorDAO extends DBContext {
                 acc.setGender(rs.getString(12));
                 acc.setPhoneNumber(rs.getString(7));
                 acc.setAddress(rs.getString(8));
-                acc.setImages(rs.getString(9));
+                String base64StringImage = new String(rs.getBytes(9), "UTF-8");
+                acc.setImages(base64StringImage);
                 acc.setOnlineStatus(rs.getBoolean(5));
                 acc.setActivedStatus(rs.getInt(6));
                 listAccount.add(acc);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
@@ -88,10 +92,11 @@ public class DoctorDAO extends DBContext {
                 acc.setGender(rs.getString("gender"));
                 acc.setPhoneNumber(rs.getString("phoneNumber"));
                 acc.setAddress(rs.getString("address"));
-                acc.setImages(rs.getString("image"));
+                String base64StringImage = new String(rs.getBytes("image"), "UTF-8");
+                acc.setImages(base64StringImage);
                 listAccount.add(acc);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
         } finally {
             try {
                 if (conn != null) {
@@ -129,10 +134,11 @@ public class DoctorDAO extends DBContext {
                 acc.setGender(rs.getString("gender"));
                 acc.setPhoneNumber(rs.getString("phoneNumber"));
                 acc.setAddress(rs.getString("address"));
-                acc.setImages(rs.getString("image"));
+                String base64StringImage = new String(rs.getBytes("image"), "UTF-8");
+                acc.setImages(base64StringImage);
                 listAccount.add(acc);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
         } finally {
             try {
                 if (conn != null) {
@@ -270,5 +276,135 @@ public class DoctorDAO extends DBContext {
             }
         }
         return doctors;
+    }
+
+    public ArrayList<DoctorInfoDTO> getDoctorsForSpecialtyDetail(int specialtyId) {
+        StringBuilder sql = new StringBuilder(" SELECT dwi.doctorId, u.firstName, u.lastName, upr.image, upr.address ,p.name, pro.name, pr.priceValue FROM Doctor_Working_Info dwi ");
+        sql.append(" JOIN  Specialties sp ON sp.specialtyId = dwi.specialtyId ");
+        sql.append(" JOIN Positions p ON dwi.positionId = p.positionId ");
+        sql.append(" JOIN Users u ON dwi.doctorId = u.id ");
+        sql.append(" JOIN User_Province up ON u.id = up.userId ");
+        sql.append(" JOIN User_Profile upr ON u.id = upr.id ");
+        sql.append(" JOIN Provinces pro ON up.provinceId = pro.provinceId ");
+        sql.append(" JOIN Prices pr ON dwi.priceId = pr.priceId ");
+        sql.append(" WHERE sp.specialtyId = ? ");
+        
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DBContext db = new DBContext();
+        ArrayList<DoctorInfoDTO> doctors = new ArrayList<>();
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql.toString());
+            ps.setInt(1, specialtyId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                DoctorInfoDTO di = new DoctorInfoDTO();
+                di.setDoctorId(rs.getInt(1));
+                di.setDoctorName(rs.getString(2) + " " + rs.getString(3));
+                di.setImage(new String(rs.getBytes(4)));
+                di.setAddress(rs.getString(5));
+                di.setPositionName(rs.getString(6));
+                di.setProvinceName(rs.getString(7));
+                di.setPrice(rs.getInt(8));
+                doctors.add(di);
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return doctors;
+    }
+
+    public ArrayList<ScheduleDTO> getDoctorScheduleDates(int specialtyId) {
+        StringBuilder sql = new StringBuilder(" SELECT d.doctorId, s.scheduleDate, s.scheduleId  FROM Schedules s ");
+        sql.append(" JOIN Doctor_Working_Info d ON s.doctorWorkingInfoId = d.id ");
+        sql.append(" WHERE d.specialtyId = ? and s.scheduleDate >= cast(getdate() as date) ORDER BY s.scheduleDate");
+        
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DBContext db = new DBContext();
+        ArrayList<ScheduleDTO> schedules = new ArrayList<>();
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql.toString());
+            ps.setInt(1, specialtyId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                ScheduleDTO s = new ScheduleDTO();
+                s.setDoctorID(rs.getInt(1));
+                s.setScheduleDate(rs.getDate(2));
+                s.setScheduleID(rs.getInt(3));
+                schedules.add(s);
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return schedules;
+    }
+
+    public ArrayList<ScheduleTimesDTO> getScheduleTimes(int specialtyId) {
+        StringBuilder sql = new StringBuilder("  SELECT st.scheduleId, st.timeId, t.timeValue FROM Schedule_Time st ");
+        sql.append(" JOIN Times t ON st.timeId = t.timeId ");
+        sql.append(" JOIN Schedules s ON s.scheduleId = st.scheduleId ");
+        sql.append(" JOIN Doctor_Working_Info dwi ON dwi.id = s.doctorWorkingInfoId ");
+        sql.append(" WHERE dwi.specialtyId = ? and s.scheduleDate >= cast(getdate() as date) ORDER BY st.timeId");
+        
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DBContext db = new DBContext();
+        ArrayList<ScheduleTimesDTO> times = new ArrayList<>();
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql.toString());
+            ps.setInt(1, specialtyId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                ScheduleTimesDTO s = new ScheduleTimesDTO();
+                s.setScheduleID(rs.getInt(1));
+                s.setTimeID(rs.getInt(2));
+                s.setTimeValue(rs.getString(3));
+                times.add(s);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return times;
     }
 }

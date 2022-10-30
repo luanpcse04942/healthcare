@@ -44,11 +44,12 @@ public class UserDAO extends DBContext {
                 acc.setGender(rs.getString(8));
                 acc.setPhoneNumber(rs.getString(9));
                 acc.setAddress(rs.getString(10));
-                acc.setImages(rs.getString(11));
+                String base64StringImage = new String(rs.getBytes(11), "UTF-8");
+                acc.setImages(base64StringImage);
                 acc.setRoleId(rs.getInt(12));
                 acc.setRoleName(rs.getString(13));
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
         } finally {
             try {
                 rs.close();
@@ -95,12 +96,13 @@ public class UserDAO extends DBContext {
                 acc.setGender(rs.getString(8));
                 acc.setPhoneNumber(rs.getString(9));
                 acc.setAddress(rs.getString(10));
-                acc.setImages(rs.getString(11));
+                String base64StringImage = new String(rs.getBytes(11), "UTF-8");
+                acc.setImages(base64StringImage);
                 acc.setRoleId(rs.getInt(12));
                 acc.setRoleName(rs.getString(13));
                 listAccount.add(acc);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
         } finally {
             try {
                 if (conn != null) {
@@ -185,11 +187,12 @@ public class UserDAO extends DBContext {
                 acc.setGender(rs.getString(8));
                 acc.setPhoneNumber(rs.getString(9));
                 acc.setAddress(rs.getString(10));
-                acc.setImages(rs.getString(11));
+                String base64StringImage = new String(rs.getBytes(11), "UTF-8");
+                acc.setImages(base64StringImage);
                 acc.setRoleId(rs.getInt(12));
                 acc.setRoleName(rs.getString(13));
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
         } finally {
             if (rs != null) {
                 try {
@@ -247,12 +250,13 @@ public class UserDAO extends DBContext {
                 acc.setGender(rs.getString(8));
                 acc.setPhoneNumber(rs.getString(9));
                 acc.setAddress(rs.getString(10));
-                acc.setImages(rs.getString(11));
+                String base64StringImage = new String(rs.getBytes(11), "UTF-8");
+                acc.setImages(base64StringImage);
                 acc.setRoleId(rs.getInt(12));
                 acc.setRoleName(rs.getString(13));
                 listAccount.add(acc);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
         } finally {
             if (rs != null) {
                 try {
@@ -409,7 +413,7 @@ public class UserDAO extends DBContext {
         return addSuccess;
     }
 
-    public void addUserProfile(int userId, String imageName) {
+    public void addUserProfile(int userId, byte[] imageName) {
         String sql = "INSERT INTO User_Profile(userId, image) VALUES (?, ?)";
 
         DBContext db = new DBContext();
@@ -419,7 +423,7 @@ public class UserDAO extends DBContext {
             conn = db.getConn();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, userId);
-            ps.setString(2, imageName);
+            ps.setBytes(2, imageName);
             ps.executeUpdate();
         } catch (SQLException e) {
         } finally {
@@ -585,10 +589,11 @@ public class UserDAO extends DBContext {
                 acc.setGender(rs.getString("gender"));
                 acc.setPhoneNumber(rs.getString("phoneNumber"));
                 acc.setAddress(rs.getString("address"));
-                acc.setImages(rs.getString("image"));
+                String base64StringImage = new String(rs.getBytes("image"), "UTF-8");
+                acc.setImages(base64StringImage);
                 listUser.add(acc);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
         } finally {
             try {
                 if (conn != null) {

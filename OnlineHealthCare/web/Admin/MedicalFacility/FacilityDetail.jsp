@@ -16,7 +16,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Quản lý  tài khoản</title>
     </head>
-    <body class="no-skin">
+    <body class="no-skin" style="overflow-x: hidden">
         <!-- header -->
         <%@ include file="/common/header.jsp" %>
         <!-- header -->
@@ -58,7 +58,7 @@
                         <form action="<c:url value='/edit-facility?facilityId=${facility.id}'/>" id="formSubmit" method="post" enctype="multipart/form-data">
                             <div class="form-group col-sm-12">
                                 <span class="profile-picture">
-                                    <img class="editable img-responsive" alt="Alex's Avatar" id="avatar2" src="<c:url value='/static/images/Facility/${facility.images}' />" />
+                                    <img alt="Avatar" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${facility.images}' />" />
                                 </span>
                             </div>
                             <div class="form-group col-sm-12">

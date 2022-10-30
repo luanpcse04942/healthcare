@@ -46,24 +46,59 @@
                     </div>
                     <div class="container">
                         <h2>Thêm mới tài khoản</h2>
+                        <div id="alert"></div>
                         <c:if test="${not empty messageResponse}">
                             <div id="message" class="alert alert-${alert}">
                                 ${messageResponse}
                             </div>
                         </c:if>
-                        <form action="<c:url value='/'/>" id="formSubmit" method="post" enctype="multipart/form-data">
+
+                        <form action="<c:url value='/add-account'/>" id="formSubmit" method="post" enctype="multipart/form-data">
                             <div class="form-group col-sm-12">
-                                <select class="form-control" id="form-field-select-1" name="province">
-                                    <option >--Chọn bác sĩ--</option>
-                                    <c:forEach items="${doctors}" var="doctor">
-                                        <option value="${doctor.id}">
-                                            ${doctor.firstName} ${doctor.lastName}
+                                <label>Email</label>
+                                <input id="email" name="email" type="email" class="form-control"  aria-describedby="emailHelp" placeholder="Nhập vào email">
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label>Mật khẩu</label>
+                                <input id="password" name="password" type="password" class="form-control" placeholder="Nhập vào mật khẩu">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Họ</label>
+                                    <input id="firstName" name="firstName" type="text" class="form-control">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Tên</label>
+                                    <input id="lastName" name="lastName" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>Chọn vai trò</label>
+                                <select class="form-control" id="role" name="role">
+                                    <option value="1">Quản trị viên</option>
+                                    <option value="2">Bác sĩ</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>Chọn tỉnh/thành</label>
+                                <select class="form-control" id="province" name="province">
+                                    <c:forEach items="${provinces}" var="province">
+                                        <option value="${province.id}">
+                                            ${province.name}
                                         </option>
                                     </c:forEach>
                                 </select>
                             </div>
+                            <div class="form-group col-sm-12">
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <label class="custom-file-label" id="choose-image">Chọn ảnh</label>
+                                        <input id="file" type="file" name="file" class="custom-file-input">
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group col-sm-9">
-                                <button type="submit" onclick="hideMessage()" class="btn btn-primary">Thêm</button>
+                                <button class="btn btn-primary btn-add-account">Thêm</button>
                             </div>
                         </form>
                     </div>
@@ -79,9 +114,54 @@
             </a>
         </div>
         <script>
-            function hideMessage() {
-                setTimeout(function() { $("#message").hide(); }, 3000);
-            }
+            $('.btn-add-account').on("click", function (e) {
+                var role = $('#role').find(":selected").val();
+                var province = $('#province').find(":selected").val();
+                var email = $('#email').val();
+                var password = $('#password').val();
+                var firstName = $('#firstName').val();
+                var lastName = $('#lastName').val();
+                var file = $('#file').val();
+                if (email === "" || password === "" || firstName === "" || lastName === "" || file === "") {
+                    if (email === "") {
+                        $('#email').css('border-color', 'red');
+                        setTimeout(function () {
+                            $("#email").css('border-color', '#d5d5d5');
+                        }, 3000);
+                    }
+                    if (password === "") {
+                        $('#password').css('border-color', 'red');
+                        setTimeout(function () {
+                            $("#password").css('border-color', '#d5d5d5');
+                        }, 3000);
+                    }
+                    if (firstName === "") {
+                        $('#firstName').css('border-color', 'red');
+                        setTimeout(function () {
+                            $("#firstName").css('border-color', '#d5d5d5');
+                        }, 3000);
+                    }
+                    if (lastName === "") {
+                        $('#lastName').css('border-color', 'red');
+                        setTimeout(function () {
+                            $("#lastName").css('border-color', '#d5d5d5');
+                        }, 3000);
+                    }
+                    if (file === "") {
+                        $('#choose-image').css('border-color', 'red ');
+                        setTimeout(function () {
+                            $("#file").css('border', '#d5d5d5');
+                        }, 3000);
+                    }
+                    $("#alert").addClass("alert alert-danger");
+                    $('#alert').text('Vui lòng nhập thông tin !');
+                    $('#alert').show();
+                    setTimeout(function () {
+                        $('#alert').hide();
+                    }, 3000);
+                    e.preventDefault();
+                }
+            });
         </script>
 
         <script src="<c:url value='/template/admin/assets/js/bootstrap.min.js' />"></script>

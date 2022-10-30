@@ -46,31 +46,32 @@
                     </div>
                     <div class="container">
                         <h2>Thêm mới chuyên khoa</h2>
+                        <div id="alert"></div>
                         <c:if test="${not empty messageResponse}">
-                            <div class="alert alert-${alert}">
+                            <div id="message" class="alert alert-${alert}">
                                 ${messageResponse}
                             </div>
                         </c:if>
                         <form action="<c:url value='/add-specialty'/>" id="formSubmit" method="post" enctype="multipart/form-data">
                             <div class="form-group col-sm-12">
                                 <label>Tên chuyên khoa</label>
-                                <input name="name" type="text" class="form-control"  aria-describedby="emailHelp" placeholder="Nhập vào tên chuyên khoa">
+                                <input id="name" name="name" type="text" class="form-control"  aria-describedby="emailHelp" placeholder="Nhập vào tên chuyên khoa">
                             </div>
                             <div class="form-group col-sm-12">
                                 <label>Mô tả </label>
-                                <textarea name="description" type="text" class="form-control" placeholder="Nhập vào mô tả "></textarea>
+                                <textarea id="description" name="description" type="text" class="form-control" placeholder="Nhập vào mô tả "></textarea>
                             </div>
 
                             <div class="form-group col-sm-12">
                                 <div class="input-group">
                                     <div class="custom-file">
                                         <label class="custom-file-label" >Chọn ảnh</label>
-                                        <input type="file" name="file" class="custom-file-input">
+                                        <input id="file" type="file" name="file" class="custom-file-input">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group col-sm-9">
-                                <button type="submit" class="btn btn-primary">Thêm</button>
+                                <button type="submit" class="btn btn-primary btn-add-specialty">Thêm</button>
                             </div>
                         </form>
                     </div>
@@ -86,7 +87,40 @@
             </a>
         </div>
 
-
+        <script>
+            $('.btn-add-specialty').on("click", function (e) {
+                var name = $('#name').val();
+                var description = $('#description').val();
+                var file = $('#file').val();
+                if (name === "" || description === "" || file === "") {
+                    if (name === "") {
+                        $('#name').css('border-color', 'red');
+                        setTimeout(function () {
+                            $("#name").css('border-color', '#d5d5d5');
+                        }, 3000);
+                    }
+                    if (description === "") {
+                        $('#description').css('border-color', 'red');
+                        setTimeout(function () {
+                            $("#description").css('border-color', '#d5d5d5');
+                        }, 3000);
+                    }
+                    if (file === "") {
+                        $('#choose-image').css('border-color', 'red ');
+                        setTimeout(function () {
+                            $("#file").css('border', '#d5d5d5');
+                        }, 3000);
+                    }
+                    $("#alert").addClass("alert alert-danger");
+                    $('#alert').text('Vui lòng nhập thông tin !');
+                    $('#alert').show();
+                    setTimeout(function () {
+                        $('#alert').hide();
+                    }, 3000);
+                    e.preventDefault();
+                }
+            });
+        </script>
         <script src="<c:url value='/template/admin/assets/js/bootstrap.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/jquery-ui.custom.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/jquery.ui.touch-punch.min.js' />"></script>

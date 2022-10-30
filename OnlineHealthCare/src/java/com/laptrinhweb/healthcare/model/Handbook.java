@@ -9,21 +9,48 @@ import java.sql.Date;
 public class Handbook {
     private int id;
     private int adminId;
-    private String adminName;
     private String handbookName;
-    private byte[] content;
     private Date publishedAt;
-    private Date updatedAt;
+    private String image;
+    private String content;
+    private String fullName;
 
-    public Handbook(int id, int adminId, String adminName, String handbookName, byte[] content, Date publishedAt, Date updatedAt) {
+
+
+    public Handbook() {
+    }
+
+    public Handbook(int id, int adminId, String handbookName, Date publishedAt, String image, String content, String fullName) {
         this.id = id;
         this.adminId = adminId;
-        this.adminName = adminName;
         this.handbookName = handbookName;
-        this.content = content;
         this.publishedAt = publishedAt;
-        this.updatedAt = updatedAt;
+        this.image = image;
+        this.content = content;
+        this.fullName = fullName;
     }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+
+
+
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+
 
     public int getId() {
         return id;
@@ -41,13 +68,6 @@ public class Handbook {
         this.adminId = adminId;
     }
 
-    public String getAdminName() {
-        return adminName;
-    }
-
-    public void setAdminName(String adminName) {
-        this.adminName = adminName;
-    }
 
     public String getHandbookName() {
         return handbookName;
@@ -57,11 +77,11 @@ public class Handbook {
         this.handbookName = handbookName;
     }
 
-    public byte[] getContent() {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(byte[] content) {
+    public void setContent(String content) {
         this.content = content;
     }
 
@@ -71,14 +91,6 @@ public class Handbook {
 
     public void setPublishedAt(Date publishedAt) {
         this.publishedAt = publishedAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
     }
     
     

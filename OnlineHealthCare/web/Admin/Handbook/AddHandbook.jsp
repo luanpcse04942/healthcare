@@ -9,10 +9,6 @@
         <script src="<c:url value='/template/admin/assets/js/ace-extra.min.js' />"></script>
         <script type='text/javascript' src='<c:url value="/template/admin/js/jquery-2.2.3.min.js" />'></script>
         <script src="<c:url value='/template/admin/assets/js/jquery.2.1.1.min.js' />"></script>
-        <link rel="stylesheet" href="<c:url value='/template/admin/assets/css/bootstrap-editable.min.css' />" />
-        <link rel="stylesheet" href="<c:url value='/template/admin/assets/css/select2.min.css' />" />
-        <link rel="stylesheet" href="<c:url value='/template/admin/assets/css/jquery-ui.custom.min.css' />" />
-        <link rel="stylesheet" href="<c:url value='/template/admin/assets/css/jquery.gritter.min.css' />" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Quản lý  tài khoản</title>
     </head>
@@ -42,57 +38,40 @@
                                 <a href="<c:url value='/admin-home'/>">Trang chủ</a>
                             </li>
                             <li>
-                                <a href="<c:url value='/admin-facility-list'/>">Danh sách cơ sở</a>
+                                <a href="<c:url value='/handbook-list-admin'/>">Danh sách cẩm nang</a>
                             </li>
-                            <li class="active">Thêm cơ sở</li>
+                            <li class="active">Thêm cẩm nang</li>
                         </ul>
                         <!-- /.breadcrumb -->
                     </div>
                     <div class="container">
-                        <h2>Chi tiết cơ sở</h2>
+                        <h2>Thêm mới Cẩm nang</h2>
+                        <div id="alert"></div>
                         <c:if test="${not empty messageResponse}">
-                            <div class="alert alert-${alert}">
+                            <div id="message" class="alert alert-${alert}">
                                 ${messageResponse}
                             </div>
                         </c:if>
-                        <form action="<c:url value='/add-facility'/>" id="formSubmit" method="post" enctype="multipart/form-data">
+                        <form action="<c:url value='/add-handbook'/>" id="formSubmit" method="post" enctype="multipart/form-data">
                             <div class="form-group col-sm-12">
-                                <label>Tên cơ sở</label>
-                                <input name="name" type="text" class="form-control"  placeholder="Nhập vào tên cơ sở">
+                                <label>Tên chuyên khoa</label>
+                                <input id="name" name="name" type="text" class="form-control"  aria-describedby="emailHelp" placeholder="Nhập vào tên chuyên khoa">
                             </div>
                             <div class="form-group col-sm-12">
                                 <label>Mô tả </label>
-                                <textarea name="description" type="text" class="form-control" placeholder="Nhập vào mô tả " style="height: 100px;"></textarea>
+                                <textarea id="description" name="description" type="text" class="form-control" placeholder="Nhập vào mô tả "></textarea>
                             </div>
-                            <h2>Thông tin khác</h2>
-                            <div class="form-group col-sm-6">
-                                <label >Email</label>
-                                <input type="text" class="form-control" placeholder="Nhập vào email">
-                            </div> 
-                            <div class="form-group col-sm-6">
-                                <label>Mật khẩu</label>
-                                <input name="password" type="password" class="form-control" placeholder="Nhập vào mật khẩu">
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <label>Số điện thoại</label>
-                                <input type="text" class="form-control"  placeholder="Nhập vào số  điện thoại" >
-                            </div>
-                            <div class="form-group col-sm-6" >
-                                <label >Địa chỉ</label>
-                                <input type="text" class="form-control" placeholder="Nhập vào địa chỉ">
-                            </div>
-
 
                             <div class="form-group col-sm-12">
                                 <div class="input-group">
                                     <div class="custom-file">
                                         <label class="custom-file-label" >Chọn ảnh</label>
-                                        <input type="file" name="file" class="custom-file-input">
+                                        <input id="file" type="file" name="file" class="custom-file-input">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group col-sm-9">
-                                <button type="submit" class="btn btn-primary">Thêm mới</button>
+                                <button type="submit" class="btn btn-primary btn-add-specialty">Thêm</button>
                             </div>
                         </form>
                     </div>
@@ -108,7 +87,40 @@
             </a>
         </div>
 
-
+        <script>
+            $('.btn-add-specialty').on("click", function (e) {
+                var name = $('#name').val();
+                var description = $('#description').val();
+                var file = $('#file').val();
+                if (name === "" || description === "" || file === "") {
+                    if (name === "") {
+                        $('#name').css('border-color', 'red');
+                        setTimeout(function () {
+                            $("#name").css('border-color', '#d5d5d5');
+                        }, 3000);
+                    }
+                    if (description === "") {
+                        $('#description').css('border-color', 'red');
+                        setTimeout(function () {
+                            $("#description").css('border-color', '#d5d5d5');
+                        }, 3000);
+                    }
+                    if (file === "") {
+                        $('#choose-image').css('border-color', 'red ');
+                        setTimeout(function () {
+                            $("#file").css('border', '#d5d5d5');
+                        }, 3000);
+                    }
+                    $("#alert").addClass("alert alert-danger");
+                    $('#alert').text('Vui lòng nhập thông tin !');
+                    $('#alert').show();
+                    setTimeout(function () {
+                        $('#alert').hide();
+                    }, 3000);
+                    e.preventDefault();
+                }
+            });
+        </script>
         <script src="<c:url value='/template/admin/assets/js/bootstrap.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/jquery-ui.custom.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/jquery.ui.touch-punch.min.js' />"></script>
@@ -120,13 +132,8 @@
         <script src="<c:url value='/template/admin/assets/js/ace-elements.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/ace.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/bootstrap.min.js'/>"></script>
-        <script src="<c:url value='/template/admin/assets/js/bootstrap-editable.min.js' />"></script>
-        <script src="<c:url value='/template/admin/assets/js/ace-editable.min.js ' />"></script>
+
         <!-- page specific plugin scripts -->
         <script src="<c:url value='/template/admin/assets/js/jquery-ui.min.js'/>"></script>
-        <!-- inline scripts related to this page -->
-        <script type="text/javascript">
-                
-        </script>
     </body>
 </html>

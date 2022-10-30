@@ -48,14 +48,15 @@ public class FacilityDAO extends DBContext {
                 mf.setProvinceId(rs.getInt(8));
                 mf.setProvinceName(rs.getString(9));
                 mf.setAddress(rs.getString(10));
-                mf.setImages(rs.getString(11));
+                String base64StringImage = new String(rs.getBytes(11), "UTF-8");
+                mf.setImages(base64StringImage);
                 mf.setRoleId(rs.getInt(12));
                 mf.setRoleName(rs.getString(13));
                 //mf.setEstablishedAt(rs.getDate(14));
                 mf.setDescription(rs.getString(15));
                 listFacility.add(mf);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
@@ -106,14 +107,15 @@ public class FacilityDAO extends DBContext {
                 mf.setProvinceId(rs.getInt(8));
                 mf.setProvinceName(rs.getString(9));
                 mf.setAddress(rs.getString(10));
-                mf.setImages(rs.getString(11));
+                 String base64StringImage = new String(rs.getBytes(11), "UTF-8");
+                mf.setImages(base64StringImage);
                 mf.setRoleId(rs.getInt(12));
                 mf.setRoleName(rs.getString(13));
                 //mf.setEstablishedAt(rs.getDate(14));
                 mf.setDescription(rs.getString(15));
                 listFacility.add(mf);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
@@ -245,13 +247,14 @@ public class FacilityDAO extends DBContext {
                 mf.setProvinceId(rs.getInt(8));
                 mf.setProvinceName(rs.getString(9));
                 mf.setAddress(rs.getString(10));
-                mf.setImages(rs.getString(11));
+                String base64StringImage = new String(rs.getBytes(11), "UTF-8");
+                mf.setImages(base64StringImage);
                 mf.setRoleId(rs.getInt(12));
                 mf.setRoleName(rs.getString(13));
                 //mf.setEstablishedAt(rs.getDate(14));
                 mf.setDescription(rs.getString(15));
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
         } finally {
             if (rs != null) {
                 try {
@@ -311,7 +314,8 @@ public class FacilityDAO extends DBContext {
                 mf.setProvinceId(rs.getInt(8));
                 mf.setProvinceName(rs.getString(9));
                 mf.setAddress(rs.getString(10));
-                mf.setImages(rs.getString(11));
+                 String base64StringImage = new String(rs.getBytes(11), "UTF-8");
+                mf.setImages(base64StringImage);
                 mf.setRoleId(rs.getInt(12));
                 mf.setRoleName(rs.getString(13));
                 //mf.setEstablishedAt(rs.getDate(14));
