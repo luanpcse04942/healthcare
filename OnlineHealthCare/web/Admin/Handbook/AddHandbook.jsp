@@ -38,57 +38,40 @@
                                 <a href="<c:url value='/admin-home'/>">Trang chủ</a>
                             </li>
                             <li>
-                                <a href="<c:url value='/admin-account'/>">Danh sách tài khoản</a>
+                                <a href="<c:url value='/handbook-list-admin'/>">Danh sách cẩm nang</a>
                             </li>
-                            <li class="active">Thêm tài khoản</li>
+                            <li class="active">Thêm cẩm nang</li>
                         </ul>
                         <!-- /.breadcrumb -->
                     </div>
                     <div class="container">
-                        <h2>Thêm mới tài khoản</h2>
+                        <h2>Thêm mới Cẩm nang</h2>
+                        <div id="alert"></div>
                         <c:if test="${not empty messageResponse}">
                             <div id="message" class="alert alert-${alert}">
                                 ${messageResponse}
                             </div>
                         </c:if>
-                        <form action="<c:url value='/'/>" id="formSubmit" method="post" enctype="multipart/form-data">
+                        <form action="<c:url value='/add-handbook'/>" id="formSubmit" method="post" enctype="multipart/form-data">
                             <div class="form-group col-sm-12">
-                                <label>Email</label>
-                                <input id="email" name="email" type="email" class="form-control"  aria-describedby="emailHelp" placeholder="Nhập vào email">
+                                <label>Tên chuyên khoa</label>
+                                <input id="name" name="name" type="text" class="form-control"  aria-describedby="emailHelp" placeholder="Nhập vào tên chuyên khoa">
                             </div>
                             <div class="form-group col-sm-12">
-                                <label>Mật khẩu</label>
-                                <input id="password" name="password" type="password" class="form-control" placeholder="Nhập vào mật khẩu">
+                                <label>Mô tả </label>
+                                <textarea id="description" name="description" type="text" class="form-control" placeholder="Nhập vào mô tả "></textarea>
                             </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label>Họ</label>
-                                    <input id="firstName" name="firstName" type="text" class="form-control">
+
+                            <div class="form-group col-sm-12">
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <label class="custom-file-label" >Chọn ảnh</label>
+                                        <input id="file" type="file" name="file" class="custom-file-input">
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label>Tên</label>
-                                    <input id="lastName" name="lastName" type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <label>Chọn vai trò</label>
-                                <select class="form-control" id="role" name="role">
-                                    <option value="1">Quản trị viên</option>
-                                    <option value="2">Bác sĩ</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <label>Chọn tỉnh/thành</label>
-                                <select class="form-control" id="province" name="province">
-                                    <c:forEach items="${provinces}" var="province">
-                                        <option value="${province.id}">
-                                            ${province.name}
-                                        </option>
-                                    </c:forEach>
-                                </select>
                             </div>
                             <div class="form-group col-sm-9">
-                                <button type="submit" onclick="hideMessage()" class="btn btn-primary">Thêm</button>
+                                <button type="submit" class="btn btn-primary btn-add-specialty">Thêm</button>
                             </div>
                         </form>
                     </div>
@@ -103,12 +86,41 @@
                 <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
             </a>
         </div>
-        <script>
-            function hideMessage() {
-                setTimeout(function() { $("#message").hide(); }, 3000);
-            }
-        </script>
 
+        <script>
+            $('.btn-add-specialty').on("click", function (e) {
+                var name = $('#name').val();
+                var description = $('#description').val();
+                var file = $('#file').val();
+                if (name === "" || description === "" || file === "") {
+                    if (name === "") {
+                        $('#name').css('border-color', 'red');
+                        setTimeout(function () {
+                            $("#name").css('border-color', '#d5d5d5');
+                        }, 3000);
+                    }
+                    if (description === "") {
+                        $('#description').css('border-color', 'red');
+                        setTimeout(function () {
+                            $("#description").css('border-color', '#d5d5d5');
+                        }, 3000);
+                    }
+                    if (file === "") {
+                        $('#choose-image').css('border-color', 'red ');
+                        setTimeout(function () {
+                            $("#file").css('border', '#d5d5d5');
+                        }, 3000);
+                    }
+                    $("#alert").addClass("alert alert-danger");
+                    $('#alert').text('Vui lòng nhập thông tin !');
+                    $('#alert').show();
+                    setTimeout(function () {
+                        $('#alert').hide();
+                    }, 3000);
+                    e.preventDefault();
+                }
+            });
+        </script>
         <script src="<c:url value='/template/admin/assets/js/bootstrap.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/jquery-ui.custom.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/jquery.ui.touch-punch.min.js' />"></script>

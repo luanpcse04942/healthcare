@@ -50,4 +50,11 @@ public class DoctorService {
         DoctorDAO doctorDAO = new DoctorDAO();
         return doctorDAO.getDoctorsOfFacility(facilityId);
     }
+
+    public ArrayList<DoctorInfoDTO> getDoctorsForSpecialtyDetail(int specialtyId) {
+        DoctorDAO doctorDAO = new DoctorDAO();
+        return doctorDAO.getDoctorsForSpecialtyDetail(specialtyId);
+    }
+    
+    
 }
