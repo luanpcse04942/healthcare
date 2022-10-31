@@ -44,7 +44,7 @@
             <b class="arrow"></b>
             <ul class="submenu">
                 <li>
-                    <a href='#"/>'>
+                    <a href="<c:url value='/doctor-appointment-list'/>">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Lịch hẹn của tôi
                     </a>

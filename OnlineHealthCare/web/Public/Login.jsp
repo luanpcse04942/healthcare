@@ -7,7 +7,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -19,7 +18,9 @@
 
         <link rel="stylesheet" href="template/login/assets/css/bootstrap.min.css" />
         <link rel="stylesheet" href="template/login/assets/font-awesome/4.2.0/css/font-awesome.min.css" />
-        <link rel="stylesheet" href="template/login/assets/fonts/fonts.googleapis.com.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;1,300&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="template/login/assets/css/ace.min.css" />
         <link rel="stylesheet" href="template/login/assets/css/ace-rtl.min.css" />
 
@@ -42,7 +43,7 @@
                             <div class="space-6"></div>
 
                             <div class="position-relative">
-                                
+
                                 <!-- /.login-box -->
                                 <div id="login-box" class="login-box visible widget-box no-border">
                                     <div class="widget-body">
@@ -162,7 +163,7 @@
                                         </div>
                                     </div><!-- /.widget-body -->
                                 </div>
-                                
+
                                 <!-- /.signup-box -->
                                 <div id="signup-box" class="signup-box widget-box no-border">
                                     <div class="widget-body">
