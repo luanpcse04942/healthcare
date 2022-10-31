@@ -9,9 +9,14 @@ public class LoginService {
         LoginDAO loginDAO = new LoginDAO();
         return loginDAO.login(email, password);
     }
-    
-    public boolean SimpleRegister(String email, String password, String fname, String lname){
+
+    public boolean SimpleRegister(String email, String password, String fname, String lname) {
         LoginDAO loginDAO = new LoginDAO();
         return loginDAO.register(email, password, fname, lname);
+    }
+
+    public void findRole(User u) {
+        LoginDAO loginDAO = new LoginDAO();
+        loginDAO.findRole(u);
     }
 }

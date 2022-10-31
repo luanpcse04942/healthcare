@@ -46,7 +46,7 @@
             </div>
             <div class="top-right-area">
                 <div class="layout">
-                    <button class="btn-login" onclick="location.href = '<c:url value="/login"/>'">Đăng Nhập</button>
+                    <button class="btn-login" onclick="location.href = '<c:url value="/dang-nhap"/>'">Đăng Nhập</button>
                 </div>
             </div>
         </div>

@@ -20,7 +20,7 @@ import java.util.List;
  */
 @WebServlet(name = "DoctorController", urlPatterns = {"/doctor-list-public", "/public-doctor-search",
     "/doctor-patient-list", "/doctor-patient-search", "/doctor-patient-detail", "/doctor-appointment-detail",
-    "/doctor-appointment-list"})
+    "/doctor-appointment-list", "/doctor-home"})
 public class DoctorController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -28,6 +28,11 @@ public class DoctorController extends HttpServlet {
         int page = 1;
         String search = "";
 
+        if (request.getServletPath().equals("/doctor-home")) {
+            RequestDispatcher rd = request.getRequestDispatcher("Doctor/HomeDoctor.jsp");
+            rd.forward(request, response);
+        }
+        
         if (request.getServletPath().equals("/doctor-list-public")) {
             if (request.getParameter("page") != null) {
                 page = Integer.parseInt(request.getParameter("page"));

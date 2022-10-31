@@ -70,5 +70,24 @@ public class LoginDAO extends DBContext {
         }
         return true;
     }
+    
+    public void findRole(User u) {
+        String sql = "select id, roleName from user_roles \n" +
+                        "inner join roles on roleId = id\n" +
+                        "where userId = " + u.getId();
+        PreparedStatement ps;
+        ResultSet rs;
+        DBContext db = new DBContext();
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                u.setRoleId(rs.getInt(1));
+                u.setRoleName(rs.getNString(2));
+            }
+        } catch (SQLException e) {
+        }
+    }
 
 }

@@ -2,6 +2,7 @@ package com.laptrinhweb.healthcare.controller;
 
 import com.laptrinhweb.healthcare.model.MedicalFacility;
 import com.laptrinhweb.healthcare.model.Time;
+import com.laptrinhweb.healthcare.model.User;
 import com.laptrinhweb.healthcare.services.DoctorService;
 import com.laptrinhweb.healthcare.services.FacilityService;
 import jakarta.servlet.RequestDispatcher;
@@ -12,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -25,15 +27,16 @@ import java.util.List;
  * @author LuanPC
  */
 @MultipartConfig
-@WebServlet(name = "FacilityController", urlPatterns = {"/public-facility-list","/admin-facility-list", "/admin-facility-detail", "/edit-facility",
-    "/admin-facility-search", "/admin-add-facility", "/booking-schedule", "/facility-home", "/facility-add-schedule"})
+@WebServlet(name = "FacilityController", urlPatterns = {"/public-facility-list", "/admin-facility-list",
+    "/admin-facility-detail", "/edit-facility", "/admin-facility-search",
+    "/admin-add-facility", "/booking-schedule", "/facility-home", "/facility-add-schedule"})
 public class FacilityController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int page = 1;
         String search = "";
-        
+
         if (request.getServletPath().equals("/public-facility-list") || request.getServletPath().equals("/admin-specialty")) {
             if (request.getParameter("page") != null) {
                 page = Integer.parseInt(request.getParameter("page"));
@@ -48,7 +51,7 @@ public class FacilityController extends HttpServlet {
             if (request.getServletPath().equals("/public-facility-list")) {
                 RequestDispatcher rd = request.getRequestDispatcher("Public/MedicalFacilityListPublic.jsp");
                 rd.forward(request, response);
-            }   
+            }
 
         }
 
@@ -111,7 +114,9 @@ public class FacilityController extends HttpServlet {
         }
 
         if (request.getServletPath().equals("/facility-home")) {
-            int facilityId = Integer.parseInt(request.getParameter("facilityId"));
+            HttpSession session = request.getSession();
+            User u = (User) session.getAttribute("User");
+            int facilityId = u.getId();
             request.setAttribute("facilityId", facilityId);
             RequestDispatcher rd = request.getRequestDispatcher("Medical Facility/HomeFacility.jsp");
             rd.forward(request, response);
@@ -174,7 +179,7 @@ public class FacilityController extends HttpServlet {
 
             java.util.Date d = new java.util.Date(scheduleDate);
             convertedCurrentDate = new java.sql.Date(d.getTime());
-            
+
             int doctorWorkingInfoId = fs.getDoctorWorkingInfoId(doctorId);
             fs.addSchedule(doctorWorkingInfoId, convertedCurrentDate);
             int scheduleID = fs.getScheduleID(doctorWorkingInfoId, convertedCurrentDate);

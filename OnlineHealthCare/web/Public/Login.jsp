@@ -59,7 +59,7 @@
 
                                             <div class="space-6"></div>
 
-                                            <form action="<c:url value='/login'/>" method="post">
+                                            <form action="<c:url value='/dang-nhap'/>" method="post">
                                                 <fieldset>
                                                     <label class="block clearfix">
                                                         <span class="block input-icon input-icon-right">

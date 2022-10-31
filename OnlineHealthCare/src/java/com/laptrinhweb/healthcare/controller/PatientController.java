@@ -18,12 +18,15 @@ import java.util.List;
  *
  * @author LuanPC
  */
-@WebServlet(name = "PatientController", urlPatterns = {})
+@WebServlet(name = "PatientController", urlPatterns = {"/patient-home"})
 public class PatientController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        if (request.getServletPath().equals("/patient-home")) {
+            RequestDispatcher rd = request.getRequestDispatcher("Patient/HomePatient.jsp");
+            rd.forward(request, response);
+        }
     }
 
     @Override

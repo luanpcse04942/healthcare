@@ -11,13 +11,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet(name = "LoginController", urlPatterns = {"/login", "/register"})
+@WebServlet(name = "LoginController", urlPatterns = {"/dang-nhap", "/register"})
 public class LoginController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        if (request.getServletPath().equals("/login")) {
+        if (request.getServletPath().equals("/dang-nhap")) {
 
             String email = request.getParameter("email-login");
             String password = request.getParameter("password-login");
@@ -31,15 +31,21 @@ public class LoginController extends HttpServlet {
                 rd.include(request, response);
             } else {
                 request.setAttribute("MessageLogin", null);
+                lservice.findRole(u);
                 HttpSession session = request.getSession();
                 session.setAttribute("User", u);
-                if(u.getRoleId() == 1){
-                   RequestDispatcher rd = request.getRequestDispatcher("/admin-home");
-                   rd.forward(request, response);
+                if (u.getRoleId() == 1) {
+                    response.sendRedirect("admin-home");
                 }
-
-                RequestDispatcher rd = request.getRequestDispatcher("Public/HomePage.jsp");
-                rd.forward(request, response);
+                if (u.getRoleId() == 2) {
+                    response.sendRedirect("doctor-home");
+                }
+                if (u.getRoleId() == 3) {
+                    response.sendRedirect("patient-home");
+                }
+                if (u.getRoleId() == 4) {
+                    response.sendRedirect("facility-home");
+                }
             }
 
         }
@@ -63,7 +69,7 @@ public class LoginController extends HttpServlet {
                 request.setAttribute("MessageLogin", null);
                 HttpSession session = request.getSession();
                 session.setAttribute("User", u);
-                
+
                 RequestDispatcher rd = request.getRequestDispatcher("Public/HomePage.jsp");
                 rd.forward(request, response);
             }
