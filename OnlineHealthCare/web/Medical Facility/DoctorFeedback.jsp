@@ -39,9 +39,6 @@
         <title>Phản hồi của bệnh nhân</title>
     </head>
     <body class="no-skin">
-        <!-- header -->
-        <%@ include file="/Medical Facility/menu.jsp" %>
-        <!-- header -->
 
         <div class="main-container" id="main-container">
             <script type="text/javascript">
@@ -51,7 +48,7 @@
                 }
             </script>
             <!-- header -->
-            <%@ include file="/Doctor/menu.jsp" %>
+            <%@ include file="/Medical Facility/menu.jsp" %>
             <!-- header -->
 
             <div class="main-content">

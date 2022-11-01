@@ -84,7 +84,7 @@
                 </li>
                 
                 <li>
-                    <a href='facility-doctor-feedback'>
+                    <a href="<c:url value='/medical-facility-feedback'/>">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Phản hồi của bệnh nhân
                     </a>

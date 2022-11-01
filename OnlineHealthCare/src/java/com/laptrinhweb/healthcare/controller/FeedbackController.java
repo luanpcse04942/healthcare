@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author LuanPC
  */
-@WebServlet(name = "FeedbackController", urlPatterns = {"/doctor-feedback", "facility-doctor-feedback"})
+@WebServlet(name = "FeedbackController", urlPatterns = {"/doctor-feedback", "/medical-facility-feedback"})
 public class FeedbackController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -31,6 +31,18 @@ public class FeedbackController extends HttpServlet {
             request.setAttribute("noOfPages", feedbackService.getNoOfPage(search));
             request.setAttribute("currentPage", page);
             RequestDispatcher rd = request.getRequestDispatcher("Doctor/DoctorFeedback.jsp");
+            rd.forward(request, response);
+        }
+        if (request.getServletPath().equals("/medical-facility-feedback")) {
+            if (request.getParameter("page") != null) {
+                page = Integer.parseInt(request.getParameter("page"));
+            }
+            FeedbackService feedbackService = new FeedbackService();
+
+            request.setAttribute("feedbacks", feedbackService.getListFeedbacks(page, 1));
+            request.setAttribute("noOfPages", feedbackService.getNoOfPage(search));
+            request.setAttribute("currentPage", page);
+            RequestDispatcher rd = request.getRequestDispatcher("Medical Facility/DoctorFeedback.jsp");
             rd.forward(request, response);
         }
 

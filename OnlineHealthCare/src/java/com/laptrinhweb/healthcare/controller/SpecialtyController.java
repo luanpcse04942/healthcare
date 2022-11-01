@@ -27,7 +27,8 @@ import com.google.gson.JsonObject;
  * @author LuanPC
  */
 @MultipartConfig
-@WebServlet(name = "SpecialtyController", urlPatterns = {"/public-specialty-list", "/public-specialty-detail", "/admin-specialty", "/admin-specialty-search",
+@WebServlet(name = "SpecialtyController", urlPatterns = {"/public-specialty-list", "/public-specialty-detail",
+    "/admin-specialty", "/admin-specialty-search",
     "/admin-add-specialty", "/add-specialty", "/admin-specialty-detail",
     "/edit-specialty", "/get-time-schedule"})
 public class SpecialtyController extends HttpServlet {
