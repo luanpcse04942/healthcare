@@ -506,4 +506,53 @@ public class DoctorDAO extends DBContext {
         }
         return listAccount;
     }
+    
+            public DoctorFacility getDoctorDetailFacility(int userId) {
+        StringBuilder sql = new StringBuilder("select a.id,CONCAT(firstName,' ',lastName) fullname,s.statusName,e.gender,a.email,e.phoneNumber,d.name,e.image,spec.name from Users a ");
+        sql.append("join User_Roles b on b.userId = a.id ");
+        sql.append(" join User_Province c on c.userId = a.id ");
+        sql.append("join Provinces d on d.provinceId = c.provinceId ");
+        sql.append(" join User_Profile e on e.userId = a.id ");
+        sql.append(" join (select a.id,a.doctorId,b.name from Doctor_Working_Info a join Specialties b on b.specialtyId = a.specialtyId) spec on spec.doctorId = a.id ");
+        sql.append(" join Status s on s.statusId = a.activedStatus where a.id = ? ");
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DBContext db = new DBContext();
+        DoctorFacility acc = new DoctorFacility();
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql.toString());
+            ps.setInt(1, userId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                
+                acc.setId(rs.getInt(1));
+                acc.setFullname(rs.getString(2));
+                acc.setStatusName(rs.getString(3));
+                acc.setGender(rs.getString(4));
+                acc.setEmail(rs.getString(5));
+                acc.setPhoneNumber(rs.getString(6));
+                acc.setAddress(rs.getString(7));
+                String base64StringImage = new String(rs.getBytes(8), "UTF-8");
+                acc.setImage(base64StringImage);
+                acc.setSpecName(rs.getString(9));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return acc;
+    }
 }

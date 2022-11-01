@@ -18,7 +18,7 @@ import java.util.List;
  * @author NhatDV
  */
 @WebServlet(name = "DoctorController", urlPatterns = {"/doctor-list-public", "/public-doctor-search",
-    "/doctor-patient-list", "/doctor-patient-search", "/doctor-patient-detail", "/doctor-list-facility", "/facility-doctor-search"})
+    "/doctor-patient-list", "/doctor-patient-search", "/doctor-patient-detail", "/doctor-list-facility", "/facility-doctor-search","/facility-doctor-detail"})
 public class DoctorController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -122,6 +122,21 @@ public class DoctorController extends HttpServlet {
             request.setAttribute("nameSearch", search);
             request.setAttribute("isSearching", true);
             RequestDispatcher rd = request.getRequestDispatcher("Medical Facility/Doctor/DoctorList.jsp");
+            rd.forward(request, response);
+        }
+                if (request.getServletPath().equals("/facility-doctor-detail")) {
+            if (request.getParameter("page") != null) {
+                page = Integer.parseInt(request.getParameter("page"));
+            }
+            DoctorService doctorService = new DoctorService();
+            int userId = Integer.parseInt(request.getParameter("id"));
+            request.setAttribute("userIdzxc", userId);
+            request.setAttribute("doctor", doctorService.getListDoctorFacility(page));
+            request.setAttribute("doctors", doctorService.getDoctorsDetailFacility(userId));
+            request.setAttribute("noOfPages", doctorService.getNoOfPage(search));
+            request.setAttribute("currentPage", page);
+            request.setAttribute("flag", true);
+            RequestDispatcher rd = request.getRequestDispatcher("Medical Facility/Doctor/DoctorDetail.jsp");
             rd.forward(request, response);
         }
     }

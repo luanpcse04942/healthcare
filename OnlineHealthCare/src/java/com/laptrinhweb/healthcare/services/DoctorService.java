@@ -14,6 +14,7 @@ import java.util.ArrayList;
  * @author LuanPC
  */
 public class DoctorService {
+
     public ArrayList<User> getListAccounts(int page) {
         UserDAO doctorDAO = new UserDAO();
         ArrayList<User> doctors = new ArrayList<>();
@@ -21,25 +22,24 @@ public class DoctorService {
         doctors = doctorDAO.findAllDoctor((page - 1) * recordsPerPage, recordsPerPage);
         return doctors;
     }
-    
-        public ArrayList<DoctorFacility> getListDoctorFacility(int page) {
+
+    public ArrayList<DoctorFacility> getListDoctorFacility(int page) {
         DoctorDAO doctorDAO = new DoctorDAO();
         ArrayList<DoctorFacility> doctors = new ArrayList<>();
         int recordsPerPage = 6;
         doctors = doctorDAO.getAllDoctorFacility((page - 1) * recordsPerPage, recordsPerPage);
         return doctors;
     }
-        
+
     public int getNoOfPage(String search) {
         DoctorDAO doctorDAO = new DoctorDAO();
         int noOfRecords = 0;
-        if(search.isEmpty()) 
-        {
+        if (search.isEmpty()) {
             noOfRecords = doctorDAO.getNoOfRecordAccounts();
-        }else {
+        } else {
             noOfRecords = doctorDAO.getNoOfRecordAccountsSeach(search);
         }
-        
+
         //calculate number of page
         int recordsPerPage = 6;
         int noOfPages = noOfRecords / recordsPerPage;
@@ -48,7 +48,7 @@ public class DoctorService {
         }
         return noOfPages;
     }
-    
+
     public ArrayList<User> getDoctorsSearchByName(int page, String search) {
         DoctorDAO doctorDAO = new DoctorDAO();
         ArrayList<User> doctors = new ArrayList<>();
@@ -77,13 +77,20 @@ public class DoctorService {
         DoctorDAO doctorDAO = new DoctorDAO();
         return doctorDAO.getScheduleTimes(specialtyId);
     }
-    
-        public ArrayList<DoctorFacility> getDoctorsFacilitySearchByName(int page, String search) {
+
+    public ArrayList<DoctorFacility> getDoctorsFacilitySearchByName(int page, String search) {
         DoctorDAO doctorDAO = new DoctorDAO();
         ArrayList<DoctorFacility> doctors = new ArrayList<>();
         int recordsPerPage = 4;
         page = 1;
         doctors = doctorDAO.searchDoctorFacility(search, (page - 1) * recordsPerPage, recordsPerPage);
         return doctors;
+    }
+
+    public DoctorFacility getDoctorsDetailFacility(int doctorId) {
+        DoctorDAO doctorDAO = new DoctorDAO();
+        DoctorFacility doctorFacility = doctorDAO.getDoctorDetailFacility(doctorId);
+
+        return doctorFacility;
     }
 }
