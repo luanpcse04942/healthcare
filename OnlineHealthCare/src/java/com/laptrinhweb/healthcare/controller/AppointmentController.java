@@ -13,7 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author LuanPC
  */
-@WebServlet(name="AppointmentController", urlPatterns={"/AppointmentController", "/facility-appointment-search", "/Facility-Appointment-List"})
+@WebServlet(name="AppointmentController", urlPatterns={"/AppointmentController", "/facility-appointment-search", "/Facility-Appointment-List","/facility-appointment-detail",
+                    "/edit-appointment"})
 public class AppointmentController extends HttpServlet {
    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -47,6 +48,16 @@ public class AppointmentController extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("Medical Facility/Appointment/AppointmentFacility.jsp");
             rd.forward(request, response);
         }
+        
+        if (request.getServletPath().equals("/facility-appointment-detail")) {
+            int appointmentId = Integer.parseInt(request.getParameter("appointmentId"));
+            AppointmentService appointmentService = new AppointmentService();
+            request.setAttribute("appointment", appointmentService.getAppointmentDetail(appointmentId));
+            request.setAttribute("status", appointmentService.getStatus());
+            request.setAttribute("noOfPages", appointmentService.getNoOfPageAppointment(search));
+            RequestDispatcher rd = request.getRequestDispatcher("Medical Facility/Appointment/AppointmentDetailFacility.jsp");
+            rd.forward(request, response);
+        }
     } 
 
     @Override
@@ -58,7 +69,24 @@ public class AppointmentController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+                if (request.getServletPath().equals("/edit-appointment")) {
+            int statusId = Integer.parseInt(request.getParameter("statusId"));
+            int appointmentId = Integer.parseInt(request.getParameter("appointmentId"));
+            
+            AppointmentService appointmentService = new AppointmentService();
+            boolean addSuccess = appointmentService.updateStatusById(statusId,appointmentId);
+            if(addSuccess) {
+                request.setAttribute("messageResponse", "Thay đổi thành công !");
+                request.setAttribute("alert", "success");
+            }else {
+                request.setAttribute("messageResponse", "Thay đổi không thành công !");
+                request.setAttribute("alert", "danger");
+            }
+            request.setAttribute("appointment", appointmentService.getAppointmentDetail(appointmentId));
+            request.setAttribute("status", appointmentService.getStatus());
+            RequestDispatcher rd = request.getRequestDispatcher("Medical Facility/Appointment/AppointmentDetailFacility.jsp");
+            rd.forward(request, response);
+        }
     }
     
 }

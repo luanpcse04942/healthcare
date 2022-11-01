@@ -5,6 +5,8 @@
 package com.laptrinhweb.healthcare.services;
 
 import com.laptrinhweb.healthcare.dao.AppointmentDAO;
+import com.laptrinhweb.healthcare.model.Status;
+import com.laptrinhweb.healthcare.model.dto.AppointmentDetailFacility;
 import dto.ApointmentFacility;
 import java.util.ArrayList;
 
@@ -46,6 +48,26 @@ public class AppointmentService {
         page = 1;
         facilitys = appointmentDAO.searchAppointmentFacility(search, (page - 1) * recordsPerPage, recordsPerPage);
         return facilitys;
+    }
+    
+    public AppointmentDetailFacility getAppointmentDetail(int id) {
+        AppointmentDAO appointmentDAO = new AppointmentDAO();
+        AppointmentDetailFacility appointment = appointmentDAO.getDetailAppointmentFacility(id);
+        return appointment;
+    }
+
+    public ArrayList<Status> getStatus() {
+        AppointmentDAO appointmentDAO = new AppointmentDAO();
+        ArrayList<Status> status = new ArrayList<>();
+        status = appointmentDAO.getAllStatusFacility();
+        return status;
+    }
+
+    public boolean updateStatusById(int statusId, int appointmentId) {
+        AppointmentDAO appointmentDAO = new AppointmentDAO();
+        boolean editSpecSuccess = false;
+        editSpecSuccess = appointmentDAO.updateStatus(statusId, appointmentId);
+        return editSpecSuccess;
     }
     
 }
