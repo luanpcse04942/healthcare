@@ -3,6 +3,7 @@ package com.laptrinhweb.healthcare.services;
 import com.laptrinhweb.healthcare.dao.DoctorDAO;
 import com.laptrinhweb.healthcare.dao.UserDAO;
 import com.laptrinhweb.healthcare.model.User;
+import com.laptrinhweb.healthcare.model.dto.DoctorFacility;
 import com.laptrinhweb.healthcare.model.dto.DoctorInfoDTO;
 import com.laptrinhweb.healthcare.model.dto.ScheduleDTO;
 import com.laptrinhweb.healthcare.model.dto.ScheduleTimesDTO;
@@ -21,6 +22,14 @@ public class DoctorService {
         return doctors;
     }
     
+        public ArrayList<DoctorFacility> getListDoctorFacility(int page) {
+        DoctorDAO doctorDAO = new DoctorDAO();
+        ArrayList<DoctorFacility> doctors = new ArrayList<>();
+        int recordsPerPage = 6;
+        doctors = doctorDAO.getAllDoctorFacility((page - 1) * recordsPerPage, recordsPerPage);
+        return doctors;
+    }
+        
     public int getNoOfPage(String search) {
         DoctorDAO doctorDAO = new DoctorDAO();
         int noOfRecords = 0;
@@ -69,5 +78,12 @@ public class DoctorService {
         return doctorDAO.getScheduleTimes(specialtyId);
     }
     
-    
+        public ArrayList<DoctorFacility> getDoctorsFacilitySearchByName(int page, String search) {
+        DoctorDAO doctorDAO = new DoctorDAO();
+        ArrayList<DoctorFacility> doctors = new ArrayList<>();
+        int recordsPerPage = 4;
+        page = 1;
+        doctors = doctorDAO.searchDoctorFacility(search, (page - 1) * recordsPerPage, recordsPerPage);
+        return doctors;
+    }
 }
