@@ -11,14 +11,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet(name = "LoginController", urlPatterns = {"/dang-nhap", "/register"})
+@WebServlet(name = "LoginController", urlPatterns = {"/dang-nhap", "/register", "/login"})
 public class LoginController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        if (request.getServletPath().equals("/dang-nhap")) {
-
+        if (request.getServletPath().equals("/login")) {
             String email = request.getParameter("email-login");
             String password = request.getParameter("password-login");
 
@@ -46,8 +45,13 @@ public class LoginController extends HttpServlet {
                 if (u.getRoleId() == 4) {
                     response.sendRedirect("facility-home");
                 }
-            }
 
+            }
+        }
+
+        if (request.getServletPath().equals("/dang-nhap")) {
+            RequestDispatcher rd = request.getRequestDispatcher("Public/Login.jsp");
+            rd.include(request, response);
         }
 
         if (request.getServletPath().equals("/register")) {
