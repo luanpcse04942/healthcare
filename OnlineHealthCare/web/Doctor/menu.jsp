@@ -35,7 +35,7 @@
     </div>
     <ul class="nav nav-list">
         <li >
-            <a href="#" class="dropdown-toggle">
+            <a href="<c:url value='/doctor-home'/>" class="dropdown-toggle">
                 <i class="menu-icon fa fa-list"></i>
                 <span class="menu-text"></span>
                 Trang chủ bác sĩ

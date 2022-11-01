@@ -45,9 +45,9 @@
                             <ul class="breadcrumb">
                                 <li>
                                     <i class="ace-icon fa fa-home home-icon"></i>
-                                    <a href="<c:url value='/facility-home?facilityId=${facilityId}'/>">Trang chủ cơ sở</a>
+                                    <a href="<c:url value='/facility-home?facilityId=${facilityId}'/>">Trang chủ cơ sở</a>
                                 </li>
-                                <li class="active">Đặt lịch cho bác sĩ</li>
+                                <li class="active">Đặt lịch cho bác sĩ</li>
                             </ul>
                         </div>
                         <div class="page-content">
@@ -55,7 +55,7 @@
                             <div class="form-group col-sm-6">
                                 <h3 class="header blue lighter smaller">
                                     <i class="ace-icon glyphicon glyphicon-user smaller-90"></i>
-                                    Chọn bác sĩ
+                                    Chọn bác sĩ
                                 </h3>
                                 <select class="form-control" id="select-doctor" name="doctor">
                                     <c:forEach items="${doctors}" var="doctor">
@@ -69,7 +69,7 @@
                             <div class="form-group col-sm-6">
                                 <h3 class="header blue lighter smaller">
                                     <i class="ace-icon fa fa-calendar-o smaller-90"></i>
-                                    Chọn ngày
+                                    Chọn ngày
                                 </h3>
 
                                 <div class="row">

@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author LuanPC
  */
-@WebServlet(name = "FeedbackController", urlPatterns = {"/doctor-feedback"})
+@WebServlet(name = "FeedbackController", urlPatterns = {"/doctor-feedback", "facility-doctor-feedback"})
 public class FeedbackController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
