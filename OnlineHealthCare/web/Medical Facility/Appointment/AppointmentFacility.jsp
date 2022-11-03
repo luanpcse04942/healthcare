@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Trang chủ cơ sở</title>
         <link rel="stylesheet" href="<c:url value='/template/admin/assets/css/bootstrap.min.css' />" />
-        <link rel="stylesheet" href="<c:url value='/static/css/accountList.css' />" />
         <link rel="stylesheet" href="<c:url value='/template/admin/font-awesome/4.5.0/css/font-awesome.min.css' />" />
         <link rel="stylesheet" href="<c:url value='/template/admin/assets/css/ace.min.css' />" class="ace-main-stylesheet" id="main-ace-style" />
         <script src="<c:url value='/template/admin/assets/js/ace-extra.min.js' />"></script>
@@ -15,11 +15,10 @@
         <script src="<c:url value='/template/admin/assets/js/jquery.2.1.1.min.js' />"></script>
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="<c:url value='/template/paging/jquery.twbsPagination.js' />"></script>
         <script src="<c:url value='/ckeditor/ckeditor.js' />"></script>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Quản lý  tài khoản</title>
     </head>
-    <body class="no-skin">
+    <body >
         <!-- header -->
         <%@ include file="/common/header.jsp" %>
         <!-- header -->
@@ -32,29 +31,21 @@
                 }
             </script>
             <!-- header -->
-            <%@ include file="/Admin/menu.jsp" %>
+            <%@ include file="/Medical Facility/menu.jsp" %>
             <!-- header -->
 
             <div class="main-content">
-                <form action="<c:url value='/admin-facility-search'/>" method="get">
                     <div class="main-content-inner">
                         <div class="breadcrumbs ace-save-state" id="breadcrumbs">
                             <ul class="breadcrumb">
                                 <li>
                                     <i class="ace-icon fa fa-home home-icon"></i>
-                                    <a href="<c:url value='/admin-home'/>">Trang chủ</a>
+                                    <a href="<c:url value='/appointment-Facility-home'/>">Trang chủ</a>
                                 </li>
-                                <li class="active">Danh sách cơ sở y tế</li>
+                                <li class="active">Danh sách lịch hẹn</li>
                             </ul>
                             <!-- /.breadcrumb -->
-                            <div class="nav-search" id="nav-search">
-                                <form class="form-search">
-                                    <span class="input-icon">
-                                        <input name="search" value="${nameSearch}" type="text" placeholder="Tìm tên cơ sở..." class="nav-search-input" style="width:300px !important" id="nav-search-input" autocomplete="off" />
-                                        <button type="submit" class="ace-icon fa fa-search nav-search-icon"></button>
-                                    </span>
-                                </form>
-                            </div>
+
                         </div>
                         <div class="page-content">
                             <div class="row">
@@ -64,58 +55,58 @@
                                             ${messageResponse}
                                         </div>
                                     </c:if>
-                                    <div class="widget-box table-filter">
-                                        <div class="table-btn-controls">
-                                            <div class="pull-right tableTools-container">
-                                                <div class="dt-buttons btn-overlap btn-group">
-                                                    <a flag="info"
-                                                       class="dt-button buttons-colvis btn btn-white btn-primary btn-bold" data-toggle="tooltip"
-                                                       title='Thêm cơ sở' href='<c:url value="/admin-add-facility"/>'>
-                                                        <span>
-                                                            <i class="fa fa-plus-circle bigger-110 purple"></i>
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+
                                     <div class="row">
                                         <div class="col-xs-12">
                                             <div class="table-responsive">
+                                                <div class="search-container">
+                                                    <form id="form-search" action="<c:url value='/facility-appointment-search'/>" method="POST">
+                                                        <h1>Lịch hẹn</h1>
+                                                        <div class="input-group">
+                                                            <c:if test="${codeSearch != null}">
+                                                                <input type="text" class="form-control" name="codeSearch" value="${codeSearch}" placeholder="Tìm kiếm bác sĩ" required maxlength="50" aria-describedby="basic-addon2"/>
+                                                            </c:if>
+                                                            <c:if test="${codeSearch == null || codeSearch == ''}">
+                                                                <input type="text" class="form-control" name="codeSearch" placeholder="Tìm kiếm bác sĩ" required/>
+                                                            </c:if>
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true">
+                                                                    </span> Search!</button>
+                                                            </span>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                                 <table class="table table-bordered">
                                                     <thead>
                                                         <tr>
-                                                            <th class="col-xs-1 center">No.</th>
-                                                            <th class="col-xs-2 center">Tên cơ sở</th>
-                                                            <th class="col-xs-2 center">Số  điện thoại</th>
-                                                            <th class="col-xs-4 center">Địa chỉ</th>
-                                                            <th class="col-xs-1 center">Trạng thái</th>
-                                                            <th class="col-xs-1 center">Thao tác</th>
+                                                            <th>No.</th>
+                                                            <th>Tên bệnh nhân</th>
+                                                            <th>Lý do khám</th>
+                                                            <th>Số điện thoại</th>
+                                                            <th>Bác sĩ</th>
+                                                            <th>Ngày đặt lịch</th>
+                                                            <th>Trạng thái</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
 
                                                         <c:choose>
-                                                            <c:when test="${empty facilities}">
+                                                            <c:when test="${empty appointment}">
                                                             <p>Không có thông tin!</p>
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <c:forEach var="item" items="${facilities}" varStatus="loop">
-                                                                <c:set var="count" value="${(currentPage - 1) * 4}"/>
+                                                            <c:forEach var="item" items="${appointment}" varStatus="loop">
+                                                                <c:set var="count" value="${(currentPage - 1) * 2}"/>
                                                                 <tr>
-                                                                    <td class="center">${loop.index + count + 1}</td>
-                                                                    <td class="center">${item.firstName} ${item.lastName}</td>
-                                                                    <td class="center">${item.phoneNumber}</td>
-                                                                    <td>${item.address}</td>
+                                                                    <td>${loop.index + count + 1}</td>
+                                                                    <td>${item.fullNamePatient}</td>
+                                                                    <td>${item.reason}</td>
+                                                                    <td>${item.phoneNumber}</td>
+                                                                    <td>${item.fullNameDoctor}</td>
+                                                                    <td>${item.bookingDate}</td>
+                                                                    <td>${item.status}</td>
                                                                     <td>
-                                                                        <c:if test="${item.activedStatus == 5}">Đã xác thực</c:if>
-                                                                        <c:if test="${item.activedStatus == 6}">Chưa xác thực</c:if>
-                                                                        <c:if test="${item.activedStatus == 7}">Đã khóa</c:if>
-                                                                    </td>
-                                                                    <td class="center">
-                                                                        <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
-                                                                           title="Xem chi tiết" href="<c:url value='/admin-facility-detail?facilityId=${item.id}'/>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                                                        </a>
+                                                                        <a href="<c:url value='/facility-appointment-detail?appointmentId=${item.appoitmentId}'/>" class="btn btn-info" role="button">Chi tiết</a>
                                                                     </td>
                                                                 </tr>
                                                             </c:forEach>
@@ -128,10 +119,10 @@
                                                         <c:if test="${currentPage != 1}">
                                                             <c:choose>
                                                                 <c:when test="${isSearching}">
-                                                                    <a href="admin-facility-search?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
+                                                                    <a href="facility-appointment-search?codeSearch=${nameSearch}&page=${currentPage-1}">Trang trước</a>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <a href="admin-facility-list?page=${currentPage-1}">Trang trước</a>
+                                                                    <a href="Facility-Appointment-List?page=${currentPage-1}">Trang trước</a>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </c:if>
@@ -141,20 +132,20 @@
                                                                     <a href="" class="active">${i}</a>
                                                                 </c:when>
                                                                 <c:when test="${isSearching}">
-                                                                    <a href="admin-facility-search?search=${nameSearch}&page=${i}">${i}</a>
+                                                                    <a href="facility-appointment-search?codeSearch=${nameSearch}&page=${i}">${i}</a>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <a href="admin-facility-list?page=${i}">${i}</a>
+                                                                    <a href="Facility-Appointment-List?page=${i}">${i}</a>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </c:forEach>
                                                         <c:if test="${currentPage lt noOfPages}">
                                                             <c:choose>
                                                                 <c:when test="${isSearching}">
-                                                                    <a href="admin-facility-search?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
+                                                                    <a href="facility-appointment-search?codeSearch=${nameSearch}&page=${currentPage+1}">Trang sau</a>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <a href="admin-facility-list?page=${currentPage+1}">Trang sau</a>
+                                                                    <a href="Facility-Appointment-List?page=${currentPage+1}">Trang sau</a>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </c:if>
@@ -167,8 +158,9 @@
                             </div>
                         </div>
                     </div>
-                </form>
+
             </div>
+            
 
             <!-- footer -->
             <%@ include file="/common/footer.jsp" %>
@@ -178,6 +170,7 @@
                 <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
             </a>
         </div>
+
 
         <script src="<c:url value='/template/admin/assets/js/bootstrap.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/jquery-ui.custom.min.js' />"></script>

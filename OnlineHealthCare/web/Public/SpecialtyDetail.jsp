@@ -122,7 +122,25 @@
                         });
                     }
                 });
+            });
 
+            $('.form-control').on('change', function () {
+                var scheduleID = parseInt($(this).find(":selected").val());
+                var doctorID = $(this).find(":selected").attr('class');
+                $.ajax({
+                    type: "POST",
+                    url: 'get-time',
+                    data: {
+                        scheduleID: scheduleID
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        $("#doctor-schedules-" + doctorID).html("");
+                        jQuery.each(data.listTime, function (index, item) {
+                                $("#doctor-schedules-" + doctorID).append("<span>" + item.timeValue + "</span>")
+                        });
+                    }
+                });
             });
         </script>
         <script src="<c:url value='/template/admin/assets/js/bootstrap.min.js' />"></script>

@@ -2,6 +2,7 @@ package com.laptrinhweb.healthcare.dao;
 
 import com.laptrinhweb.healthcare.context.DBContext;
 import com.laptrinhweb.healthcare.model.User;
+import com.laptrinhweb.healthcare.model.dto.DoctorFacility;
 import com.laptrinhweb.healthcare.model.dto.DoctorInfoDTO;
 import com.laptrinhweb.healthcare.model.dto.ScheduleDTO;
 import com.laptrinhweb.healthcare.model.dto.ScheduleTimesDTO;
@@ -406,5 +407,189 @@ public class DoctorDAO extends DBContext {
             }
         }
         return times;
+    }
+    
+    public ArrayList<ScheduleTimesDTO> getScheduleTimesOnChange(int scheduleId) {
+        StringBuilder sql = new StringBuilder(" SELECT t.timeId, t.timeValue FROM Schedule_Time st ");
+        sql.append(" JOIN Times t ON st.timeId = t.timeId WHERE st.scheduleId = ? ");
+        
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DBContext db = new DBContext();
+        ArrayList<ScheduleTimesDTO> times = new ArrayList<>();
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql.toString());
+            ps.setInt(1, scheduleId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                ScheduleTimesDTO s = new ScheduleTimesDTO();
+                s.setTimeID(rs.getInt(1));
+                s.setTimeValue(rs.getString(2));
+                times.add(s);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return times;
+    }
+        public ArrayList<DoctorFacility> getAllDoctorFacility(int start, int total) {
+        StringBuilder sql = new StringBuilder("select a.id,CONCAT(firstName,' ',lastName) fullname,s.statusName,e.gender,a.email,e.phoneNumber,d.name,e.image from Users a ");
+        sql.append("join User_Roles b on b.userId = a.id ");
+        sql.append(" join User_Province c on c.userId = a.id ");
+        sql.append("join Provinces d on d.provinceId = c.provinceId ");
+        sql.append(" join User_Profile e on e.userId = a.id ");
+        sql.append(" join Status s on s.statusId = a.activedStatus where b.roleId = '2' ORDER BY a.id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DBContext db = new DBContext();
+        ArrayList<DoctorFacility> listAccount = new ArrayList<>();
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql.toString());
+            ps.setInt(1, start);
+            ps.setInt(2, total);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                DoctorFacility acc = new DoctorFacility();
+                acc.setId(rs.getInt(1));
+                acc.setFullname(rs.getString(2));
+                acc.setStatusName(rs.getString(3));
+                acc.setGender(rs.getString(4));
+                acc.setEmail(rs.getString(5));
+                acc.setPhoneNumber(rs.getString(6));
+                acc.setAddress(rs.getString(7));
+                String base64StringImage = new String(rs.getBytes(8), "UTF-8");
+                acc.setImage(base64StringImage);
+                listAccount.add(acc);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return listAccount;
+    }
+    
+    public ArrayList<DoctorFacility> searchDoctorFacility(String codeSearch, int start, int total) {
+        StringBuilder sql = new StringBuilder("select a.id,CONCAT(firstName,' ',lastName) fullname,s.statusName,e.gender,a.email,e.phoneNumber,d.name,e.image from Users a ");
+        sql.append("join User_Roles b on b.userId = a.id ");
+        sql.append(" join User_Province c on c.userId = a.id ");
+        sql.append("join Provinces d on d.provinceId = c.provinceId ");
+        sql.append(" join User_Profile e on e.userId = a.id ");
+        sql.append(" join Status s on s.statusId = a.activedStatus where (convert(VARCHAR(255), a.firstName)+' '+convert(VARCHAR(255), a.lastName)) like '%" + codeSearch + "%' and b.roleId = '2' ORDER BY a.id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DBContext db = new DBContext();
+        ArrayList<DoctorFacility> listAccount = new ArrayList<>();
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql.toString());
+            ps.setInt(1, start);
+            ps.setInt(2, total);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                DoctorFacility acc = new DoctorFacility();
+                acc.setId(rs.getInt(1));
+                acc.setFullname(rs.getString(2));
+                acc.setStatusName(rs.getString(3));
+                acc.setGender(rs.getString(4));
+                acc.setEmail(rs.getString(5));
+                acc.setPhoneNumber(rs.getString(6));
+                acc.setAddress(rs.getString(7));
+                String base64StringImage = new String(rs.getBytes(8), "UTF-8");
+                acc.setImage(base64StringImage);
+                listAccount.add(acc);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return listAccount;
+    }
+    
+            public DoctorFacility getDoctorDetailFacility(int userId) {
+        StringBuilder sql = new StringBuilder("select a.id,CONCAT(firstName,' ',lastName) fullname,s.statusName,e.gender,a.email,e.phoneNumber,d.name,e.image,spec.name from Users a ");
+        sql.append("join User_Roles b on b.userId = a.id ");
+        sql.append(" join User_Province c on c.userId = a.id ");
+        sql.append("join Provinces d on d.provinceId = c.provinceId ");
+        sql.append(" join User_Profile e on e.userId = a.id ");
+        sql.append(" join (select a.id,a.doctorId,b.name from Doctor_Working_Info a join Specialties b on b.specialtyId = a.specialtyId) spec on spec.doctorId = a.id ");
+        sql.append(" join Status s on s.statusId = a.activedStatus where a.id = ? ");
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DBContext db = new DBContext();
+        DoctorFacility acc = new DoctorFacility();
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql.toString());
+            ps.setInt(1, userId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                
+                acc.setId(rs.getInt(1));
+                acc.setFullname(rs.getString(2));
+                acc.setStatusName(rs.getString(3));
+                acc.setGender(rs.getString(4));
+                acc.setEmail(rs.getString(5));
+                acc.setPhoneNumber(rs.getString(6));
+                acc.setAddress(rs.getString(7));
+                String base64StringImage = new String(rs.getBytes(8), "UTF-8");
+                acc.setImage(base64StringImage);
+                acc.setSpecName(rs.getString(9));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return acc;
     }
 }

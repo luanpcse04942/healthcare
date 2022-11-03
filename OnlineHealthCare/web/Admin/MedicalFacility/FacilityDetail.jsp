@@ -86,26 +86,14 @@
 
                                 <div class="form-group">
                                     <label>Trạng thái tài khoản</label>
-                                    <select class="form-control" id="sel1">
+                                    <select class="form-control" id="sel1" disabled="true">
                                         <option>
                                             <c:if test="${facility.activedStatus == 5}">Đã xác thực</c:if>
                                             <c:if test="${facility.activedStatus == 6}">Chưa xác thực</c:if>
                                             <c:if test="${facility.activedStatus == 7}">Đã khóa</c:if>
                                             </option>
-                                            <option>Vô hiệu hóa</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="form-group col-sm-12">
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <label class="custom-file-label" >Chọn ảnh</label>
-                                            <input type="file" name="file" class="custom-file-input">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group col-sm-9">
-                                    <button type="submit" class="btn btn-primary">Cập nhật</button>
                                 </div>
                             </form>
                         </div>

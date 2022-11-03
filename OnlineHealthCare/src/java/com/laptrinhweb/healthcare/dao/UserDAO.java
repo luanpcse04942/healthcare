@@ -225,7 +225,7 @@ public class UserDAO extends DBContext {
         sql.append(" join  User_Profile up on u.id = up.userId ");
         sql.append(" join User_Roles ur on ur.userId = u.id ");
         sql.append(" join Roles r on ur.roleId = r.id ");
-        sql.append(" where (u.email like ? or convert(VARCHAR(255), u.firstName)+' '+convert(VARCHAR(255), u.lastName) like ?) and ur.roleId not like 4 ORDER BY u.id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
+        sql.append(" where (u.email like '%"+ search.trim() +"%' or convert(VARCHAR(255), u.firstName)+' '+convert(VARCHAR(255), u.lastName) like '%"+ search.trim() +"%') and ur.roleId not like 4 ORDER BY u.id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
         PreparedStatement ps = null;
         ResultSet rs = null;
         DBContext db = new DBContext();
@@ -233,10 +233,8 @@ public class UserDAO extends DBContext {
         try {
             conn = db.getConn();
             ps = conn.prepareStatement(sql.toString());
-            ps.setString(1, '%' + search.trim() + '%');
-            ps.setString(2, '%' + search.trim() + '%');
-            ps.setInt(3, start);
-            ps.setInt(4, total);
+            ps.setInt(1, start);
+            ps.setInt(2, total);
             rs = ps.executeQuery();
             while (rs.next()) {
                 User acc = new User();

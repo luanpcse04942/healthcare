@@ -127,30 +127,6 @@ public class FacilityController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (request.getServletPath().equals("/edit-facility")) {
-            int facilityId = Integer.parseInt(request.getParameter("facilityId"));
-            String name = request.getParameter("name");
-            String phoneNumber = request.getParameter("phoneNumber");
-            String description = request.getParameter("description");
-            String address = request.getParameter("address");
-
-            Part filePart = request.getPart("file");
-            String fileName = filePart.getSubmittedFileName();
-
-            String path = request.getServletContext().getRealPath("/static/images/avatars/" + fileName);
-            FileOutputStream fops = new FileOutputStream(path);
-            InputStream is = filePart.getInputStream();
-            try {
-                byte[] byt = new byte[is.available()];
-                is.read();
-                fops.write(byt);
-                fops.close();
-                System.out.println(path);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-
         if (request.getServletPath().equals("/facility-add-schedule")) {
 
             //get value from ajax in BookingSchedule.jsp
