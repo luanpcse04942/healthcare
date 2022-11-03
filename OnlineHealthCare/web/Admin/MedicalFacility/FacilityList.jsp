@@ -115,7 +115,6 @@
                                                                     <td class="center">
                                                                         <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
                                                                            title="Xem chi tiết" href="<c:url value='/admin-facility-detail?facilityId=${item.id}'/>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                                                            Sửa
                                                                         </a>
                                                                     </td>
                                                                 </tr>
