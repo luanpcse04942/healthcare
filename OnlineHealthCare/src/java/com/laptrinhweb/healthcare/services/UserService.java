@@ -57,10 +57,11 @@ public class UserService {
    
         UserDAO userDAO = new UserDAO();
         boolean addSuccess = userDAO.addUser(email, password, firstName, lastName);
-        userDAO.addUserProvince(userDAO.getUserId(email), provinceId);
-        userDAO.addUserProfile(userDAO.getUserId(email), imageName);
-        userDAO.addUserRole(userDAO.getUserId(email), roleId);
-        userDAO.addMedicalFacilityInfo(userDAO.getUserId(email));
+        int userId = userDAO.getUserId(email);
+        userDAO.addUserProvince(userId, provinceId);
+        userDAO.addUserProfile(userId, imageName);
+        userDAO.addUserRole(userId, roleId);
+        //userDAO.addMedicalFacilityInfo(userDAO.getUserId(email));
         return addSuccess;
     }
 
