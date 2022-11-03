@@ -123,6 +123,11 @@
             </div>
             <div class="navbar-pc">
                 <ul class="nav-list">
+                    <li class="nav-link ">
+                        <a href="public-handbook-list" class="mo-cuaso" dl-cuaso="chuyenkhoa"> Cẩm nang
+                            <span>Thông tin hữu tích</span>
+                        </a>
+                    </li>
                     <li class="nav-link">
                         <a href="public-specialty-list" class="mo-cuaso" dl-cuaso="chuyenkhoa"> Chuyên khoa
                             <span>Tìm bác sĩ theo chuyên khoa</span>

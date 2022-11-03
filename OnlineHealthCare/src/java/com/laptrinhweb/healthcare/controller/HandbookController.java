@@ -27,7 +27,7 @@ import org.apache.tomcat.util.codec.binary.Base64;
  */
 
 @MultipartConfig
-@WebServlet(name = "HandbookController", urlPatterns = {"/HandbookController", "/handbook-list-admin", "/handbook-detail-admin", "/admin-add-handbook", "/add-handbook",
+@WebServlet(name = "HandbookController", urlPatterns = {"/public-handbook-list", "/HandbookController", "/handbook-list-admin", "/handbook-detail-admin", "/admin-add-handbook", "/add-handbook",
                     "/edit-handbook", "/admin-handbook-search"})
 
 public class HandbookController extends HttpServlet {
@@ -36,6 +36,22 @@ public class HandbookController extends HttpServlet {
             throws ServletException, IOException {
         int page = 1;
         String search = "";
+        
+        if (request.getServletPath().equals("/public-handbook-list")) {
+            if (request.getParameter("page") != null) {
+                page = Integer.parseInt(request.getParameter("page"));
+            }
+
+            HandbookService handbookService = new HandbookService();
+
+            request.setAttribute("handbook", handbookService.getListHandbook(page));
+            request.setAttribute("noOfPages", handbookService.getNoOfPage(search));
+            request.setAttribute("currentPage", page);
+
+            RequestDispatcher rd = request.getRequestDispatcher("Public/HandbookListPublic.jsp");
+            rd.forward(request, response);
+
+        }
 
         if (request.getServletPath().equals("/handbook-list-admin")) {
             if (request.getParameter("page") != null) {

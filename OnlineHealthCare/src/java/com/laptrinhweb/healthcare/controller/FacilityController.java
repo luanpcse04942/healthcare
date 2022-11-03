@@ -25,7 +25,7 @@ import java.util.List;
  * @author LuanPC
  */
 @MultipartConfig
-@WebServlet(name = "FacilityController", urlPatterns = {"/public-facility-list","/admin-facility-list", "/admin-facility-detail", "/edit-facility",
+@WebServlet(name = "FacilityController", urlPatterns = {"/public-facility-list", "/admin-facility-list", "/admin-facility-detail", "/edit-facility",
     "/admin-facility-search", "/admin-add-facility", "/booking-schedule", "/facility-home", "/facility-add-schedule"})
 public class FacilityController extends HttpServlet {
 
@@ -33,8 +33,8 @@ public class FacilityController extends HttpServlet {
             throws ServletException, IOException {
         int page = 1;
         String search = "";
-        
-        if (request.getServletPath().equals("/public-facility-list") || request.getServletPath().equals("/admin-specialty")) {
+
+        if (request.getServletPath().equals("/public-facility-list")) {
             if (request.getParameter("page") != null) {
                 page = Integer.parseInt(request.getParameter("page"));
             }
@@ -45,10 +45,8 @@ public class FacilityController extends HttpServlet {
             request.setAttribute("noOfPages", facilityService.getNoOfPage(search));
             request.setAttribute("currentPage", page);
 
-            if (request.getServletPath().equals("/public-facility-list")) {
-                RequestDispatcher rd = request.getRequestDispatcher("Public/MedicalFacilityListPublic.jsp");
-                rd.forward(request, response);
-            }   
+            RequestDispatcher rd = request.getRequestDispatcher("Public/MedicalFacilityListPublic.jsp");
+            rd.forward(request, response);
 
         }
 
@@ -150,7 +148,7 @@ public class FacilityController extends HttpServlet {
 
             java.util.Date d = new java.util.Date(scheduleDate);
             convertedCurrentDate = new java.sql.Date(d.getTime());
-            
+
             int doctorWorkingInfoId = fs.getDoctorWorkingInfoId(doctorId);
             fs.addSchedule(doctorWorkingInfoId, convertedCurrentDate);
             int scheduleID = fs.getScheduleID(doctorWorkingInfoId, convertedCurrentDate);
