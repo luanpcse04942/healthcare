@@ -409,6 +409,43 @@ public class DoctorDAO extends DBContext {
         return times;
     }
     
+    public ArrayList<ScheduleTimesDTO> getScheduleTimesOnChange(int scheduleId) {
+        StringBuilder sql = new StringBuilder(" SELECT t.timeId, t.timeValue FROM Schedule_Time st ");
+        sql.append(" JOIN Times t ON st.timeId = t.timeId WHERE st.scheduleId = ? ");
+        
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DBContext db = new DBContext();
+        ArrayList<ScheduleTimesDTO> times = new ArrayList<>();
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql.toString());
+            ps.setInt(1, scheduleId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                ScheduleTimesDTO s = new ScheduleTimesDTO();
+                s.setTimeID(rs.getInt(1));
+                s.setTimeValue(rs.getString(2));
+                times.add(s);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return times;
+    }
         public ArrayList<DoctorFacility> getAllDoctorFacility(int start, int total) {
         StringBuilder sql = new StringBuilder("select a.id,CONCAT(firstName,' ',lastName) fullname,s.statusName,e.gender,a.email,e.phoneNumber,d.name,e.image from Users a ");
         sql.append("join User_Roles b on b.userId = a.id ");

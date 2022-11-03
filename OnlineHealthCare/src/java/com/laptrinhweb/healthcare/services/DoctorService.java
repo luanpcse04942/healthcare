@@ -93,4 +93,9 @@ public class DoctorService {
 
         return doctorFacility;
     }
+
+    public ArrayList<ScheduleTimesDTO> getScheduleTimesOnChange(int scheduleId) {
+        DoctorDAO doctorDAO = new DoctorDAO();
+        return doctorDAO.getScheduleTimesOnChange(scheduleId);
+    }
 }

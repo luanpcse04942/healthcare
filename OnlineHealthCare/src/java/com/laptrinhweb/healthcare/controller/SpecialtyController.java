@@ -29,7 +29,7 @@ import com.google.gson.JsonObject;
 @MultipartConfig
 @WebServlet(name = "SpecialtyController", urlPatterns = {"/public-specialty-list", "/public-specialty-detail", "/admin-specialty", "/admin-specialty-search",
     "/admin-add-specialty", "/add-specialty", "/admin-specialty-detail",
-    "/edit-specialty", "/get-time-schedule"})
+    "/edit-specialty", "/get-time-schedule", "/get-time"})
 public class SpecialtyController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -199,6 +199,29 @@ public class SpecialtyController extends HttpServlet {
 
             DoctorService ds = new DoctorService();
             ArrayList<ScheduleTimesDTO> arrs = ds.getScheduleTimes(specialtyId);
+            JsonElement timeObj = gson.toJsonTree(arrs);
+            myObj.add("listTime", timeObj);
+            out.println(myObj.toString());
+            out.close();
+        }
+        
+        if (request.getServletPath().equals("/get-time")) {
+            int scheduleId = Integer.parseInt(request.getParameter("scheduleID"));
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+            response.setHeader("Cache-control", "no-cache, no-store");
+            response.setHeader("Pragma", "no-cache");
+            response.setHeader("Expires", "-1");
+
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Access-Control-Allow-Methods", "POST");
+            response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+            response.setHeader("Access-Control-Max-Age", "86400");
+            Gson gson = new Gson();
+            JsonObject myObj = new JsonObject();
+
+            DoctorService ds = new DoctorService();
+            ArrayList<ScheduleTimesDTO> arrs = ds.getScheduleTimesOnChange(scheduleId);
             JsonElement timeObj = gson.toJsonTree(arrs);
             myObj.add("listTime", timeObj);
             out.println(myObj.toString());
