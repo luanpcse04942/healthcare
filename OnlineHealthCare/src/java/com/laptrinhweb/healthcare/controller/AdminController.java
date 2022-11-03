@@ -123,6 +123,7 @@ public class AdminController extends HttpServlet {
                 request.setAttribute("messageResponse", "Thêm mới không thành công !");
                 request.setAttribute("alert", "danger");
             }
+            request.setAttribute("provinces", userService.getAllProvinces());
             RequestDispatcher rd = request.getRequestDispatcher("Admin/Account/AddAccount.jsp");
             rd.forward(request, response);
         }

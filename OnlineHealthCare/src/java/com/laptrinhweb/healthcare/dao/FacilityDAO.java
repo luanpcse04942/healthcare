@@ -290,7 +290,7 @@ public class FacilityDAO extends DBContext {
         sql.append(" join Roles r on ur.roleId = r.id ");
         sql.append(" join User_Province upr on upr.userId = u.id ");
         sql.append(" join Provinces p on p.provinceId = upr.provinceId ");
-        sql.append(" where convert(VARCHAR(255), u.firstName)+' '+convert(VARCHAR(255), u.lastName) like ? and ur.roleId = 4 ORDER BY u.id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
+        sql.append(" where convert(VARCHAR(255), u.firstName)+' '+convert(VARCHAR(255), u.lastName) like '%"+search+"%' and ur.roleId = 4 ORDER BY u.id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
         PreparedStatement ps = null;
         ResultSet rs = null;
         DBContext db = new DBContext();
@@ -299,8 +299,8 @@ public class FacilityDAO extends DBContext {
             conn = db.getConn();
             ps = conn.prepareStatement(sql.toString());
             ps.setString(1, '%' + search.trim() + '%');
-            ps.setInt(2, start);
-            ps.setInt(3, total);
+            ps.setInt(1, start);
+            ps.setInt(2, total);
             rs = ps.executeQuery();
             while (rs.next()) {
                 MedicalFacility mf = new MedicalFacility();

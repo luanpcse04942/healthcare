@@ -106,7 +106,7 @@
                                 </div>
                             </div>
                             <div class="form-group col-sm-12">
-                                <button class="btn btn-primary btn-save-schedule">Lưu thông tin</button>
+                                <button class="btn btn-primary btn-save-schedule">Lưu lịch</button>
                             </div>
                         </div>
                     </div>

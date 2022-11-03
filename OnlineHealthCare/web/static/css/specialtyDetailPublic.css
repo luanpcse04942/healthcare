@@ -153,4 +153,5 @@ sup {
 .pick-hour-container > span:hover {
     cursor: pointer;
     background-color: orange;
+    color: white;
 }
