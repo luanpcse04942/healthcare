@@ -5,6 +5,7 @@ import com.laptrinhweb.healthcare.model.Time;
 import com.laptrinhweb.healthcare.services.DoctorService;
 import com.laptrinhweb.healthcare.services.FacilityService;
 import com.laptrinhweb.healthcare.services.PatientService;
+import com.laptrinhweb.healthcare.services.UserService;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -29,7 +30,7 @@ import org.apache.tomcat.util.codec.binary.Base64;
  * @author LuanPC
  */
 @MultipartConfig
-@WebServlet(name = "FacilityController", urlPatterns = {"/public-facility-list", "/public-facility-detail", "/facility-patient-list", "/admin-facility-list", "/admin-facility-detail", "/edit-facility",
+@WebServlet(name = "FacilityController", urlPatterns = {"/public-facility-list", "/public-facility-detail", "/facility-patient-list", "/facility-patient-detail", "/admin-facility-list", "/admin-facility-detail", "/edit-facility",
     "/admin-facility-search", "/admin-add-facility", "/booking-schedule", "/facility-home", "/facility-add-schedule", "/add-facility"})
 public class FacilityController extends HttpServlet {
 
@@ -54,14 +55,35 @@ public class FacilityController extends HttpServlet {
 
         }
 
-        if (request.getServletPath().equals("/public-facility-detail")) {         
+        if (request.getServletPath().equals("/public-facility-detail")) {
             int facilityId = Integer.parseInt(request.getParameter("facilityId"));
-            
+
             FacilityService facilityService = new FacilityService();
             MedicalFacility facility = facilityService.getFacilityDetail(facilityId);
             request.setAttribute("facility", facility);
-            
+
             RequestDispatcher rd = request.getRequestDispatcher("Public/FacilityDetail.jsp");
+            rd.forward(request, response);
+        }
+        
+        if (request.getServletPath().equals("/facility-patient-list")) {
+            if (request.getParameter("page") != null) {
+                page = Integer.parseInt(request.getParameter("page"));
+            }
+            UserService userService = new UserService();
+
+            request.setAttribute("patients", userService.getListAccounts(page));
+            request.setAttribute("noOfPages", userService.getNoOfPage(search));
+            request.setAttribute("currentPage", page);
+            RequestDispatcher rd = request.getRequestDispatcher("Medical Facility/Patient/PatientList.jsp");
+            rd.forward(request, response);
+        }
+
+        if (request.getServletPath().equals("/facility-patient-detail")) {
+            int userId = Integer.parseInt(request.getParameter("userId"));
+            UserService userService = new UserService();
+            request.setAttribute("account", userService.getAccountDetail(userId));
+            RequestDispatcher rd = request.getRequestDispatcher("Medical Facility/Patient/PatientDetail.jsp");
             rd.forward(request, response);
         }
 
