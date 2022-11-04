@@ -164,7 +164,7 @@
                             <div class="card-body">
                                 <div class="card-img-actions">
                                  
-                                   <img width="300px" height="200px" alt="Avatar" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${item.images}' />" />
+                                   <img width="300px" height="200px" alt="Avatar" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${item.image}' />" />
 
                                 </div>
                             </div>
@@ -172,7 +172,7 @@
                             <div class="card-body bg-light text-center ">
                                 <div class="mb-2">
                                     <h6 class="font-weight-semibold mb-2">
-                                        <a href="#" class="text-default mb-2" data-abc="true">${item.name} </a>
+                                        <a href="#" class="text-default mb-2" data-abc="true">${item.handbookName} </a>
                                     </h6>
                                 </div>
                             </div> 

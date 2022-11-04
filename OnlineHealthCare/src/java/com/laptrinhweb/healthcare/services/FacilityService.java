@@ -15,7 +15,7 @@ public class FacilityService {
     public ArrayList<MedicalFacility> getListFacilities(int page) {
         FacilityDAO facilityDAO = new FacilityDAO();
         ArrayList<MedicalFacility> facilities = new ArrayList<>();
-        int recordsPerPage = 8;
+        int recordsPerPage = 6;
         facilities = facilityDAO.findAll((page - 1) * recordsPerPage, recordsPerPage);
         return facilities;
     }

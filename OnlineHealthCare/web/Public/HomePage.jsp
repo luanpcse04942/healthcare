@@ -168,6 +168,19 @@
             </div>
         </div>
 
+        <div class="spec-list">
+            <c:forEach var="handbook" items="${listHandbook}">
+                <div class="specialty">
+                    <a href="<c:url value="/public-handbook-detail?handBookId=${handbook.id}&name=${handbook.handbookName}"/>" style="text-decoration: none; color: black">
+                        <div class="grid-img"> 
+                            <img width="300px" height="200px" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${handbook.image}' />" />
+                        </div>
+                        <div class="grid-name">${handbook.handbookName}</div>
+                    </a>
+                </div>
+            </c:forEach>
+        </div>
+
         <div class="top-title">
             <div class="heading">
                 <div class="title">Chuyên khoa nổi bật</div>
