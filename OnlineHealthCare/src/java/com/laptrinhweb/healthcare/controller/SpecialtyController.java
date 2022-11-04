@@ -21,6 +21,7 @@ import org.apache.tomcat.util.codec.binary.Base64;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.laptrinhweb.healthcare.services.UserService;
 
 /**
  *
@@ -29,7 +30,7 @@ import com.google.gson.JsonObject;
 @MultipartConfig
 @WebServlet(name = "SpecialtyController", urlPatterns = {"/public-specialty-list", "/public-specialty-detail", "/admin-specialty", "/admin-specialty-search",
     "/admin-add-specialty", "/add-specialty", "/admin-specialty-detail",
-    "/edit-specialty", "/get-time-schedule", "/get-time"})
+    "/edit-specialty", "/get-time-schedule", "/get-time", "/search-doctor-by-province"})
 public class SpecialtyController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -93,11 +94,13 @@ public class SpecialtyController extends HttpServlet {
         if (request.getServletPath().equals("/public-specialty-detail")) {
             DoctorService ds = new DoctorService();
             SpecialtyService ss = new SpecialtyService();
+            UserService userService = new UserService();
             int specialtyId = Integer.parseInt(request.getParameter("specialtyId"));
-
+            int provinceId = 0;
             request.setAttribute("scheduleDates", ds.getDoctorScheduleDates(specialtyId));
-            request.setAttribute("doctors", ds.getDoctorsForSpecialtyDetail(specialtyId));
+            request.setAttribute("doctors", ds.getDoctorsForSpecialtyDetail(specialtyId, provinceId));
             request.setAttribute("spec", ss.getSpecialtyInfo(specialtyId));
+            request.setAttribute("provinces", userService.getAllProvinces());
             RequestDispatcher rd = request.getRequestDispatcher("Public/SpecialtyDetail.jsp");
             rd.forward(request, response);
         }
@@ -226,6 +229,21 @@ public class SpecialtyController extends HttpServlet {
             myObj.add("listTime", timeObj);
             out.println(myObj.toString());
             out.close();
+        }
+        
+        if (request.getServletPath().equals("/search-doctor-by-province")) {
+            DoctorService ds = new DoctorService();
+            SpecialtyService ss = new SpecialtyService();
+            UserService userService = new UserService();
+            int specialtyId = Integer.parseInt(request.getParameter("specialtyID"));
+            int provinceId = Integer.parseInt(request.getParameter("provinceID"));
+            
+            request.setAttribute("scheduleDates", ds.getDoctorScheduleDates(specialtyId));
+            request.setAttribute("doctors", ds.getDoctorsForSpecialtyDetail(specialtyId, provinceId));
+            request.setAttribute("spec", ss.getSpecialtyInfo(specialtyId));
+            request.setAttribute("provinces", userService.getAllProvinces());
+            RequestDispatcher rd = request.getRequestDispatcher("Public/SpecialtyDetail.jsp");
+            rd.forward(request, response);
         }
     }
 }

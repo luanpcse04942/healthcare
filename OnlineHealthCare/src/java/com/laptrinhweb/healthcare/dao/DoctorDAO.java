@@ -279,7 +279,7 @@ public class DoctorDAO extends DBContext {
         return doctors;
     }
 
-    public ArrayList<DoctorInfoDTO> getDoctorsForSpecialtyDetail(int specialtyId) {
+    public ArrayList<DoctorInfoDTO> getDoctorsForSpecialtyDetail(int specialtyId, int provinceId) {
         StringBuilder sql = new StringBuilder(" SELECT dwi.doctorId, u.firstName, u.lastName, upr.image, upr.address ,p.name, pro.name, pr.priceValue FROM Doctor_Working_Info dwi ");
         sql.append(" JOIN  Specialties sp ON sp.specialtyId = dwi.specialtyId ");
         sql.append(" JOIN Positions p ON dwi.positionId = p.positionId ");
@@ -289,6 +289,9 @@ public class DoctorDAO extends DBContext {
         sql.append(" JOIN Provinces pro ON up.provinceId = pro.provinceId ");
         sql.append(" JOIN Prices pr ON dwi.priceId = pr.priceId ");
         sql.append(" WHERE sp.specialtyId = ? ");
+        if(provinceId != 0){
+            sql.append(" AND pro.provinceId = ? ");
+        }
         
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -298,6 +301,9 @@ public class DoctorDAO extends DBContext {
             conn = db.getConn();
             ps = conn.prepareStatement(sql.toString());
             ps.setInt(1, specialtyId);
+            if(provinceId != 0){
+                ps.setInt(2, specialtyId);
+            }
             rs = ps.executeQuery();
             while (rs.next()) {
                 DoctorInfoDTO di = new DoctorInfoDTO();
