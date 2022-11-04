@@ -1,6 +1,7 @@
 package com.laptrinhweb.healthcare.services;
 
 import com.laptrinhweb.healthcare.dao.FacilityDAO;
+import com.laptrinhweb.healthcare.dao.UserDAO;
 import com.laptrinhweb.healthcare.model.MedicalFacility;
 import com.laptrinhweb.healthcare.model.Time;
 import java.sql.Date;
@@ -76,5 +77,17 @@ public class FacilityService {
         FacilityDAO facDAO = new FacilityDAO();
         facDAO.addScheduleTime(scheduleID, listTime);
     }
+
+    public boolean addFacility(String name, String description, String email, String password, String phonenumber, String address, byte[] encoded) {
+        UserDAO userDAO = new UserDAO();
+        
+        userDAO.addUser(email, password,"" , name);
+        int userId = userDAO.getUserId(email);
+        userDAO.addUserProfile(userId, encoded);
+        userDAO.addUserRole(userId, 4);
+        
+        return true;
+    }
+    
 
 }

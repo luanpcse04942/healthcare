@@ -49,7 +49,7 @@
                         <!-- /.breadcrumb -->
                     </div>
                     <div class="container">
-                        <h2>Chi tiết cơ sở</h2>
+                        <h2>Chi tiết cơ sở</h2>
                         <c:if test="${not empty messageResponse}">
                             <div class="alert alert-${alert}">
                                 ${messageResponse}
@@ -57,7 +57,7 @@
                         </c:if>
                         <form action="<c:url value='/add-facility'/>" id="formSubmit" method="post" enctype="multipart/form-data">
                             <div class="form-group col-sm-12">
-                                <label>Tên cơ sở</label>
+                                <label>Tên cơ sở</label>
                                 <input name="name" type="text" class="form-control"  placeholder="Nhập vào tên cơ sở">
                             </div>
                             <div class="form-group col-sm-12">
@@ -67,7 +67,7 @@
                             <h2>Thông tin khác</h2>
                             <div class="form-group col-sm-6">
                                 <label >Email</label>
-                                <input type="text" class="form-control" placeholder="Nhập vào email">
+                                <input name="email" type="text" class="form-control" placeholder="Nhập vào email">
                             </div> 
                             <div class="form-group col-sm-6">
                                 <label>Mật khẩu</label>
@@ -75,11 +75,11 @@
                             </div>
                             <div class="form-group col-sm-6">
                                 <label>Số điện thoại</label>
-                                <input type="text" class="form-control"  placeholder="Nhập vào số  điện thoại" >
+                                <input name="phonenumber" type="text" class="form-control"  placeholder="Nhập vào số  điện thoại" >
                             </div>
                             <div class="form-group col-sm-6" >
                                 <label >Địa chỉ</label>
-                                <input type="text" class="form-control" placeholder="Nhập vào địa chỉ">
+                                <input name="address" type="text" class="form-control" placeholder="Nhập vào địa chỉ">
                             </div>
 
 

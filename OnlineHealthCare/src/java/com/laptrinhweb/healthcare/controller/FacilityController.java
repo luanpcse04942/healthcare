@@ -4,6 +4,7 @@ import com.laptrinhweb.healthcare.model.MedicalFacility;
 import com.laptrinhweb.healthcare.model.Time;
 import com.laptrinhweb.healthcare.services.DoctorService;
 import com.laptrinhweb.healthcare.services.FacilityService;
+import com.laptrinhweb.healthcare.services.PatientService;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -13,20 +14,23 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.apache.tomcat.util.codec.binary.Base64;
 
 /**
  *
  * @author LuanPC
  */
 @MultipartConfig
-@WebServlet(name = "FacilityController", urlPatterns = {"/public-facility-list", "/admin-facility-list", "/admin-facility-detail", "/edit-facility",
-    "/admin-facility-search", "/admin-add-facility", "/booking-schedule", "/facility-home", "/facility-add-schedule"})
+@WebServlet(name = "FacilityController", urlPatterns = {"/public-facility-list", "/public-facility-detail", "/facility-patient-list", "/admin-facility-list", "/admin-facility-detail", "/edit-facility",
+    "/admin-facility-search", "/admin-add-facility", "/booking-schedule", "/facility-home", "/facility-add-schedule", "/add-facility"})
 public class FacilityController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -48,6 +52,17 @@ public class FacilityController extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("Public/MedicalFacilityListPublic.jsp");
             rd.forward(request, response);
 
+        }
+
+        if (request.getServletPath().equals("/public-facility-detail")) {         
+            int facilityId = Integer.parseInt(request.getParameter("facilityId"));
+            
+            FacilityService facilityService = new FacilityService();
+            MedicalFacility facility = facilityService.getFacilityDetail(facilityId);
+            request.setAttribute("facility", facility);
+            
+            RequestDispatcher rd = request.getRequestDispatcher("Public/FacilityDetail.jsp");
+            rd.forward(request, response);
         }
 
         if (request.getServletPath().equals("/admin-facility-list")) {
@@ -153,6 +168,40 @@ public class FacilityController extends HttpServlet {
             fs.addSchedule(doctorWorkingInfoId, convertedCurrentDate);
             int scheduleID = fs.getScheduleID(doctorWorkingInfoId, convertedCurrentDate);
             fs.addScheduleTime(scheduleID, listTime);
+        }
+
+        if (request.getServletPath().equals("/add-facility")) {
+            String name = request.getParameter("name");
+            String description = request.getParameter("description");
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            String phonenumber = request.getParameter("phonenumber");
+            String address = request.getParameter("address");
+            Part filePart = request.getPart("file");
+            String fileName = filePart.getSubmittedFileName();
+
+            FileInputStream mFileInputStream = new FileInputStream("C:\\images\\Facility\\" + fileName);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] b = new byte[1024];
+            int bytesRead = 0;
+            while ((bytesRead = mFileInputStream.read(b)) != -1) {
+                bos.write(b, 0, bytesRead);
+            }
+            byte[] ba = bos.toByteArray();
+            byte[] encoded = Base64.encodeBase64(ba);
+
+            FacilityService facilityService = new FacilityService();
+            boolean addSpecSuccess = false;
+            addSpecSuccess = facilityService.addFacility(name, description, email, password, phonenumber, address, encoded);
+            if (addSpecSuccess) {
+                request.setAttribute("messageResponse", "Thêm mới thành công !");
+                request.setAttribute("alert", "success");
+            } else {
+                request.setAttribute("messageResponse", "Thêm mới không thành công !");
+                request.setAttribute("alert", "danger");
+            }
+            RequestDispatcher rd = request.getRequestDispatcher("Admin/MedicalFacility/AddFacility.jsp");
+            rd.forward(request, response);
         }
     }
 

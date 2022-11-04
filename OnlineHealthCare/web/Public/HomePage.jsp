@@ -210,12 +210,14 @@
         <div class="spec-list">
             <c:forEach var="facility" items="${listFacility}">
                 <div class="specialty">
-                    <div class="grid-img"> 
-                        <img width="300px" height="200px" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${facility.images}' />" />
-                    </div>
-                    <div class="grid-name">
-                        <span>${facility.firstName} ${facility.lastName}</span>
-                    </div>
+                    <a href="<c:url value="/public-facility-detail?facilityId=${facility.id}&name=${facility.firstName} ${facility.lastName}"/>" style="text-decoration: none; color: black">
+                        <div class="grid-img"> 
+                            <img width="300px" height="200px" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${facility.images}' />" />
+                        </div>
+                        <div class="grid-name">
+                            <span>${facility.firstName} ${facility.lastName}</span>
+                        </div>
+                    </a>
                 </div>
             </c:forEach>
         </div>

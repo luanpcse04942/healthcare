@@ -25,10 +25,9 @@ import org.apache.tomcat.util.codec.binary.Base64;
  *
  * @author LuanPC
  */
-
 @MultipartConfig
-@WebServlet(name = "HandbookController", urlPatterns = {"/public-handbook-list", "/HandbookController", "/handbook-list-admin", "/handbook-detail-admin", "/admin-add-handbook", "/add-handbook",
-                    "/edit-handbook", "/admin-handbook-search"})
+@WebServlet(name = "HandbookController", urlPatterns = {"/public-handbook-list", "/public-handbook-detail", "/HandbookController", "/handbook-list-admin", "/handbook-detail-admin", "/admin-add-handbook", "/add-handbook",
+    "/edit-handbook", "/admin-handbook-search"})
 
 public class HandbookController extends HttpServlet {
 
@@ -36,7 +35,7 @@ public class HandbookController extends HttpServlet {
             throws ServletException, IOException {
         int page = 1;
         String search = "";
-        
+
         if (request.getServletPath().equals("/public-handbook-list")) {
             if (request.getParameter("page") != null) {
                 page = Integer.parseInt(request.getParameter("page"));
@@ -49,6 +48,17 @@ public class HandbookController extends HttpServlet {
             request.setAttribute("currentPage", page);
 
             RequestDispatcher rd = request.getRequestDispatcher("Public/HandbookListPublic.jsp");
+            rd.forward(request, response);
+
+        }
+        if (request.getServletPath().equals("/public-handbook-detail")) {  
+            int handbookId = Integer.parseInt(request.getParameter("handBookId"));
+            
+            HandbookService hanbookService = new HandbookService();
+            Handbook handbook = hanbookService.getHandbook(handbookId);
+            request.setAttribute("handbook", handbook);
+            
+            RequestDispatcher rd = request.getRequestDispatcher("Public/HandbookDetail.jsp");
             rd.forward(request, response);
 
         }
@@ -65,7 +75,7 @@ public class HandbookController extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("Admin/Handbook/HandbookList.jsp");
             rd.forward(request, response);
         }
-        
+
         if (request.getServletPath().equals("/handbook-detail-admin")) {
             int handbookId = Integer.parseInt(request.getParameter("handBookId"));
             HandbookService hanbookService = new HandbookService();
@@ -74,12 +84,12 @@ public class HandbookController extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("Admin/Handbook/HandbookDetail.jsp");
             rd.forward(request, response);
         }
-        
+
         if (request.getServletPath().equals("/admin-add-handbook")) {
             RequestDispatcher rd = request.getRequestDispatcher("Admin/Handbook/AddHandbook.jsp");
             rd.forward(request, response);
         }
-        
+
         if (request.getServletPath().equals("/admin-handbook-search")) {
             if (request.getParameter("page") != null) {
                 page = Integer.parseInt(request.getParameter("page"));
@@ -99,7 +109,6 @@ public class HandbookController extends HttpServlet {
         }
 
     }
-
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -125,21 +134,21 @@ public class HandbookController extends HttpServlet {
             }
             byte[] ba = bos.toByteArray();
             byte[] encoded = Base64.encodeBase64(ba);
-            
+
             HandbookService handbookService = new HandbookService();
             boolean addSpecSuccess = false;
-            addSpecSuccess = handbookService.addHandbook(name, encoded,description);
-            if(addSpecSuccess) {
+            addSpecSuccess = handbookService.addHandbook(name, encoded, description);
+            if (addSpecSuccess) {
                 request.setAttribute("messageResponse", "Thêm mới thành công !");
                 request.setAttribute("alert", "success");
-            }else {
+            } else {
                 request.setAttribute("messageResponse", "Thêm mới không thành công !");
                 request.setAttribute("alert", "danger");
             }
             RequestDispatcher rd = request.getRequestDispatcher("Admin/Handbook/AddHandbook.jsp");
             rd.forward(request, response);
         }
-        
+
         if (request.getServletPath().equals("/edit-handbook")) {
             int id = Integer.parseInt(request.getParameter("handBookId"));
             String name = request.getParameter("name");
@@ -147,7 +156,7 @@ public class HandbookController extends HttpServlet {
             Part filePart = request.getPart("file");
             String fileName = filePart.getSubmittedFileName();
 
-             FileInputStream mFileInputStream = new FileInputStream("C:\\images\\Specialty\\" + fileName);
+            FileInputStream mFileInputStream = new FileInputStream("C:\\images\\Specialty\\" + fileName);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             byte[] b = new byte[1024];
             int bytesRead = 0;
@@ -156,19 +165,19 @@ public class HandbookController extends HttpServlet {
             }
             byte[] ba = bos.toByteArray();
             byte[] encoded = Base64.encodeBase64(ba);
-            
+
             HandbookService handbookService = new HandbookService();
             boolean editSpecSuccess = false;
             editSpecSuccess = handbookService.updateHandbook(id, name, description, encoded);
-            if(editSpecSuccess) {
+            if (editSpecSuccess) {
                 request.setAttribute("messageResponse", "Update thành công !");
                 request.setAttribute("alert", "success");
-            }else {
+            } else {
                 request.setAttribute("messageResponse", "Update không thành công !");
                 request.setAttribute("alert", "danger");
             }
-            
-            Handbook handbook =  handbookService.getHandbook(id);
+
+            Handbook handbook = handbookService.getHandbook(id);
             request.setAttribute("handbooks", handbook);
             RequestDispatcher rd = request.getRequestDispatcher("Admin/Handbook/HandbookDetail.jsp");
             rd.forward(request, response);
