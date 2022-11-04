@@ -63,9 +63,9 @@ public class DoctorService {
         return doctorDAO.getDoctorsOfFacility(facilityId);
     }
 
-    public ArrayList<DoctorInfoDTO> getDoctorsForSpecialtyDetail(int specialtyId) {
+    public ArrayList<DoctorInfoDTO> getDoctorsForSpecialtyDetail(int specialtyId, int provinceId) {
         DoctorDAO doctorDAO = new DoctorDAO();
-        return doctorDAO.getDoctorsForSpecialtyDetail(specialtyId);
+        return doctorDAO.getDoctorsForSpecialtyDetail(specialtyId, provinceId);
     }
 
     public ArrayList<ScheduleDTO> getDoctorScheduleDates(int specialtyId) {

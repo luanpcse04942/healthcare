@@ -33,10 +33,22 @@
         </div>
     </header>
     <body>
-        <div class="container">
+        <div id="box" class="container">
             <div class="specialty-info">
                 <div class="spec-name">${spec.name}</div>
                 <div class="spec-description">${spec.description}</div>
+            </div>
+            <div class="provinces">
+                <select class="choose-province" style="width: 150px;">
+                    <option value="0">
+                        Tất cả
+                    </option>
+                    <c:forEach var="item" items="${provinces}" varStatus="loop">
+                        <option value="${item.id}">
+                            ${item.name}
+                        </option>
+                    </c:forEach>
+                </select>
             </div>
             <c:choose>
                 <c:when test="${empty doctors}">
@@ -61,31 +73,25 @@
                             <div class="doctor-board-right">
                                 <span><i class="fa fa-calendar bigger-110"></i>Lịch khám</span>
 
-                                <c:choose>
-                                    <c:when test="${empty scheduleDates}">
-                                        <p>Bác sĩ  chưa có lịch mới!</p>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <div class="doctor-schedules">
-                                            <select class="form-control" style="width: 150px;">
-                                                <c:forEach var="item" items="${scheduleDates}" varStatus="loop">
-                                                    <c:if test="${item.doctorID eq doctor.doctorId}">
-                                                        <option class="${doctor.doctorId}" value="${item.scheduleID}">
-                                                            ${item.scheduleDate}
-                                                        </option>
-                                                    </c:if>
-                                                </c:forEach>
-                                            </select>
+
+                                <div class="doctor-schedules" id="abc-${doctor.doctorId}">
+                                    <select class="form-control" id="xyz-${doctor.doctorId}" style="width: 150px;">
+                                        <c:forEach var="item" items="${scheduleDates}" varStatus="loop">
+                                            <c:if test="${item.doctorID eq doctor.doctorId}">
+                                                <option class="${doctor.doctorId}" value="${item.scheduleID}">
+                                                    ${item.scheduleDate}
+                                                </option>
+                                            </c:if>
+                                        </c:forEach>
+                                    </select>
 
 
 
-                                            <div class="pick-hour-container" id="doctor-schedules-${doctor.doctorId}">
+                                    <div class="pick-hour-container" id="doctor-schedules-${doctor.doctorId}">
 
-                                            </div>
-                                        </div>
-                                        <div class="board-right-text">Chọn <i class="fa fa-hand-o-up" aria-hidden="true"></i> và đặt (Phí đặt lịch 0đ)</div>
-                                    </c:otherwise>
-                                </c:choose>
+                                    </div>
+                                </div>
+                                <div class="board-right-text">Chọn <i class="fa fa-hand-o-up" aria-hidden="true"></i> và đặt (Phí đặt lịch 0đ)</div>
                                 <span>Địa chỉ khám</span>
                                 <div class="doctor-address">
                                     ${doctor.address}
@@ -116,9 +122,14 @@
                             jQuery.each(data.listTime, function (index, item) {
                                 var id = item.scheduleID;
                                 if (id === scheduleID) {
-                                    $("#doctor-schedules-" + doctorID).append("<span>" + item.timeValue + "</span>")
+                                    $("#doctor-schedules-" + doctorID).append("<a style='text-decoration: none;' href='public-booking-appointment'>" + item.timeValue + "</a>")
                                 }
                             });
+
+//                            if (("#xyz-" + doctorID).val() === "") {
+//                                $("#abc-" + doctorID).html("Bác sĩ  chưa có lịch mới!");
+//                                $("#xyz-" + doctorID).hide();
+//                            }
                         });
                     }
                 });
@@ -137,8 +148,26 @@
                     success: function (data) {
                         $("#doctor-schedules-" + doctorID).html("");
                         jQuery.each(data.listTime, function (index, item) {
-                                $("#doctor-schedules-" + doctorID).append("<span>" + item.timeValue + "</span>")
+                            $("#doctor-schedules-" + doctorID).append("<a style='text-decoration: none;' href='public-booking-appointment'>" + item.timeValue + "</a>")
                         });
+                    }
+                });
+            });
+
+            $('.choose-province').on('change', function () {
+                var params = new window.URLSearchParams(window.location.search);
+                var provinceID = parseInt($(this).find(":selected").val());
+//                 $('#box').load('/search-doctor-by-province?specialtyID=' + params.get('specialtyId') + '&provinceID=' + provinceID);
+                $.ajax({
+                    type: "POST",
+                    url: 'search-doctor-by-province',
+                    data: {
+                        specialtyID: params.get('specialtyId'),
+                        provinceID: provinceID
+                    },
+                    dataType: "json",
+                    success: {
+                        
                     }
                 });
             });
