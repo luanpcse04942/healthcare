@@ -124,6 +124,11 @@
             <div class="navbar-pc">
                 <ul class="nav-list">
                     <li class="nav-link ">
+                        <a href="public-handbook-list" class="mo-cuaso" dl-cuaso="chuyenkhoa"> Cẩm nang
+                            <span>Thông tin hữu tích</span>
+                        </a>
+                    </li>
+                    <li class="nav-link ">
                         <a href="public-specialty-list" class="mo-cuaso" dl-cuaso="chuyenkhoa"> Chuyên khoa
                             <span>Tìm bác sĩ theo chuyên khoa</span>
                         </a>
@@ -181,10 +186,10 @@
                     <c:if test="${currentPage != 1}">
                         <c:choose>
                             <c:when test="${isSearching}">
-                                <a href="facility-list-public?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
+                                <a href="public-facility-list?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="facility-list-public?page=${currentPage-1}">Trang trước</a>
+                                <a href="public-facility-list?page=${currentPage-1}">Trang trước</a>
                             </c:otherwise>
                         </c:choose>
                     </c:if>
@@ -194,29 +199,25 @@
                                 <a href="" class="active">${i}</a>
                             </c:when>
                             <c:when test="${isSearching}">
-                                <a href="facility-list-public?search=${nameSearch}&page=${i}">${i}</a>
+                                <a href="public-facility-list?search=${nameSearch}&page=${i}">${i}</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="facility-list-public?page=${i}">${i}</a>
+                                <a href="public-facility-list?page=${i}">${i}</a>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
                     <c:if test="${currentPage lt noOfPages}">
                         <c:choose>
                             <c:when test="${isSearching}">
-                                <a href="facility-list-public?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
+                                <a href="public-facility-list?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="facility-list-public?page=${currentPage+1}">Trang sau</a>
+                                <a href="public-facility-list?page=${currentPage+1}">Trang sau</a>
                             </c:otherwise>
                         </c:choose>
                     </c:if>
                 </div>
             </c:if>
-
-
-
-
 
     </body>
 </html>

@@ -1,15 +1,10 @@
-<%-- 
-    Document   : DoctorListPublic
-    Created on : Sep 25, 2022, 9:34:05 PM
-    Author     : mikuo
---%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Trang chủ Bác sĩ </title>
+        <title>Trang chủ Cẩm nang </title>
         <link rel="stylesheet" href="<c:url value='/template/admin/assets/css/bootstrap.min.css' />" />
         <link rel="stylesheet" href="<c:url value='/css/admin/accountList.css' />" />
         <link rel="stylesheet" href="<c:url value='/template/admin/font-awesome/4.5.0/css/font-awesome.min.css' />" />
@@ -128,17 +123,17 @@
                             <span>Thông tin hữu tích</span>
                         </a>
                     </li>
-                    <li class="nav-link">
+                    <li class="nav-link ">
                         <a href="public-specialty-list" class="mo-cuaso" dl-cuaso="chuyenkhoa"> Chuyên khoa
                             <span>Tìm bác sĩ theo chuyên khoa</span>
                         </a>
                     </li>
-                    <li class="nav-link">
+                    <li class="nav-link ">
                         <a href="public-facility-list" class="mo-cuaso" dl-cuaso="cosoyte"> Cơ sở y tế
                             <span>Chọn bệnh viện phòng khám</span>
                         </a>
                     </li>
-                    <li class="nav-link">
+                    <li class="nav-link ">
                         <a href="doctor-list-public" class="mo-cuaso" dl-cuaso="bacsi"> Bác sĩ
                             <span>Chọn bác sĩ giỏi</span>
                         </a>
@@ -154,39 +149,25 @@
         </div>
 
         <div class="container d-flex justify-content-center mt-50 mb-50">
-            <div class="search-container">
-                <form id="form-search" action="<c:url value='/public-doctor-search'/>" method="POST">
-                    <div class="input-group">
-                        <c:if test="${codeSearch != null}">
-                            <input type="text" class="form-control" name="codeSearch" value="${codeSearch}" placeholder="Tìm kiếm bác sĩ" required maxlength="50" aria-describedby="basic-addon2"/>
-                        </c:if>
-                        <c:if test="${codeSearch == null || codeSearch == ''}">
-                            <input type="text" class="form-control" name="codeSearch" placeholder="Tìm kiếm bác sĩ" required/>
-                        </c:if>
-                        <span class="input-group-btn">
-                            <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true">
-                                </span> Search!</button>
-                        </span>
-                    </div>
-                </form>
-            </div>
+            <h1>Thông tin hữu ích cho mọi người</h1>
             <div class="row">
-                <c:forEach var="item" items="${accounts}">
+                <c:forEach var="item" items="${handbook}">
                     <div class="col-md-4 mt-2">
-
 
                         <div class="card">
 
                             <div class="card-body">
                                 <div class="card-img-actions">
-                                    <img alt="Avatar" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${item.images}' />" width="270" height="270" alt=""/>
+                                 
+                                   <img width="300px" height="200px" alt="Avatar" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${item.image}' />" />
+
                                 </div>
                             </div>
 
-                            <div class="card-body bg-light text-center">
+                            <div class="card-body bg-light text-center ">
                                 <div class="mb-2">
                                     <h6 class="font-weight-semibold mb-2">
-                                        <a href="#" class="text-default mb-2" data-abc="true">${item.firstName} ${item.lastName}</a>
+                                        <a href="#" class="text-default mb-2" data-abc="true">${item.handbookName}</a>
                                     </h6>
                                 </div>
                             </div> 
@@ -200,10 +181,10 @@
                     <c:if test="${currentPage != 1}">
                         <c:choose>
                             <c:when test="${isSearching}">
-                                <a href="public-doctor-search?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
+                                <a href="public-handbook-list?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="doctor-list-public?page=${currentPage-1}">Trang trước</a>
+                                <a href="public-handbook-list?page=${currentPage-1}">Trang trước</a>
                             </c:otherwise>
                         </c:choose>
                     </c:if>
@@ -213,24 +194,26 @@
                                 <a href="" class="active">${i}</a>
                             </c:when>
                             <c:when test="${isSearching}">
-                                <a href="public-doctor-search?search=${nameSearch}&page=${i}">${i}</a>
+                                <a href="public-handbook-list?search=${nameSearch}&page=${i}">${i}</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="doctor-list-public?page=${i}">${i}</a>
+                                <a href="public-handbook-list?page=${i}">${i}</a>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
                     <c:if test="${currentPage lt noOfPages}">
                         <c:choose>
                             <c:when test="${isSearching}">
-                                <a href="public-doctor-search?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
+                                <a href="public-handbook-list?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="doctor-list-public?page=${currentPage+1}">Trang sau</a>
+                                <a href="public-handbook-list?page=${currentPage+1}">Trang sau</a>
                             </c:otherwise>
                         </c:choose>
                     </c:if>
                 </div>
             </c:if>
+
     </body>
 </html>
+

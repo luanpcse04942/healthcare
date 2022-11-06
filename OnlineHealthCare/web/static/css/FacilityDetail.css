@@ -1,0 +1,92 @@
+html, body{
+    top: 0;
+    margin: 0;
+    font: 14px/1.5 'Montserrat', sans-serif !important;
+    background-color: #eee;
+    overflow-x: hidden;
+}
+.container{
+    margin: 100px;
+}
+.right{
+    position: right
+    }
+#dieuhuong {
+    top:0;
+    background: #45c3d2;
+    box-shadow: 1px 1px 1px #999;
+    border-bottom: none;
+    position: fixed;
+    z-index: 1;
+}
+#dieuhuong h2 {
+    font-weight: normal;
+    display: inline;
+    position: absolute;
+    max-width: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-left: 10px;
+    margin-bottom: 30px;
+    font-size: 16px;
+}
+.vung-bao {
+    margin-left: 100px;
+}
+
+.vung-bao i {
+    color: #ffffff;
+    margin-top: 20px;
+}
+
+sup {
+    vertical-align: super;
+    font-size: smaller;
+}
+
+.doctor-schedules {
+    padding: 10px 0;
+}
+
+.spec-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.specialty-info {
+    margin-bottom: 20px;
+}
+
+.pick-hour-container {
+    display: flex;
+    flex-wrap: wrap;
+    grid-gap: 20px;
+    gap: 20px;
+    padding: 20px 0;
+}
+.pick-hour-container > a {
+    padding: 7px 15px;
+    border: 1px solid #8ab5f5;
+    margin-left: 15px;
+    width: 120px;
+    font-weight: 600;
+    border-radius: 3px;
+}
+
+.pick-hour-container > a:hover {
+    cursor: pointer;
+    background-color: orange;
+    color: white;
+}
+.provinces {
+    margin-bottom: 30px;
+}
+
+.baiviet-ten {
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+    margin: 15px 0;
+    line-height: 1.3;
+}

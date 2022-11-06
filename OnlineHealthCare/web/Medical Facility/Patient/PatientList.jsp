@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Danh sách lịch hẹn</title>
         <link rel="stylesheet" href="<c:url value='/template/admin/assets/css/bootstrap.min.css' />" />
+        <link rel="stylesheet" href="<c:url value='/static/css/accountList.css' />" />
         <link rel="stylesheet" href="<c:url value='/template/admin/font-awesome/4.5.0/css/font-awesome.min.css' />" />
         <link rel="stylesheet" href="<c:url value='/template/admin/assets/css/ace.min.css' />" class="ace-main-stylesheet" id="main-ace-style" />
         <script src="<c:url value='/template/admin/assets/js/ace-extra.min.js' />"></script>
@@ -15,9 +15,9 @@
         <script src="<c:url value='/template/admin/assets/js/jquery.2.1.1.min.js' />"></script>
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script src="<c:url value='/template/paging/jquery.twbsPagination.js' />"></script>
-
         <script src="<c:url value='/ckeditor/ckeditor.js' />"></script>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Danh sách bệnh nhân</title>
     </head>
     <body class="no-skin">
         <!-- header -->
@@ -27,43 +27,37 @@
         <div class="main-container" id="main-container">
             <script type="text/javascript">
                 try {
-                    ace.settings.check('main-container', 'fixed')
+                    ace.settings.check('main-container', 'fixed');
                 } catch (e) {
                 }
             </script>
             <!-- header -->
-            <%@ include file="/Patient/menu.jsp" %>
+            <%@ include file="/Medical Facility/menu.jsp" %>
             <!-- header -->
 
             <div class="main-content">
-                <form action="<c:url value='/Patient-Appointment-search'/>" method="get">
+                <form action="<c:url value='/facility-patient-search'/>" method="get">
                     <div class="main-content-inner">
                         <div class="breadcrumbs ace-save-state" id="breadcrumbs">
                             <ul class="breadcrumb">
                                 <li>
                                     <i class="ace-icon fa fa-home home-icon"></i>
-                                    <a href="<c:url value='/appointment-patient-home'/>">Trang chủ</a>
+                                    <a href="<c:url value='/trang-chu'/>">Trang chủ</a>
                                 </li>
-                                <li class="active">Danh sách lịch hẹn</li>
+                                <li class="active">Danh sách bệnh nhân</li>
                             </ul>
                             <!-- /.breadcrumb -->
-                        </div>
-                        <div class="search-container">
-                        <form id="form-search" action="<c:url value='/Patient-Appointment-search'/>" method="POST">
-                            <div class="input-group">
-                                <c:if test="${codeSearch != null}">
-                                    <input type="text" class="form-control" name="codeSearch" value="${codeSearch}" placeholder="Tìm kiếm bác sĩ" required maxlength="50" aria-describedby="basic-addon2"/>
-                                </c:if>
-                                <c:if test="${codeSearch == null || codeSearch == ''}">
-                                    <input type="text" class="form-control" name="codeSearch" placeholder="Tìm kiếm bác sĩ" required/>
-                                </c:if>
-                                <span class="input-group-btn">
-                                    <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true">
-                                        </span> Search!</button>
-                                </span>
+                            <div class="nav-search" id="nav-search">
+                                <form class="form-search">
+                                    <span class="input-icon">
+                                        <input name="NameSearch" value="${nameSearch}" type="text" 
+                                               placeholder="Tìm tên bệnh nhân" class="nav-search-input" 
+                                               style="width:300px !important" id="nav-search-input" autocomplete="off" />
+                                        <button type="submit" class="ace-icon fa fa-search nav-search-icon"></button>
+                                    </span>
+                                </form>
                             </div>
-                        </form>
-                    </div>                
+                        </div>
                         <div class="page-content">
                             <div class="row">
                                 <div class="col-xs-12">
@@ -72,7 +66,6 @@
                                             ${messageResponse}
                                         </div>
                                     </c:if>
-
                                     <div class="row">
                                         <div class="col-xs-12">
                                             <div class="table-responsive">
@@ -80,49 +73,35 @@
                                                     <thead>
                                                         <tr>
                                                             <th>No.</th>
-                                                            <th>Bác Sĩ</th>
-                                                            <th>Lý do khám</th>
-                                                            <th>Địa chỉ</th>
+                                                            <th>Họ và tên</th>
+                                                            <th>Số điện thoại</th>
                                                             <th>Ngày đặt lịch</th>
                                                             <th>Trạng thái</th>
+                                                            <th></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-
                                                         <c:choose>
-                                                            <c:when test="${empty appointment}">
+                                                            <c:when test="${empty accounts}">
                                                             <p>Không có thông tin!</p>
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <c:forEach var="item" items="${appointment}" varStatus="loop">
-                                                                <c:set var="count" value="${(currentPage - 1) * 2}"/>
+                                                            <c:forEach var="item" items="${accounts}" varStatus="loop">
+                                                                <c:set var="count" value="${(currentPage - 1) * 4}"/>
                                                                 <tr>
                                                                     <td>${loop.index + count + 1}</td>
-                                                                    <td>${item.fullName}</td>
-                                                                    <td>${item.reason}</td>
-                                                                    <td>${item.address}</td>
+                                                                    <td>${item.firstName} ${item.lastName}</td>
+                                                                    <td>${item.phoneNumber}</td>
                                                                     <td>${item.bookingDate}</td>
-                                                                    <td>${item.status}</td>
+                                                                    <td>Đã khám xong</td>
                                                                     <td>
-                                                                        <button type = "button" class = "btn btn-secondary" >Chi tiết </button>
+                                                                        <c:url var="viewDetail" value="/facility-patient-detail">
+                                                                            <c:param name="userId" value="${patients.id}"/>
+                                                                        </c:url>
+                                                                        <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
+                                                                           title="Xem chi tiết" href="${viewDetail}">Chi tiết<i  aria-hidden="true"></i>
+                                                                        </a>
                                                                     </td>
-                                                                    <c:choose>
-                                                                        <c:when test="${item.status eq 'Đã xác nhận'}">
-                                                                            <td>
-                                                                                <button type = "button" class = "btn btn-secondary" >Hủy hẹn </button>
-                                                                            </td> 
-                                                                        </c:when>
-                                                                        <c:when test="${item.status eq 'Đã khám xong'}">
-                                                                            <td>
-                                                                                <button type = "button" class = "btn btn-secondary" >Phản hồi </button>
-                                                                            </td> 
-                                                                        </c:when>
-                                                                        <c:when test="${item.status eq 'Lịch hẹn mới'}">
-                                                                            <td>
-                                                                                <button type = "button" class = "btn btn-secondary" >Hủy hẹn </button>
-                                                                            </td> 
-                                                                        </c:when>
-                                                                    </c:choose>
                                                                 </tr>
                                                             </c:forEach>
                                                         </c:otherwise>
@@ -134,10 +113,10 @@
                                                         <c:if test="${currentPage != 1}">
                                                             <c:choose>
                                                                 <c:when test="${isSearching}">
-                                                                    <a href="Patient-Appointment-search?codeSearch=${nameSearch}&page=${currentPage-1}">Trang trước</a>
+                                                                    <a href="facility-patient-search?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <a href="Patient-Appointment-List?page=${currentPage-1}">Trang trước</a>
+                                                                    <a href="facility-patient-list?page=${currentPage-1}">Trang trước</a>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </c:if>
@@ -147,20 +126,20 @@
                                                                     <a href="" class="active">${i}</a>
                                                                 </c:when>
                                                                 <c:when test="${isSearching}">
-                                                                    <a href="Patient-Appointment-search?codeSearch=${nameSearch}&page=${i}">${i}</a>
+                                                                    <a href="facility-patient-search?search=${nameSearch}&page=${i}">${i}</a>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <a href="Patient-Appointment-List?page=${i}">${i}</a>
+                                                                    <a href="facility-patient-list?page=${i}">${i}</a>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </c:forEach>
                                                         <c:if test="${currentPage lt noOfPages}">
                                                             <c:choose>
                                                                 <c:when test="${isSearching}">
-                                                                    <a href="Patient-Appointment-search?codeSearch=${nameSearch}&page=${currentPage+1}">Trang sau</a>
+                                                                    <a href="facility-patient-search?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <a href="Patient-Appointment-List?page=${currentPage+1}">Trang sau</a>
+                                                                    <a href="facility-patient-list?page=${currentPage+1}">Trang sau</a>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </c:if>
@@ -184,7 +163,6 @@
                 <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
             </a>
         </div>
-
 
         <script src="<c:url value='/template/admin/assets/js/bootstrap.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/jquery-ui.custom.min.js' />"></script>

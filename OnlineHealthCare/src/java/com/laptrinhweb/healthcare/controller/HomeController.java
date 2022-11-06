@@ -2,7 +2,9 @@ package com.laptrinhweb.healthcare.controller;
 
 import com.laptrinhweb.healthcare.dao.DoctorDAO;
 import com.laptrinhweb.healthcare.dao.FacilityDAO;
+import com.laptrinhweb.healthcare.dao.HandbookDAO;
 import com.laptrinhweb.healthcare.dao.SpecialtyDAO;
+import com.laptrinhweb.healthcare.model.Handbook;
 import com.laptrinhweb.healthcare.model.MedicalFacility;
 import com.laptrinhweb.healthcare.model.User;
 import com.laptrinhweb.healthcare.model.Specialty;
@@ -28,6 +30,10 @@ public class HomeController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         if (request.getServletPath().equals("/trang-chu")) {
+            
+            HandbookDAO handDAO = new HandbookDAO();
+            ArrayList<Handbook> listHandbook = handDAO.getAllHandbook();
+            
             SpecialtyDAO specDAO = new SpecialtyDAO();
             ArrayList<Specialty> listSpecialty = specDAO.getAllSpecialty();
 
@@ -37,6 +43,7 @@ public class HomeController extends HttpServlet {
             DoctorDAO doctorDAO = new DoctorDAO();
             ArrayList<User> listDoctor = doctorDAO.getAllDoctorPublic();
 
+            request.setAttribute("listHandbook", listHandbook);
             request.setAttribute("listSpecialty", listSpecialty);
             request.setAttribute("listFacility", listFac);
             request.setAttribute("listDoctor", listDoctor);

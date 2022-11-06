@@ -76,7 +76,7 @@
                 </li>
                 
                 <li>
-                    <a href='#"/>'>
+                    <a href='facility-patient-list'>
                         <i class="menu-icon fa fa-caret-right"></i>
                         Danh sách bệnh nhân
                     </a>

@@ -17,9 +17,45 @@ import java.util.logging.Logger;
  *
  * @author LuanPC
  */
-public class HandbookDAO extends DBContext{
-    
-        public ArrayList<Handbook> findAll(int start, int total) {
+public class HandbookDAO extends DBContext {
+
+    public ArrayList<Handbook> getAllHandbook() {
+        String sql = "select TOP 4 * from Handbooks ORDER BY handBookId";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<Handbook> listHandbook = new ArrayList<Handbook>();
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Handbook han = new Handbook();
+                han.setId(rs.getInt("handBookId"));
+                han.setHandbookName(rs.getString("name"));
+                han.setPublishedAt(rs.getDate("publishAt"));
+                String base64StringImage = new String(rs.getBytes("image"), "UTF-8");
+                han.setImage(base64StringImage);
+                han.setContent(rs.getString("content"));
+                listHandbook.add(han);
+            }
+        } catch (Exception e) {
+        } finally {
+            try {
+                rs.close();
+            } catch (Exception e) {
+                /* Ignored */ }
+            try {
+                ps.close();
+            } catch (Exception e) {
+                /* Ignored */ }
+            try {
+                conn.close();
+            } catch (Exception e) {
+                /* Ignored */ }
+        }
+        return listHandbook;
+    }
+
+    public ArrayList<Handbook> findAll(int start, int total) {
         String sql = "  select a.handBookId,a.adminId,a.name,a.publishAt,a.image,a.content,CONCAT(b.firstName , ' ', b.lastName) nameAdmin from Handbooks a join Users b on b.id = a.adminId  ORDER BY a.handBookId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -61,7 +97,6 @@ public class HandbookDAO extends DBContext{
         return listHandbook;
     }
 
-        
     public Handbook getHanbookDetail(int handbookId) {
         String sql = "select a.handBookId,a.adminId,a.name,a.publishAt,a.image,a.content,CONCAT(b.firstName , ' ', b.lastName) nameAdmin from Handbooks a join Users b on b.id = a.adminId where a.handBookId = ?";
         PreparedStatement ps = null;
@@ -99,13 +134,13 @@ public class HandbookDAO extends DBContext{
             }
         }
         return handbook;
-    }    
-    
-public boolean addSpecialty(String name, byte[] fileName, String content) {
+    }
+
+    public boolean addSpecialty(String name, byte[] fileName, String content) {
         boolean addSpecSuccess = false;
-        
+
         String sql = "INSERT INTO Handbooks(name,adminId, publishAt, image, content) VALUES (?, 1, GETDATE(), ?, ?)";
-        
+
         DBContext db = new DBContext();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -144,13 +179,13 @@ public boolean addSpecialty(String name, byte[] fileName, String content) {
             }
         }
         return addSpecSuccess;
-    }    
+    }
 
     public boolean updateHandbook(int id, String name, String description, byte[] fileName) {
         boolean editSpecSuccess = false;
-        
+
         String sql = "UPDATE handbooks SET name = ?, content = ?, image = ? where handBookId = ?";
-        
+
         DBContext db = new DBContext();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -191,7 +226,7 @@ public boolean addSpecialty(String name, byte[] fileName, String content) {
         }
         return editSpecSuccess;
     }
-    
+
     public int getNoOfRecordHandbook() {
         String query = "SELECT count(*) FROM Handbooks";
         DBContext db = new DBContext();
@@ -231,6 +266,7 @@ public boolean addSpecialty(String name, byte[] fileName, String content) {
         }
         return count;
     }
+
     public int getNoOfRecordSearchHandbook(String search) {
         String sql = "SELECT count(*) FROM Handbooks s where s.name like ?";
         DBContext db = new DBContext();
@@ -271,12 +307,12 @@ public boolean addSpecialty(String name, byte[] fileName, String content) {
         }
         return count;
     }
-    
+
     public ArrayList<Handbook> searchByNameHandbook(String search, int start, int total) {
         String sql = "select a.handBookId,a.adminId,a.name,a.publishAt,a.image,a.content,CONCAT(b.firstName , ' ', b.lastName) nameAdmin from Handbooks a join Users b on b.id = a.adminId where a.name like ? ORDER BY a.handBookId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         PreparedStatement ps = null;
         ResultSet rs = null;
-         DBContext db = new DBContext();
+        DBContext db = new DBContext();
         ArrayList<Handbook> listhandbook = new ArrayList<>();
         try {
             conn = db.getConn();
