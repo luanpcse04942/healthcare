@@ -63,11 +63,11 @@
                         <form action="<c:url value='/edit-handbook?handBookId=${handbooks.id}'/>" id="formSubmit" method="post" enctype="multipart/form-data">
                             <div class="form-group col-sm-12">
                                 <label>Người viết: </label>
-                                <input id="name" name="name" type="text" value="${handbooks.fullName}" class="form-control" disabled>
+                                <input  type="text" value="${handbooks.fullName}" class="form-control" disabled>
                             </div>
                             <div class="form-group col-sm-12">
                                 <label>Xuất bản: </label>
-                                <input id="name" name="name" type="text" value="${handbooks.publishedAt}" class="form-control" disabled>
+                                <input type="text" value="${handbooks.publishedAt}" class="form-control" disabled>
                             </div>
                             <div class="form-group col-sm-12">
                                 <label>Tiêu đề: </label>
@@ -121,5 +121,39 @@
 
         <!-- page specific plugin scripts -->
         <script src="<c:url value='/template/admin/assets/js/jquery-ui.min.js'/>"></script>
+        <script>
+            $('.btn-edit-specialty').on("click", function (e) {
+                var name = $('#name').val();
+                var description = $('#description').val();
+                var file = $('#file').val();
+                if (name === "" || description === "" || file === "") {
+                    if (name === "") {
+                        $('#name').css('border-color', 'red');
+                        setTimeout(function () {
+                            $("#name").css('border-color', '#d5d5d5');
+                        }, 3000);
+                    }
+                    if (description === "") {
+                        $('#description').css('border-color', 'red');
+                        setTimeout(function () {
+                            $("#description").css('border-color', '#d5d5d5');
+                        }, 3000);
+                    }
+                    if (file === "") {
+                        $('#choose-image').css('border-color', 'red ');
+                        setTimeout(function () {
+                            $("#file").css('border', '#d5d5d5');
+                        }, 3000);
+                    }
+                    $("#alert").addClass("alert alert-danger");
+                    $('#alert').text('Vui lòng nhập thông tin !');
+                    $('#alert').show();
+                    setTimeout(function () {
+                        $('#alert').hide();
+                    }, 3000);
+                    e.preventDefault();
+                }
+            });
+        </script>
     </body>
 </html>
