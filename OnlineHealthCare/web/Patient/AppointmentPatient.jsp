@@ -36,7 +36,7 @@
             <!-- header -->
 
             <div class="main-content">
-                <form action="<c:url value='/Patient-Appointment-List'/>" method="get">
+                <form action="<c:url value='/Patient-Appointment-search'/>" method="get">
                     <div class="main-content-inner">
                         <div class="breadcrumbs ace-save-state" id="breadcrumbs">
                             <ul class="breadcrumb">
@@ -47,15 +47,23 @@
                                 <li class="active">Danh sách lịch hẹn</li>
                             </ul>
                             <!-- /.breadcrumb -->
-                            <div class="nav-search" id="nav-search">
-                                <form class="form-search">
-                                    <span class="input-icon">
-                                        <input name="search" value="${nameSearch}" type="text" placeholder="Tìm tên, email ..." class="nav-search-input" style="width:300px !important" id="nav-search-input" autocomplete="off" />
-                                        <button type="submit" class="ace-icon fa fa-search nav-search-icon"></button>
-                                    </span>
-                                </form>
-                            </div>
                         </div>
+                        <div class="search-container">
+                        <form id="form-search" action="<c:url value='/Patient-Appointment-search'/>" method="POST">
+                            <div class="input-group">
+                                <c:if test="${codeSearch != null}">
+                                    <input type="text" class="form-control" name="codeSearch" value="${codeSearch}" placeholder="Tìm kiếm bác sĩ" required maxlength="50" aria-describedby="basic-addon2"/>
+                                </c:if>
+                                <c:if test="${codeSearch == null || codeSearch == ''}">
+                                    <input type="text" class="form-control" name="codeSearch" placeholder="Tìm kiếm bác sĩ" required/>
+                                </c:if>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true">
+                                        </span> Search!</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>                
                         <div class="page-content">
                             <div class="row">
                                 <div class="col-xs-12">
@@ -126,7 +134,7 @@
                                                         <c:if test="${currentPage != 1}">
                                                             <c:choose>
                                                                 <c:when test="${isSearching}">
-                                                                    <a href="Patient-Appointment-List?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
+                                                                    <a href="Patient-Appointment-search?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
                                                                 </c:when>
                                                                 <c:otherwise>
                                                                     <a href="Patient-Appointment-List?page=${currentPage-1}">Trang trước</a>
@@ -139,7 +147,7 @@
                                                                     <a href="" class="active">${i}</a>
                                                                 </c:when>
                                                                 <c:when test="${isSearching}">
-                                                                    <a href="Patient-Appointment-List?search=${nameSearch}&page=${i}">${i}</a>
+                                                                    <a href="Patient-Appointment-search?search=${nameSearch}&page=${i}">${i}</a>
                                                                 </c:when>
                                                                 <c:otherwise>
                                                                     <a href="Patient-Appointment-List?page=${i}">${i}</a>
@@ -149,7 +157,7 @@
                                                         <c:if test="${currentPage lt noOfPages}">
                                                             <c:choose>
                                                                 <c:when test="${isSearching}">
-                                                                    <a href="Patient-Appointment-List?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
+                                                                    <a href="Patient-Appointment-search?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
                                                                 </c:when>
                                                                 <c:otherwise>
                                                                     <a href="Patient-Appointment-List?page=${currentPage+1}">Trang sau</a>
