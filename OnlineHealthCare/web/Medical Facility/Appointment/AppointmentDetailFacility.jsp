@@ -29,6 +29,14 @@
                 padding: 10px;
                 /* Should be removed. Only for demonstration */
             }
+            #borderDivLeft{
+                border-right: 2px solid;
+                border-bottom:  2px solid;
+            }
+            #borderDivRight{
+                border-left:  2px solid;
+                border-bottom:  2px solid;
+            }
             #borderDiv{
                 border: 2px solid;
             }
@@ -74,16 +82,15 @@
                                         ${messageResponse}
                                     </div>
                                 </c:if>
-
+                                <h2 class="modal-title" style="text-align: center">Lịch hẹn</h2>
                                 <div class="row" id="borderDiv">
                                     <div class="col-xs-12">
 
 
-                                        <h2 class="modal-title" style="text-align: center" >Lịch hẹn</h2>
+                                        
 
-                                        <hr class="line-full">
                                         <div class="row">
-                                            <div class="column" id="borderDiv">
+                                            <div class="column" id="borderDivLeft">
                                                 <div class="column">
                                                     <div class="form-group col-sm-8">
                                                         <h3>Thông tin bệnh nhân</h3>
@@ -107,7 +114,7 @@
                                             <div class="column">
 
                                             </div>            
-                                            <div class="column" id="borderDiv">
+                                            <div class="column" id="borderDivRight">
                                                 <div class="column">                                                    
                                                     <div class="form-group col-sm-8">
                                                         <h3>Thông tin bác sỹ</h3>
