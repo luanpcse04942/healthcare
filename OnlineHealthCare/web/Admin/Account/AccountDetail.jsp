@@ -52,6 +52,7 @@
                         </div>
 
                         <div class="tab-content no-border padding-24">
+                            <div id="alert"></div>
                             <div id="home" class="tab-pane in active">
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-3 center">
@@ -63,11 +64,6 @@
                                     <div class="col-xs-12 col-sm-9">
                                         <h4 class="blue">
                                             <span class="middle">${account.firstName} ${account.lastName}</span>
-
-                                            <span class="label label-purple arrowed-in-right">
-                                                <i class="ace-icon fa fa-circle smaller-80 align-middle"></i>
-                                                online
-                                            </span>
                                         </h4>
 
                                         <div class="profile-user-info">
@@ -110,47 +106,35 @@
                                                     <span>${account.roleName}</span>
                                                 </div>
                                             </div>
-                                        </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> Trạng thái tài khoản </div>
 
-                                        <div class="hr hr-8 dotted"></div>
+                                                <div class="profile-info-value">
+                                                    <select class="form-control" id="select-status" style="width: 200px;">
 
-                                    </div><!-- /.col -->
-                                </div><!-- /.row -->
+                                                        <c:if test="${account.activedStatus == 5}">
+                                                            <option value="5">Đã xác thực</option>
+                                                            <option value="7">Khóa tài khoản</option>
+                                                        </c:if>
+                                                        <c:if test="${account.activedStatus == 6}">Chưa xác thực</c:if>
+                                                        <c:if test="${account.activedStatus == 7}">
+                                                            <option value="7">Đã  khóa</option>
+                                                            <option value="5">Mở khóa</option>
+                                                        </c:if>
 
-                                <div class="space-20"></div>
-
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6">
-                                        <div class="widget-box transparent">
-                                            <div class="widget-header widget-header-small">
-                                                <h4 class="widget-title smaller">
-                                                    <i class="ace-icon fa fa-check-square-o bigger-110"></i>
-                                                    Thông tin về tôi
-                                                </h4>
-                                            </div>
-
-                                            <div class="widget-body">
-                                                <div class="widget-main">
-                                                    <p>
-                                                        My job is mostly lorem ipsuming and dolor sit ameting as long as consectetur adipiscing elit.
-                                                    </p>
-                                                    <p>
-                                                        Sometimes quisque commodo massa gets in the way and sed ipsum porttitor facilisis.
-                                                    </p>
-                                                    <p>
-                                                        The best thing about my job is that vestibulum id ligula porta felis euismod and nullam quis risus eget urna mollis ornare.
-                                                    </p>
-                                                    <p>
-                                                        Thanks for visiting my profile.
-                                                    </p>
+                                                    </select>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
+
+                                            <div class="hr hr-8 dotted"></div>
+                                            <div class="form-group col-sm-9">
+                                                <button class="btn btn-primary btn-edit-account">Cập nhật</button>
+                                            </div>
+                                        </div><!-- /.col -->
+                                    </div><!-- /.row -->
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </form>
             </div>
 
@@ -163,7 +147,30 @@
             </a>
         </div>
 
+        <script type="text/javascript">
+            $('.btn-edit-account').on("click", function (e) {
+                var status = $('#select-status').find(":selected").val();
+                var params = new window.URLSearchParams(window.location.search);
+                $.ajax({
+                    type: "POST",
+                    url: 'admin-update-account',
+                    data: {
+                        userId: params.get('userId'),
+                        activeStatus: status
+                    },
+                    dataType: "json"
+                });
 
+                $("#alert").addClass("alert alert-success");
+                $('#alert').text('Cập nhật thành công !');
+                $('#alert').show();
+                setTimeout(function () {
+                    $('#alert').hide();
+                }, 3000);
+                e.preventDefault();
+
+            });
+        </script>
         <script src="<c:url value='/template/admin/assets/js/bootstrap.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/jquery-ui.custom.min.js' />"></script>
         <script src="<c:url value='/template/admin/assets/js/jquery.ui.touch-punch.min.js' />"></script>
