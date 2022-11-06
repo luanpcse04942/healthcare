@@ -58,6 +58,15 @@ public class PatientService {
         return patients;
     }
 
+    
+    public ArrayList<AppointmentPatient> searchListAppointment(int page,String search) {
+        PatientDAO patientDAO = new PatientDAO();
+        ArrayList<AppointmentPatient> patients = new ArrayList<>();
+        int recordsPerPage = 2;
+        patients = patientDAO.searchAppointmentPatient(search,(page - 1) * recordsPerPage, recordsPerPage);
+        return patients;
+    }
+    
     public int getNoOfPageAppointment(String search) {
         PatientDAO patientDAO = new PatientDAO();
         int noOfRecords = 0;
