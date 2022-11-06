@@ -134,7 +134,7 @@
                                                         <c:if test="${currentPage != 1}">
                                                             <c:choose>
                                                                 <c:when test="${isSearching}">
-                                                                    <a href="Patient-Appointment-search?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
+                                                                    <a href="Patient-Appointment-search?codeSearch=${nameSearch}&page=${currentPage-1}">Trang trước</a>
                                                                 </c:when>
                                                                 <c:otherwise>
                                                                     <a href="Patient-Appointment-List?page=${currentPage-1}">Trang trước</a>
@@ -147,7 +147,7 @@
                                                                     <a href="" class="active">${i}</a>
                                                                 </c:when>
                                                                 <c:when test="${isSearching}">
-                                                                    <a href="Patient-Appointment-search?search=${nameSearch}&page=${i}">${i}</a>
+                                                                    <a href="Patient-Appointment-search?codeSearch=${nameSearch}&page=${i}">${i}</a>
                                                                 </c:when>
                                                                 <c:otherwise>
                                                                     <a href="Patient-Appointment-List?page=${i}">${i}</a>
@@ -157,7 +157,7 @@
                                                         <c:if test="${currentPage lt noOfPages}">
                                                             <c:choose>
                                                                 <c:when test="${isSearching}">
-                                                                    <a href="Patient-Appointment-search?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
+                                                                    <a href="Patient-Appointment-search?codeSearch=${nameSearch}&page=${currentPage+1}">Trang sau</a>
                                                                 </c:when>
                                                                 <c:otherwise>
                                                                     <a href="Patient-Appointment-List?page=${currentPage+1}">Trang sau</a>
