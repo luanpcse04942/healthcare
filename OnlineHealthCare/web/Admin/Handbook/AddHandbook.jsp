@@ -54,8 +54,8 @@
                         </c:if>
                         <form action="<c:url value='/add-handbook'/>" id="formSubmit" method="post" enctype="multipart/form-data">
                             <div class="form-group col-sm-12">
-                                <label>Tên chuyên khoa</label>
-                                <input id="name" name="name" type="text" class="form-control"  aria-describedby="emailHelp" placeholder="Nhập vào tên chuyên khoa">
+                                <label>Tên Cẩm nang</label>
+                                <input id="name" name="name" type="text" class="form-control"  aria-describedby="emailHelp" placeholder="Nhập vào tên cẩm nang">
                             </div>
                             <div class="form-group col-sm-12">
                                 <label>Mô tả </label>

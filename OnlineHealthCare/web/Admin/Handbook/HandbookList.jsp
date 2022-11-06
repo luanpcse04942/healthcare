@@ -193,7 +193,7 @@
                                                                     </div>
                                                                 </div> 
                                                                 <a href="<c:url value='/handbook-detail-admin?handBookId=${item.id}'/>" class="btn btn-info" role="button">Chỉnh sửa</a>
-                                                                <button type="button" onclick="myFunction(${item.id})">Try it</button>
+                                                                <button type="button" onclick="myFunction(${item.id})">Ẩn</button>
 
                                                             </div>
 

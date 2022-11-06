@@ -200,7 +200,7 @@
                     <c:if test="${currentPage != 1}">
                         <c:choose>
                             <c:when test="${isSearching}">
-                                <a href="doctor-list-public?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
+                                <a href="public-doctor-search?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
                             </c:when>
                             <c:otherwise>
                                 <a href="doctor-list-public?page=${currentPage-1}">Trang trước</a>
@@ -213,7 +213,7 @@
                                 <a href="" class="active">${i}</a>
                             </c:when>
                             <c:when test="${isSearching}">
-                                <a href="doctor-list-public?search=${nameSearch}&page=${i}">${i}</a>
+                                <a href="public-doctor-search?search=${nameSearch}&page=${i}">${i}</a>
                             </c:when>
                             <c:otherwise>
                                 <a href="doctor-list-public?page=${i}">${i}</a>
@@ -223,7 +223,7 @@
                     <c:if test="${currentPage lt noOfPages}">
                         <c:choose>
                             <c:when test="${isSearching}">
-                                <a href="doctor-list-public?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
+                                <a href="public-doctor-search?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
                             </c:when>
                             <c:otherwise>
                                 <a href="doctor-list-public?page=${currentPage+1}">Trang sau</a>
