@@ -124,10 +124,6 @@
                                             </div>
                                             <div class="column">
                                                 <div class="form-group col-sm-12">
-                                                    <label>Số bệnh nhân đã khám: </label>
-                                                    <input id="name" name="name" type="text" value="35" class="form-control" disabled>
-                                                </div>
-                                                <div class="form-group col-sm-12">
                                                     <label>Trạng thái: </label>
                                                     <input id="name" name="name" type="text" value="${doctors.statusName}" class="form-control" disabled>
                                                 </div>

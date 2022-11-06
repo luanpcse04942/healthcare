@@ -60,7 +60,7 @@
                 </li>
                 
                 <li>
-                    <a href='#"/>'>
+                    <a href='<c:url value="/doctor-list-facility"/>'>
                         <i class="menu-icon fa fa-caret-right"></i>
                         Quản lý bác sĩ
                     </a>
@@ -68,7 +68,7 @@
                 </li>
                 
                 <li>
-                    <a href='#'>
+                    <a href='<c:url value="/Facility-Appointment-List"/>'>
                         <i class="menu-icon fa fa-caret-right"></i>
                         Quản lý lịch hẹn
                     </a>
