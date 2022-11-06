@@ -60,7 +60,7 @@
                                         <div class="col-xs-12">
                                             <div class="table-responsive">
                                                 <div class="search-container">
-                                                    <form id="form-search" action="<c:url value='/facility-appointment-search'/>" method="POST">
+                                                    <form id="form-search" action="<c:url value='/facility-appointment-search'/>" method="GET">
                                                         <h1>Lịch hẹn</h1>
                                                         <div class="input-group">
                                                             <c:if test="${codeSearch != null}">
