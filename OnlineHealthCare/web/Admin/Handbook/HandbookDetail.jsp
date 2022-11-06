@@ -79,7 +79,7 @@
                             </div>
                             <div class="form-group col-sm-12">
                                 <span class="profile-picture">
-                                    <img alt="Avatar" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${handbooks.image}' />" />
+                                    <img alt="Avatar" width="130" height="130" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${handbooks.image}' />" />
                                 </span>
                             </div>
                             <div class="form-group col-sm-12">
