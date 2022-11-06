@@ -64,10 +64,10 @@
                                                         <h1>Lịch hẹn</h1>
                                                         <div class="input-group">
                                                             <c:if test="${codeSearch != null}">
-                                                                <input type="text" class="form-control" name="codeSearch" value="${codeSearch}" placeholder="Tìm kiếm bác sĩ" required maxlength="50" aria-describedby="basic-addon2"/>
+                                                                <input type="text" class="form-control" name="codeSearch" value="${codeSearch}" placeholder="Tìm kiếm bệnh nhân" required maxlength="50" aria-describedby="basic-addon2"/>
                                                             </c:if>
                                                             <c:if test="${codeSearch == null || codeSearch == ''}">
-                                                                <input type="text" class="form-control" name="codeSearch" placeholder="Tìm kiếm bác sĩ" required/>
+                                                                <input type="text" class="form-control" name="codeSearch" placeholder="Tìm kiếm bệnh nhân" required/>
                                                             </c:if>
                                                             <span class="input-group-btn">
                                                                 <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true">

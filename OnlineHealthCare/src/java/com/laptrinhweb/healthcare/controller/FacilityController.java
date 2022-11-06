@@ -146,8 +146,8 @@ public class FacilityController extends HttpServlet {
         }
 
         if (request.getServletPath().equals("/facility-home")) {
-            int facilityId = Integer.parseInt(request.getParameter("facilityId"));
-            request.setAttribute("facilityId", facilityId);
+//            int facilityId = Integer.parseInt(request.getParameter("facilityId"));
+//            request.setAttribute("facilityId", facilityId);
             RequestDispatcher rd = request.getRequestDispatcher("Medical Facility/HomeFacility.jsp");
             rd.forward(request, response);
         }
