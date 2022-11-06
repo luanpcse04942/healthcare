@@ -647,4 +647,42 @@ public class UserDAO extends DBContext {
         }
     }
 
+    public void updateUser(int userId, int activeStatus) {
+        String sql = "UPDATE Users SET activedStatus = ? WHERE id = ?";
+
+        DBContext db = new DBContext();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, activeStatus);
+            ps.setInt(2, userId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
 }

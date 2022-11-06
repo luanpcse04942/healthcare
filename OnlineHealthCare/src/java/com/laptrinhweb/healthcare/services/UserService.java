@@ -69,4 +69,9 @@ public class UserService {
         UserDAO userDAO = new UserDAO();
         return userDAO.getAllProvinces();
     }
+
+    public void updateUser(int userId, int activeStatus) {
+        UserDAO userDAO = new UserDAO();
+        userDAO.updateUser(userId, activeStatus);
+    }
 }

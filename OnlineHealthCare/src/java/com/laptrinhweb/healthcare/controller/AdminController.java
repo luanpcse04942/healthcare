@@ -20,7 +20,7 @@ import org.apache.tomcat.util.codec.binary.Base64;
  */
 @MultipartConfig
 @WebServlet(name = "AdminController", urlPatterns = {"/admin-account", "/admin-account-detail",
-    "/admin-add-account", "/admin-account-search", "/admin-home", "/add-account", "/admin-dashboard"})
+    "/admin-add-account", "/admin-account-search", "/admin-home", "/add-account", "/admin-dashboard", "/admin-update-account"})
 public class AdminController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -128,5 +128,11 @@ public class AdminController extends HttpServlet {
             rd.forward(request, response);
         }
 
+        if (request.getServletPath().equals("/admin-update-account")) {
+            int userId = Integer.parseInt(request.getParameter("userId"));
+            int activeStatus = Integer.parseInt(request.getParameter("activeStatus"));
+            UserService userService = new UserService();
+            userService.updateUser(userId, activeStatus);
+        }
     }
 }
