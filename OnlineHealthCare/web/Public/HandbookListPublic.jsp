@@ -1,8 +1,3 @@
-<%-- 
-    Document   : HandbookList
-    Created on : Nov 2, 2022, 8:23:17 AM
-    Author     : ADMIN
---%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp" %>
@@ -156,69 +151,69 @@
         <div class="container d-flex justify-content-center mt-50 mb-50">
             <h1>Thông tin hữu ích cho mọi người</h1>
             <div class="row">
-
                 <c:forEach var="item" items="${handbook}">
                     <div class="col-md-4 mt-2">
 
-
                         <div class="card">
+
                             <div class="card-body">
                                 <div class="card-img-actions">
-
-                                    <img width="300px" height="200px" alt="Avatar" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${item.image}' />" />
+                                 
+                                   <img width="300px" height="200px" alt="Avatar" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${item.image}' />" />
 
                                 </div>
                             </div>
-                            <div class="card-body bg-light text-center ">
 
+                            <div class="card-body bg-light text-center ">
                                 <div class="mb-2">
                                     <h6 class="font-weight-semibold mb-2">
-                                        <a href="#" class="text-default mb-2" data-abc="true">${item.handbookName} </a>
+                                        <a href="#" class="text-default mb-2" data-abc="true">${item.handbookName}</a>
                                     </h6>
                                 </div>
                             </div> 
-                        </div>
+
+                        </div> 
                     </div>
-                </div>
-            </c:forEach>
-        </div>
-        <c:if test="${noOfPages > 1}">
-            <div class="pagination">
-                <c:if test="${currentPage != 1}">
-                    <c:choose>
-                        <c:when test="${isSearching}">
-                            <a href="public-handbook-list?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="public-handbook-list?page=${currentPage-1}">Trang trước</a>
-                        </c:otherwise>
-                    </c:choose>
-                </c:if>
-                <c:forEach begin="1" end="${noOfPages}" var="i">
-                    <c:choose>
-                        <c:when test="${currentPage eq i}">
-                            <a href="" class="active">${i}</a>
-                        </c:when>
-                        <c:when test="${isSearching}">
-                            <a href="facility-list-public?search=${nameSearch}&page=${i}">${i}</a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="facility-list-public?page=${i}">${i}</a>
-                        </c:otherwise>
-                    </c:choose>
                 </c:forEach>
-                <c:if test="${currentPage lt noOfPages}">
-                    <c:choose>
-                        <c:when test="${isSearching}">
-                            <a href="facility-list-public?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="facility-list-public?page=${currentPage+1}">Trang sau</a>
-                        </c:otherwise>
-                    </c:choose>
-                </c:if>
             </div>
-        </c:if>
+            <c:if test="${noOfPages > 1}">
+                <div class="pagination">
+                    <c:if test="${currentPage != 1}">
+                        <c:choose>
+                            <c:when test="${isSearching}">
+                                <a href="public-handbook-list?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="public-handbook-list?page=${currentPage-1}">Trang trước</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:if>
+                    <c:forEach begin="1" end="${noOfPages}" var="i">
+                        <c:choose>
+                            <c:when test="${currentPage eq i}">
+                                <a href="" class="active">${i}</a>
+                            </c:when>
+                            <c:when test="${isSearching}">
+                                <a href="public-handbook-list?search=${nameSearch}&page=${i}">${i}</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="public-handbook-list?page=${i}">${i}</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                    <c:if test="${currentPage lt noOfPages}">
+                        <c:choose>
+                            <c:when test="${isSearching}">
+                                <a href="public-handbook-list?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="public-handbook-list?page=${currentPage+1}">Trang sau</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:if>
+                </div>
+            </c:if>
+
     </body>
 </html>
 
