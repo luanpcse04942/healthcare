@@ -135,10 +135,10 @@
                             <form id="form-search" action="<c:url value='/admin-handbook-search'/>" method="POST">
                                 <div class="input-group">
                                     <c:if test="${codeSearch != null}">
-                                        <input type="text" class="form-control" name="codeSearch" value="${codeSearch}" placeholder="Tìm kiếm bác sĩ" required maxlength="50" aria-describedby="basic-addon2"/>
+                                        <input type="text" class="form-control" name="codeSearch" value="${codeSearch}" placeholder="Tìm kiếm cẩm nang" required maxlength="50" aria-describedby="basic-addon2"/>
                                     </c:if>
                                     <c:if test="${codeSearch == null || codeSearch == ''}">
-                                        <input type="text" class="form-control" name="codeSearch" placeholder="Tìm kiếm bác sĩ" required/>
+                                        <input type="text" class="form-control" name="codeSearch" placeholder="Tìm kiếm cẩm nang" required/>
                                     </c:if>
                                     <span class="input-group-btn">
                                         <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true">
@@ -181,7 +181,7 @@
                                                             <div class="card">
                                                                 <div class="card-body">
                                                                     <div class="card-img-actions">
-                                                                        <img alt="Avatar" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${item.image}' />" class="card-img img-fluid" width="85" height="350" alt=""/>
+                                                                        <img alt="Avatar" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${item.image}' />" class="card-img img-fluid" width="300" height="200" alt=""/>
                                                                     </div>
                                                                 </div>
 

@@ -175,7 +175,7 @@
                                                 <div class="search-container">
                                                     <form id="form-search" action="<c:url value='/edit-appointment?appointmentId=${appointment.id}'/>" method="POST">
                                                         <div class="form-group">
-                                                            <label>Chọn vai trò</label>
+                                                            <label>Chọn trạng thái</label>
                                                             <input type="text" id ="appointmentId" name="appointmentId" value="${appointment.id}" hidden/>
                                                             <select class="form-control" id="statusId" name="statusId">
                                                                 <c:forEach items="${status}" var="item">
