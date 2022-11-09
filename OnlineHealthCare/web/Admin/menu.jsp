@@ -90,7 +90,7 @@
                 </li>
                 
                 <li>
-                    <a href='#'>
+                    <a href='<c:url value="/admin-feedback"/>'>
                         <i class="menu-icon fa fa-caret-right"></i>
                         Quản lý phản hồi
                     </a>

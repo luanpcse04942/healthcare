@@ -41,13 +41,13 @@
                 <div class="navbar-expand-lg navbar-light  lighten-3 mt-3 ">
                     <div class="breadcrumbs ace-save-state bg-info " id="breadcrumbs">
                         <ul class="breadcrumb ">
-                            <div class="line_right publish" style="font-size:15px;""margin-left: 0px;"> Người đăng: ${handbook.fullName} </div>
-                            <div  class="line_right publish" style="font-size:15px;""margin-left: 0px;"> Xuất bản: ${handbook.publishedAt}, Cập nhật lần cuối: 03/11/2022 </div>
+                            <div class="line_right publish" style="font-size:15px;""margin-left: 0px;"> Người đăng: ${handbook.fullName}. </div>
+                            <div  class="line_right publish" style="font-size:15px;""margin-left: 0px;"> Xuất bản: ${handbook.publishedAt}. </div>
                         </ul>
                     </div>
                 </div>
                 <div class="breadcrumbs ace-save-state ">
-                    <h1 class="baiviet-ten st" style="font-size:33px;">${handbook.handbookName}</h1>
+                    <h1 class="baiviet-ten st" style="font-size:30px;">${handbook.handbookName}</h1>
                     <div class="container center">
                         <img width="650px" height="450px" src="<c:url value='data:image/jpeg;charset=utf-8;base64,${handbook.image}' />" />
                     </div>

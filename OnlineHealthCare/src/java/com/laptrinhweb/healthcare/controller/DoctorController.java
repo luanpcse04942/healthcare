@@ -18,7 +18,7 @@ import java.util.List;
  * @author NhatDV
  */
 @WebServlet(name = "DoctorController", urlPatterns = {"/doctor-list-public", "/public-doctor-search",
-    "/doctor-patient-list", "/doctor-patient-search", "/doctor-patient-detail", "/doctor-list-facility", "/facility-doctor-search","/facility-doctor-detail"})
+    "/doctor-patient-list", "/doctor-patient-search", "/doctor-patient-detail", "/doctor-list-facility", "/facility-doctor-search", "/facility-doctor-detail","/doctor-home"})
 public class DoctorController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -55,7 +55,7 @@ public class DoctorController extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("Public/DoctorListPublic.jsp");
             rd.forward(request, response);
         }
-        
+
         if (request.getServletPath().equals("/doctor-patient-list")) {
             if (request.getParameter("page") != null) {
                 page = Integer.parseInt(request.getParameter("page"));
@@ -73,7 +73,7 @@ public class DoctorController extends HttpServlet {
             if (request.getParameter("page") != null) {
                 page = Integer.parseInt(request.getParameter("page"));
             }
-            
+
             search = request.getParameter("NameSearch").trim();
             search = search.replaceAll("\\s+", " ");
 
@@ -87,7 +87,7 @@ public class DoctorController extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("Doctor/PatientList.jsp");
             rd.forward(request, response);
         }
-        
+
         if (request.getServletPath().equals("/doctor-patient-detail")) {
             int userId = Integer.parseInt(request.getParameter("userId"));
             UserService userService = new UserService();
@@ -96,7 +96,7 @@ public class DoctorController extends HttpServlet {
             rd.forward(request, response);
         }
 
-                if (request.getServletPath().equals("/doctor-list-facility")) {
+        if (request.getServletPath().equals("/doctor-list-facility")) {
             if (request.getParameter("page") != null) {
                 page = Integer.parseInt(request.getParameter("page"));
             }
@@ -124,7 +124,7 @@ public class DoctorController extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("Medical Facility/Doctor/DoctorList.jsp");
             rd.forward(request, response);
         }
-                if (request.getServletPath().equals("/facility-doctor-detail")) {
+        if (request.getServletPath().equals("/facility-doctor-detail")) {
             if (request.getParameter("page") != null) {
                 page = Integer.parseInt(request.getParameter("page"));
             }
@@ -137,6 +137,10 @@ public class DoctorController extends HttpServlet {
             request.setAttribute("currentPage", page);
             request.setAttribute("flag", true);
             RequestDispatcher rd = request.getRequestDispatcher("Medical Facility/Doctor/DoctorDetail.jsp");
+            rd.forward(request, response);
+        }
+        if (request.getServletPath().equals("/doctor-home")) {
+            RequestDispatcher rd = request.getRequestDispatcher("Doctor/HomeDoctor.jsp");
             rd.forward(request, response);
         }
     }

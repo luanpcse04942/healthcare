@@ -1,9 +1,3 @@
-<%-- 
-    Document   : DoctorFeedback
-    Created on : Oct 16, 2022, 11:06:00 PM
-    Author     : Y545
---%>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp" %>
 <!DOCTYPE html>
@@ -38,17 +32,17 @@
                 }
             </script>
             <!-- header -->
-            <%@ include file="/Doctor/menu.jsp" %>
+            <%@ include file="/Admin/menu.jsp" %>
             <!-- header -->
 
             <div class="main-content">
-                <form action="<c:url value='/doctor-feedback-search'/>" method="get">
+                <form action="<c:url value='/admin-feedback-search'/>" method="get">
                     <div class="main-content-inner">
                         <div class="breadcrumbs ace-save-state" id="breadcrumbs">
                             <ul class="breadcrumb">
                                 <li>
                                     <i class="ace-icon fa fa-home home-icon"></i>
-                                    <a href="<c:url value='/doctor-home'/>">Trang chủ</a>
+                                    <a href="<c:url value='/admin-home'/>">Trang chủ</a>
                                 </li>
                                 <li class="active">Danh sách phản hồi</li>
                             </ul>
@@ -77,9 +71,10 @@
                                                     <thead>
                                                         <tr>
                                                             <th>No.</th>
-                                                            <th>Tên Bác Sĩ</th>
-                                                            <th>Nội dung Phản hồi của bạn</th>
+                                                            <th>Tên bênh nhân</th>
+                                                            <th>Phản hồi/Ý kiến</th>
                                                             <th>Số điện thoại</th>
+                                                            <!--<th>Bác sĩ khám</th>-->
                                                             <th>Ngày tạo</th>
                                                         </tr>
                                                     </thead>
@@ -93,9 +88,10 @@
                                                                 <c:set var="count" value="${(currentPage - 1) * 4}"/>
                                                                 <tr>
                                                                     <td>${loop.index + count + 1}</td>
-                                                                    <td>${item.fname} ${item.lname}</td>
+                                                                    <td>${item.fname} ${item.lname} </td>
                                                                     <td>${item.content}</td>
                                                                     <td>${item.phoneNumber}</td>
+                                                                    <!--<td>${item.doctorName}</td>-->
                                                                     <td>${item.createdAt}</td>
                                                                 </tr>
                                                             </c:forEach>
@@ -108,10 +104,10 @@
                                                         <c:if test="${currentPage != 1}">
                                                             <c:choose>
                                                                 <c:when test="${isSearching}">
-                                                                    <a href="doctor-feedback-search?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
+                                                                    <a href="admin-feedback-search?search=${nameSearch}&page=${currentPage-1}">Trang trước</a>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <a href="doctor-feedback?page=${currentPage-1}">Trang trước</a>
+                                                                    <a href="admin-feedback?page=${currentPage-1}">Trang trước</a>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </c:if>
@@ -121,20 +117,20 @@
                                                                     <a href="" class="active">${i}</a>
                                                                 </c:when>
                                                                 <c:when test="${isSearching}">
-                                                                    <a href="doctor-feedback-search?search=${nameSearch}&page=${i}">${i}</a>
+                                                                    <a href="admin-feedback-search?search=${nameSearch}&page=${i}">${i}</a>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <a href="doctor-feedback?page=${i}">${i}</a>
+                                                                    <a href="admin-feedback?page=${i}">${i}</a>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </c:forEach>
                                                         <c:if test="${currentPage lt noOfPages}">
                                                             <c:choose>
                                                                 <c:when test="${isSearching}">
-                                                                    <a href="doctor-feedback-search?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
+                                                                    <a href="admin-feedback-search?search=${nameSearch}&page=${currentPage+1}">Trang sau</a>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <a href="doctor-feedback?page=${currentPage+1}">Trang sau</a>
+                                                                    <a href="admin-feedback?page=${currentPage+1}">Trang sau</a>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </c:if>

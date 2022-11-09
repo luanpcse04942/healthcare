@@ -70,11 +70,29 @@ public class FacilityController extends HttpServlet {
             if (request.getParameter("page") != null) {
                 page = Integer.parseInt(request.getParameter("page"));
             }
+            PatientService patientService = new PatientService();
+
+            request.setAttribute("patients", patientService.getListPatients(page));
+            request.setAttribute("noOfPages", patientService.getNoOfPage(search));
+            request.setAttribute("currentPage", page);
+            RequestDispatcher rd = request.getRequestDispatcher("Medical Facility/Patient/PatientList.jsp");
+            rd.forward(request, response);
+        }
+        
+        if (request.getServletPath().equals("/facility-patient-search")) {
+            search = request.getParameter("search");
+
+            if (request.getParameter("page") != null) {
+                page = Integer.parseInt(request.getParameter("page"));
+            }
+
             UserService userService = new UserService();
 
-            request.setAttribute("patients", userService.getListAccounts(page));
+            request.setAttribute("accounts", userService.getAccountsSearchByNameOrEmail(page, search));
             request.setAttribute("noOfPages", userService.getNoOfPage(search));
             request.setAttribute("currentPage", page);
+            request.setAttribute("nameSearch", search);
+            request.setAttribute("isSearching", true);
             RequestDispatcher rd = request.getRequestDispatcher("Medical Facility/Patient/PatientList.jsp");
             rd.forward(request, response);
         }
@@ -214,6 +232,7 @@ public class FacilityController extends HttpServlet {
 
             FacilityService facilityService = new FacilityService();
             boolean addSpecSuccess = false;
+            int onlineStatus;
             addSpecSuccess = facilityService.addFacility(name, description, email, password, phonenumber, address, encoded);
             if (addSpecSuccess) {
                 request.setAttribute("messageResponse", "Thêm mới thành công !");

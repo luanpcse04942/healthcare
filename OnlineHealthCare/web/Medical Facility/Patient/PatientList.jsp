@@ -82,11 +82,11 @@
                                                     </thead>
                                                     <tbody>
                                                         <c:choose>
-                                                            <c:when test="${empty accounts}">
+                                                            <c:when test="${empty patients}">
                                                             <p>Không có thông tin!</p>
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <c:forEach var="item" items="${accounts}" varStatus="loop">
+                                                            <c:forEach var="item" items="${patients}" varStatus="loop">
                                                                 <c:set var="count" value="${(currentPage - 1) * 4}"/>
                                                                 <tr>
                                                                     <td>${loop.index + count + 1}</td>

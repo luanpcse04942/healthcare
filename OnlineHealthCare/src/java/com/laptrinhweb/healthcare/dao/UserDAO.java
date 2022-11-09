@@ -368,7 +368,7 @@ public class UserDAO extends DBContext {
     }
 
     public boolean addUser(String email, String password, String firstName, String lastName) {
-        String sql = "INSERT INTO Users(firstName, lastName, email, password, activedStatus) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Users(firstName, lastName, email, password, activedStatus, onlineStatus) VALUES (?, ?, ?, ?, ?, ?)";
 
         DBContext db = new DBContext();
         PreparedStatement ps = null;
@@ -382,6 +382,7 @@ public class UserDAO extends DBContext {
             ps.setString(3, email);
             ps.setString(4, password);
             ps.setInt(5, 5);
+            ps.setInt(6, 0);
             ps.executeUpdate();
             addSuccess = true;
         } catch (SQLException e) {
@@ -412,7 +413,7 @@ public class UserDAO extends DBContext {
     }
 
     public void addUserProfile(int userId, byte[] imageName) {
-        String sql = "INSERT INTO User_Profile(userId, image) VALUES (?, ?)";
+        String sql = "INSERT INTO User_Profile(userId, image,) VALUES (?, ?)";
 
         DBContext db = new DBContext();
         PreparedStatement ps = null;
@@ -685,4 +686,44 @@ public class UserDAO extends DBContext {
         }
     }
 
+    public void addFacilityProfile(int userId, String phonenumber, String address, byte[] encoded) {
+        String sql = "INSERT INTO User_Profile(userId,phonenumber,address, image) VALUES (?, ?, ?, ?)";
+
+        DBContext db = new DBContext();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+            ps.setString(2, phonenumber);
+            ps.setString(3, address);
+            ps.setBytes(4, encoded);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+  
 }

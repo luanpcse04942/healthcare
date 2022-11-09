@@ -83,7 +83,7 @@ public class FacilityService {
         
         userDAO.addUser(email, password,"" , name);
         int userId = userDAO.getUserId(email);
-        userDAO.addUserProfile(userId, encoded);
+        userDAO.addFacilityProfile(userId,phonenumber,address, encoded);
         userDAO.addUserRole(userId, 4);
         
         return true;
